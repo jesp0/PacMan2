@@ -11,7 +11,7 @@ public class PacMan extends Entitet{
     public PacMan(){
         radius = 50.0;
         farge = Color.YELLOW;
-        pman = new Circle(100, 200,radius,farge);
+        pman = new Circle(radius,farge);
         super.fart = 10.0;
 
     }
