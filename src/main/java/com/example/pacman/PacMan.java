@@ -4,15 +4,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class PacMan extends Entitet{
-    protected double radius;
-    protected Color farge;
-    protected Circle pman;
+
+
+    protected Circle posisjon;
+    protected String ret;
 
     public PacMan(){
-        radius = 50.0;
-        farge = Color.YELLOW;
-        pman = new Circle(radius,farge);
+        posisjon = new Circle(0,0,50.0,Color.YELLOW);
+        ret = "Øst";
         super.fart = 10.0;
+
 
     }
 }
