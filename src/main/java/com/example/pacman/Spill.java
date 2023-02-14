@@ -11,7 +11,13 @@ import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Spill extends Application {
     private final int BRETTHOYDE = 600;
@@ -24,6 +30,9 @@ public class Spill extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        kartInnlesing();
+
 
         Pane spillbrett = new Pane();
        // PacMan pacMan = new PacMan();
@@ -96,7 +105,21 @@ public class Spill extends Application {
         }
     }
 
-
+    public void kartInnlesing(){
+        try{
+            File fil = new File("src/main/java/com/example/pacman/Kart.txt");
+            Scanner leser = new Scanner(fil);
+            ArrayList<String> test = new ArrayList<>();
+            while(leser.hasNext()) {
+                String hei = leser.next();
+                test.add(hei);
+            }
+            System.out.println(test.size());
+            System.out.println(test);
+        }catch(FileNotFoundException e){
+            System.out.println("Fil ikke funnet - " + e);
+        }
+    }
 
     public static void main(String[] args) {
         launch();
