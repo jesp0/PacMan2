@@ -11,7 +11,7 @@ public class PacMan extends Entitet{
 
     public PacMan(){
         posisjon = new Circle(0,0,50.0,Color.YELLOW);
-        ret = "Øst";
+        ret = "";
         super.fart = 10.0;
 
 

@@ -1,41 +1,29 @@
 package com.example.pacman;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Spill extends Application {
     private final int BRETTHOYDE = 600;
     private final int BRETTLENGDE = 800;
-    PathTransition pt;
     PacMan pacMan; // = new PacMan();
-
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
-
-
     @Override
     public void start(Stage stage) throws IOException {
 
         kartInnlesing();
 
-
-        Pane spillbrett = new Pane();
-       // PacMan pacMan = new PacMan();
+        Pane spillbrett = new Pane();;
         pacMan = new PacMan();
         // PacMans startposisjon
         pacMan.posisjon.setCenterX(BRETTLENGDE/2);
@@ -54,57 +42,34 @@ public class Spill extends Application {
                 case RIGHT : pacBevegelse("Øst");
             }
         });
+        Animation animation = new Timeline(
+                new KeyFrame(Duration.millis(20), e -> pacBevegelse(pacMan.ret)));
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.play(); // Start animation
 
         stage.setTitle("PacMan");
         stage.setScene(scene);
         stage.show();
     }
-
     public void pacBevegelse(String retning){
         pacMan.ret = retning;
         // Henter oppdatert posisjon
         pacX = pacMan.posisjon.getCenterX();
         pacY = pacMan.posisjon.getCenterY();
-        // Oppretter ny linje (fra pacman til nærmeste vegg i retning nord)
-        // pt = new PathTransition(Duration.millis(5000), new Line(pacX, pacY, pacX , pacY-500), pacMan.posisjon);
         tegnLinje(retning);
-        pt.setCycleCount(1);
-        pt.setInterpolator(Interpolator.LINEAR);
-        //System.out.println(pt.getOnFinished().toString());
-        pt.play();
-
-
-        // Setter ny Y-verdi basert på hvor langt pacman har beveget seg (hva skal stå i stedet for 50?)
-        // Sett ny x/y når pacman endrer retning?
-        // Kontinuerlig endre x/y etterhvert som pacman beveger seg?
-        // Vi må kanskje ha kontinuerlig endring av x/y for å vite om PacMan spiser de prikkene?
-        //pacMan.posisjon.setCenterY(pacY-=50);
     }
     // 500 byttes etterhvert ut med distansen til nærmeste vegg i riktig retning?
     public void tegnLinje(String retning){
         if(retning.equals("Nord")){ // bedre med switch?
-            pt = new PathTransition(Duration.millis(500), new Line(pacX, pacY, pacX , pacY-50), pacMan.posisjon);
-            pacMan.posisjon.setCenterY(pacY-50);
-            //pt.setOnFinished (e -> {pacMan.posisjon.setCenterY(pacY-50);});
-
+            pacMan.posisjon.setCenterY(pacY - 1);
         }else if(retning.equals("Sør")){
-            pt = new PathTransition(Duration.millis(500), new Line(pacX, pacY, pacX , pacY+50), pacMan.posisjon);
-            pacMan.posisjon.setCenterY(pacY+50);
-            //pt.setOnFinished (e -> {pacMan.posisjon.setCenterY(pacY+50);});
-
+            pacMan.posisjon.setCenterY(pacY+1);
         }else if(retning.equals("Vest")){
-            pt = new PathTransition(Duration.millis(500), new Line(pacX, pacY, pacX-50 , pacY), pacMan.posisjon);
-            pacMan.posisjon.setCenterX(pacX-50);
-            //pt.setOnFinished (e -> {pacMan.posisjon.setCenterX(pacX-50);});
-
-        }else{ // i vårt tilfelle kan retning bare være "Øst" når den ikke er noen av de andre
-            pt = new PathTransition(Duration.millis(500), new Line(pacX, pacY, pacX+50 , pacY), pacMan.posisjon);
-            pacMan.posisjon.setCenterX(pacX+50);
-            //pt.setOnFinished (e -> {pacMan.posisjon.setCenterX(pacX+50);});
-
+            pacMan.posisjon.setCenterX(pacX-1);
+        }else if(retning.equals("Øst")){
+            pacMan.posisjon.setCenterX(pacX+1);
         }
     }
-
     public void kartInnlesing(){
         try{
             File fil = new File("src/main/java/com/example/pacman/Kart.txt");
