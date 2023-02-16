@@ -21,7 +21,7 @@ public class Spill extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        kartInnlesing();
+        Kart.kartInnlesing();
 
         Pane spillbrett = new Pane();;
         pacMan = new PacMan();
@@ -70,21 +70,7 @@ public class Spill extends Application {
             pacMan.posisjon.setCenterX(pacX+1);
         }
     }
-    public void kartInnlesing(){
-        try{
-            File fil = new File("src/main/java/com/example/pacman/Kart.txt");
-            Scanner leser = new Scanner(fil);
-            ArrayList<String> test = new ArrayList<>();
-            while(leser.hasNext()) {
-                String hei = leser.next();
-                test.add(hei);
-            }
-            System.out.println(test.size());
-            System.out.println(test);
-        }catch(FileNotFoundException e){
-            System.out.println("Fil ikke funnet - " + e);
-        }
-    }
+
 
     public static void main(String[] args) {
         launch();
