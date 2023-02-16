@@ -7,7 +7,7 @@
 #D####D##D########D##D####D#
 #D####D##D########D##D####D#
 #DDDDDD##DDDD##DDDD##DDDDDD#
-######D#####R##R######D#####
+######D#####R##R#####D######
 RRRRR#D#####R##R#####D#RRRRR
 RRRRR#D##RRRRGGRRRR##D#RRRRR
 RRRRR#D##RRRRGGRRRR##D#RRRRR

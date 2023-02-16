@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.util.Duration;
@@ -14,24 +15,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Spill extends Application {
-    private final int BRETTHOYDE = 600;
-    private final int BRETTLENGDE = 800;
+    private final int BRETTHOYDE = 620;
+    private final int BRETTLENGDE = 560;
     PacMan pacMan; // = new PacMan();
+    ArrayList<String> byggkart = new ArrayList<>();
+    private static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
     @Override
     public void start(Stage stage) throws IOException {
 
-        Kart.kartInnlesing();
 
-        Pane spillbrett = new Pane();;
+
+        spillbrett = new Pane();;
         pacMan = new PacMan();
         // PacMans startposisjon
         pacMan.posisjon.setCenterX(BRETTLENGDE/2);
         pacMan.posisjon.setCenterY(BRETTHOYDE/2);
         spillbrett.getChildren().add(pacMan.posisjon);
+        byggkart = Kart.kartInnlesing();
+        kartTolking(byggkart);
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
+
 
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
@@ -68,6 +74,27 @@ public class Spill extends Application {
             pacMan.posisjon.setCenterX(pacX-1);
         }else if(retning.equals("Øst")){
             pacMan.posisjon.setCenterX(pacX+1);
+        }
+    }
+
+    public static void kartTolking(ArrayList<String> kart){
+        double x = 0, y = 0;
+        for(int i = 0; i< kart.size(); i++){
+            for(int k = 0; k < kart.get(i).length(); k++){
+                switch (kart.get(i).charAt(k)){
+                    case '#' : Rectangle vegg = new Rectangle(x,y, 20,20);
+                                vegg.setFill(Color.BLUE);
+                                spillbrett.getChildren().add(vegg); break;
+                    case 'G' : System.out.println("Spøkelse");  break;
+                    case 'D' : System.out.println("Liten prikk");  break;
+                    case 'R' : System.out.println("Tomrom!");  break;
+                    case 'B' : System.out.println("Bigboy");  break;
+                    case 'Ø' : System.out.println("Dør");  break;
+                }
+                x += 20;
+            }
+            y += 20;
+            x = 0;
         }
     }
 
