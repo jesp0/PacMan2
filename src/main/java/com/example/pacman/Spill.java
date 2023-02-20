@@ -31,7 +31,7 @@ public class Spill extends Application {
         pacMan = new PacMan();
         // PacMans startposisjon
         pacMan.posisjon.setCenterX(BRETTLENGDE/2);
-        pacMan.posisjon.setCenterY(BRETTHOYDE/2);
+        pacMan.posisjon.setCenterY(BRETTHOYDE*0.75);
         spillbrett.getChildren().add(pacMan.posisjon);
         byggkart = Kart.kartInnlesing();
         kartTolking(byggkart);
