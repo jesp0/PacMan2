@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.animation.*;
@@ -82,14 +83,28 @@ public class Spill extends Application {
         for(int i = 0; i< kart.size(); i++){
             for(int k = 0; k < kart.get(i).length(); k++){
                 switch (kart.get(i).charAt(k)){
-                    case '#' : Rectangle vegg = new Rectangle(x,y, 20,20);
-                                vegg.setFill(Color.BLUE);
-                                spillbrett.getChildren().add(vegg); break;
-                    case 'G' : System.out.println("Spøkelse");  break;
-                    case 'D' : System.out.println("Liten prikk");  break;
-                    case 'R' : System.out.println("Tomrom!");  break;
-                    case 'B' : System.out.println("Bigboy");  break;
-                    case 'Ø' : System.out.println("Dør");  break;
+                    case '#' :  boolean venstre = false, hoyre = false, under = false, over = false;
+                                if(k>0)
+                                    if(kart.get(i).charAt(k - 1) == '#')
+                                        venstre = true;
+                                if(k < kart.get(i).length()-1)
+                                    if(kart.get(i).charAt(k + 1) == '#')
+                                        hoyre = true;
+                                if(i>0)
+                                    if(kart.get(i - 1).charAt(k) == '#')
+                                        over = true;
+                                if(i < kart.size()-1)
+                                    if(kart.get(i + 1).charAt(k) == '#')
+                                        under = true;
+                                System.out.println(venstre + " " + hoyre + " " + over + " " + under);
+                                Vegg vegg = new Vegg(venstre,hoyre,over,under, x, y);
+                                Polyline v = vegg.tegnVegg(vegg);
+                                spillbrett.getChildren().add(v); break;
+                    case 'G' : //System.out.println("Spøkelse");  break;
+                    case 'D' : //System.out.println("Liten prikk");  break;
+                    case 'R' : //System.out.println("Tomrom!");  break;
+                    case 'B' : //System.out.println("Bigboy");  break;
+                    case 'Ø' : //System.out.println("Dør");  break;
                 }
                 x += 20;
             }
