@@ -16,6 +16,7 @@ public class Kart {
                 String hei = leser.next();
                 kart.add(hei);
             }
+            leser.close();
         }catch(FileNotFoundException e){
             System.out.println("Fil ikke funnet - " + e);
         }

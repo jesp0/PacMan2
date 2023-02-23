@@ -1,9 +1,11 @@
 package com.example.pacman;
 
 import javafx.application.Application;
+import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -14,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javafx.geometry.Bounds;
 
 public class Spill extends Application {
     private final int BRETTHOYDE = 620;
@@ -22,6 +25,7 @@ public class Spill extends Application {
     ArrayList<String> byggkart = new ArrayList<>();
     private static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
+    protected BoundingBox boks, pacBoks;
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -34,7 +38,15 @@ public class Spill extends Application {
         pacMan.posisjon.setCenterY(BRETTHOYDE*0.75);
         spillbrett.getChildren().add(pacMan.posisjon);
         byggkart = Kart.kartInnlesing();
-        kartTolking(byggkart);
+       // kartTolking(byggkart);
+
+        Line l = new Line(250,250,250,500);
+        l.setStroke(Color.BLUE);
+        l.setStrokeWidth(5);
+        spillbrett.getChildren().add(l);
+
+        boks = new BoundingBox(249,250,251,500);
+        //pacBoks = new BoundingBox();
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
@@ -51,8 +63,14 @@ public class Spill extends Application {
         });
         Animation animation = new Timeline(
                 new KeyFrame(Duration.millis(20), e -> pacBevegelse(pacMan.ret)));
+
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.play(); // Start animation
+        if(pacMan.posisjon.getCenterX().intersects(boks)){
+            System.out.println("hei");
+            animation.stop();
+        }
+       // Bounds.getHeight(pacMan);
 
         stage.setTitle("PacMan");
         stage.setScene(scene);
@@ -77,14 +95,14 @@ public class Spill extends Application {
             pacMan.posisjon.setCenterX(pacX+1);
         }
     }
-
+/*
     public static void kartTolking(ArrayList<String> kart){
         double x = 0, y = 0;
         for(int i = 0; i< kart.size(); i++){
             for(int k = 0; k < kart.get(i).length(); k++){
                 switch (kart.get(i).charAt(k)){
                     case '#' :  boolean venstre = false, hoyre = false, under = false, over = false;
-                                if(k>0)
+                                if(k>0 && (kart.get(i).charAt(k - 1) == '#') )
                                     if(kart.get(i).charAt(k - 1) == '#')
                                         venstre = true;
                                 if(k < kart.get(i).length()-1)
@@ -96,7 +114,6 @@ public class Spill extends Application {
                                 if(i < kart.size()-1)
                                     if(kart.get(i + 1).charAt(k) == '#')
                                         under = true;
-                                System.out.println(venstre + " " + hoyre + " " + over + " " + under);
                                 Vegg vegg = new Vegg(venstre,hoyre,over,under, x, y);
                                 Polyline v = vegg.tegnVegg(vegg);
                                 spillbrett.getChildren().add(v); break;
@@ -113,7 +130,7 @@ public class Spill extends Application {
         }
     }
 
-
+*/
     public static void main(String[] args) {
         launch();
     }
