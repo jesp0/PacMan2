@@ -70,6 +70,8 @@ public class Spill extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.play(); // Start animation
 
+        //System.out.println(veggListe.size());
+
         stage.setResizable(false);
         stage.setTitle("PacMan");
         stage.setScene(scene);
@@ -82,7 +84,7 @@ public class Spill extends Application {
         pacX = pacMan.posisjon.getCenterX();
         pacY = pacMan.posisjon.getCenterY();
         tegnLinje(retning);
-        pacBoks = new BoundingBox(pacX-10,pacY-10,20,20);
+        pacBoks = new BoundingBox(pacX-8,pacY-8,16,16);
         kollisjonSjekk(retning);
         if(retningSjekk != retning) {
             animation.play();
@@ -107,23 +109,30 @@ public class Spill extends Application {
         for(int i = 0; i< kart.size(); i++){
             for(int k = 0; k < kart.get(i).length(); k++){
                 switch (kart.get(i).charAt(k)){
-                    case '#' :  boolean venstre = false, hoyre = false, under = false, over = false;
-                                if(k>0 && (kart.get(i).charAt(k - 1) == '#') )
-                                    if(kart.get(i).charAt(k - 1) == '#')
+                    case '#' :  boolean venstre = false, hoyre = false, under = false, over = false, venstreSjekk = false, nordSjekk = false;
+                                if(k>0 && (kart.get(i).charAt(k - 1) == '#')){
                                         venstre = true;
+                                    }
+                                else if (k>0 && (kart.get(i).charAt(k - 1) == 'D' || kart.get(i).charAt(k - 1) == 'B' || kart.get(i).charAt(k - 1) == 'R')) {
+                                    venstreSjekk = true;
+                                }
                                 if(k < kart.get(i).length()-1)
                                     if(kart.get(i).charAt(k + 1) == '#')
                                         hoyre = true;
-                                if(i>0)
+                                if(i>0){
                                     if(kart.get(i - 1).charAt(k) == '#')
                                         over = true;
-                                if(i < kart.size()-1)
+                                    else if (kart.get(i - 1).charAt(k) == 'D' || kart.get(i - 1).charAt(k) == 'R' || kart.get(i - 1).charAt(k) == 'B') {
+                                       nordSjekk = true;
+                                    }
+                                }
+                        if(i < kart.size()-1)
                                     if(kart.get(i + 1).charAt(k) == '#')
                                         under = true;
-                                Vegg vegg = new Vegg(venstre,hoyre,over,under, x, y);
-                                Rectangle v = vegg.tegnVegg(vegg);
+                                Vegg vegg = new Vegg(venstre,hoyre,over,under, nordSjekk, venstreSjekk, x, y);
                                 veggListe.add(vegg);
                                 Polyline p = vegg.tegnVegg2(vegg);
+                                Rectangle v = vegg.tegnVegg(vegg);
                                 spillbrett.getChildren().addAll(v,p); break;
                     case 'G' : //System.out.println("Spøkelse");  break;
                     case 'D' : //System.out.println("Liten prikk");  break;
@@ -141,7 +150,8 @@ public class Spill extends Application {
     public void kollisjonSjekk(String retning){
         for(int i=0; i<veggListe.size();i++){
             if(pacBoks.intersects(veggListe.get(i).boks)) {
-                System.out.println("hei");
+                System.out.println("" + i + veggListe.get(i).boks.toString());
+                System.out.println("X: "+pacMan.posisjon.getCenterX() + " Y: " + pacMan.posisjon.getCenterY());
                 animation.pause();
                 retningSjekk = retning;
                 switch (retning) {
@@ -152,7 +162,7 @@ public class Spill extends Application {
                         pacMan.posisjon.setCenterY(pacY - 1);
                         break;
                     case "Vest":
-                        pacMan.posisjon.setCenterX(pacY + 1);
+                        pacMan.posisjon.setCenterX(pacX + 1);
                         break;
                     case "Øst":
                         pacMan.posisjon.setCenterX(pacX - 1);
