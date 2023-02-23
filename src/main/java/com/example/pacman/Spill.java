@@ -25,7 +25,10 @@ public class Spill extends Application {
     ArrayList<String> byggkart = new ArrayList<>();
     private static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
-    protected BoundingBox boks, pacBoks;
+    protected BoundingBox pacBoks;
+    protected Animation animation;
+    protected String retningSjekk;
+    public static ArrayList<Vegg> veggListe = new ArrayList<>();
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -38,15 +41,15 @@ public class Spill extends Application {
         pacMan.posisjon.setCenterY(BRETTHOYDE*0.75);
         spillbrett.getChildren().add(pacMan.posisjon);
         byggkart = Kart.kartInnlesing();
-       // kartTolking(byggkart);
-
+        kartTolking(byggkart);
+/*
         Line l = new Line(250,250,250,500);
         l.setStroke(Color.BLUE);
         l.setStrokeWidth(5);
         spillbrett.getChildren().add(l);
 
-        boks = new BoundingBox(249,250,251,500);
-        //pacBoks = new BoundingBox();
+        //boks = new BoundingBox(249,250,1,250);
+*/
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
@@ -61,27 +64,30 @@ public class Spill extends Application {
                 case RIGHT : pacBevegelse("Øst");
             }
         });
-        Animation animation = new Timeline(
+        animation = new Timeline(
                 new KeyFrame(Duration.millis(20), e -> pacBevegelse(pacMan.ret)));
 
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.play(); // Start animation
-        if(pacMan.posisjon.getCenterX().intersects(boks)){
-            System.out.println("hei");
-            animation.stop();
-        }
-       // Bounds.getHeight(pacMan);
 
+        stage.setResizable(false);
         stage.setTitle("PacMan");
         stage.setScene(scene);
         stage.show();
     }
     public void pacBevegelse(String retning){
+
         pacMan.ret = retning;
         // Henter oppdatert posisjon
         pacX = pacMan.posisjon.getCenterX();
         pacY = pacMan.posisjon.getCenterY();
         tegnLinje(retning);
+        pacBoks = new BoundingBox(pacX-10,pacY-10,20,20);
+        kollisjonSjekk(retning);
+        if(retningSjekk != retning) {
+            animation.play();
+
+        }
     }
     // 500 byttes etterhvert ut med distansen til nærmeste vegg i riktig retning?
     public void tegnLinje(String retning){
@@ -95,7 +101,7 @@ public class Spill extends Application {
             pacMan.posisjon.setCenterX(pacX+1);
         }
     }
-/*
+
     public static void kartTolking(ArrayList<String> kart){
         double x = 0, y = 0;
         for(int i = 0; i< kart.size(); i++){
@@ -115,8 +121,10 @@ public class Spill extends Application {
                                     if(kart.get(i + 1).charAt(k) == '#')
                                         under = true;
                                 Vegg vegg = new Vegg(venstre,hoyre,over,under, x, y);
-                                Polyline v = vegg.tegnVegg(vegg);
-                                spillbrett.getChildren().add(v); break;
+                                Rectangle v = vegg.tegnVegg(vegg);
+                                veggListe.add(vegg);
+                                Polyline p = vegg.tegnVegg2(vegg);
+                                spillbrett.getChildren().addAll(v,p); break;
                     case 'G' : //System.out.println("Spøkelse");  break;
                     case 'D' : //System.out.println("Liten prikk");  break;
                     case 'R' : //System.out.println("Tomrom!");  break;
@@ -130,7 +138,30 @@ public class Spill extends Application {
         }
     }
 
-*/
+    public void kollisjonSjekk(String retning){
+        for(int i=0; i<veggListe.size();i++){
+            if(pacBoks.intersects(veggListe.get(i).boks)) {
+                System.out.println("hei");
+                animation.pause();
+                retningSjekk = retning;
+                switch (retning) {
+                    case "Nord":
+                        pacMan.posisjon.setCenterY(pacY + 1);
+                        break;
+                    case "Sør":
+                        pacMan.posisjon.setCenterY(pacY - 1);
+                        break;
+                    case "Vest":
+                        pacMan.posisjon.setCenterX(pacY + 1);
+                        break;
+                    case "Øst":
+                        pacMan.posisjon.setCenterX(pacX - 1);
+                        break;
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         launch();
     }
