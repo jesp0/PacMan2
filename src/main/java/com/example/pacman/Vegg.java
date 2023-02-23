@@ -127,12 +127,10 @@ public class Vegg{
             //return v;
         }
         else if(vegg.venstre == true && vegg.hoyre == false && vegg.over == true && vegg.under == true) {
-            v = new Polyline(10 + x, 0 + y, 10 + x, 20 + y, 10 + x, 10 + y,0+x,10+y);
-            v.setStroke(Color.BLUE); v.setStrokeWidth(3);
 
             boks = new BoundingBox(x,y,10,20);
             Rectangle bounding = new Rectangle(x,y,10,20);
-            bounding.setFill(Color.RED);
+            bounding.setFill(Color.GREEN);
             return bounding;
 
             //return v;
@@ -152,12 +150,12 @@ public class Vegg{
 
             }*/
         }
-        else if(vegg.venstre == true && vegg.hoyre == true && vegg.over == true && vegg.under == true) {
+        /*else if(vegg.venstre == true && vegg.hoyre == true && vegg.over == true && vegg.under == true) {
             boks = new BoundingBox(x,y,10,10);
             Rectangle bounding = new Rectangle(x,y,10,10);
             bounding.setFill(Color.RED);
             return bounding;
-        }/*
+        }*//*
         v = new Polyline(0,0,0,0);*/
         Rectangle bounding = new Rectangle(0,0,0,0);
         return bounding;

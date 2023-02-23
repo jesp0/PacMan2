@@ -11,7 +11,7 @@
 ######D#####R##R#####D######
 ######D##RRRRGGRRRR##D######
 ######D##RRRRGGRRRR##D######
-######D##R###ØØ###R##D######
+######D##R###RR###R##D######
 RRRRRRDRRR#GGGGGG#RRRDRRRRRR
 ######D##R########R##D######
 ######D##RRRRRRRRRR##D######
