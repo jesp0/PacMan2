@@ -2,7 +2,6 @@ package com.example.pacman;
 
 import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 
 public class Vegg extends Entitet{

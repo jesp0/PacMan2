@@ -55,14 +55,19 @@ public class Spill extends Application {
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
             switch ((e.getCode())){ //enhanced switch?
-                case UP : pacBevegelse("Nord");  break;
-                case DOWN : pacBevegelse("Sør"); break;
-                case LEFT : pacBevegelse("Vest"); break;
-                case RIGHT : pacBevegelse("Øst");
+                //Prøver å fikse et problem som gjør at PacMan setter seg fat i veggen.
+                case UP : if(pacMan.ret != "Nord")
+                                pacBevegelse("Nord");  break;
+                case DOWN : if(pacMan.ret != "Sør")
+                                pacBevegelse("Sør"); break;
+                case LEFT : if(pacMan.ret != "Vest")
+                                pacBevegelse("Vest"); break;
+                case RIGHT : if(pacMan.ret != "Øst")
+                                pacBevegelse("Øst");
             }
         });
         animation = new Timeline(
-                new KeyFrame(Duration.millis(20), e -> pacBevegelse(pacMan.ret)));
+                new KeyFrame(Duration.millis(15), e -> pacBevegelse(pacMan.ret)));
 
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.play(); // Start animation
@@ -75,15 +80,16 @@ public class Spill extends Application {
         stage.show();
     }
     public void pacBevegelse(String retning){
-
         pacMan.ret = retning;
         // Henter oppdatert posisjon
         pacX = pacMan.posisjon.getCenterX();
         pacY = pacMan.posisjon.getCenterY();
         tegnLinje(retning);
+        //Oppdaterer BoundingBoksen til PacMan.
         pacBoks = new BoundingBox(pacX-7,pacY-7,14,14);
         kollisjonSjekk(retning);
         spisPrikk();
+        spisStorPrikk();
         if(retningSjekk != retning) {
             animation.play();
 
@@ -158,10 +164,13 @@ public class Spill extends Application {
                 spillbrett.getChildren().remove(litenPrikkListe.get(i).posisjon);
                 litenPrikkListe.remove(i);
             }
-            else if (pacBoks.intersects(storPrikkListe.get(i).boks)){
+        }
+    }
+    public void spisStorPrikk(){
+        for(int i=0; i<storPrikkListe.size();i++) {
+            if (pacBoks.intersects(storPrikkListe.get(i).boks)) {
                 spillbrett.getChildren().remove(storPrikkListe.get(i).posisjon);
-                litenPrikkListe.remove(i);
-
+                storPrikkListe.remove(i);
             }
         }
     }
