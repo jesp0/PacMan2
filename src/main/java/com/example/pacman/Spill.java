@@ -116,7 +116,12 @@ public class Spill extends Application {
                     case '#' :  Vegg vegg = new Vegg(x,y);
                                 veggListe.add(vegg);
                                 Rectangle v = vegg.tegnVegg(vegg);
-                                spillbrett.getChildren().add(v); break;
+                                spillbrett.getChildren().add(v);
+                                ArrayList<Rectangle> fancy = new ArrayList<>();
+                                fancy = vegg.fancyVegg(vegg);
+                                for (int j = 0; j< fancy.size(); j++)
+                                    spillbrett.getChildren().add(fancy.get(j)); break;
+
                     case 'G' :  break;
                     case 'D' : LitenPrikk litenPrikk = new LitenPrikk(x,y);
                                 litenPrikkListe.add(litenPrikk);
