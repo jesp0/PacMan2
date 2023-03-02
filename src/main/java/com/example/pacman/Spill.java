@@ -3,21 +3,15 @@ package com.example.pacman;
 import javafx.application.Application;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
-import javafx.scene.image.PixelBuffer;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.util.Duration;
-import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-import javafx.geometry.Bounds;
 
 public class Spill extends Application {
     private final int BRETTHOYDE = 620;
@@ -33,6 +27,7 @@ public class Spill extends Application {
     protected String retningSjekk;
     public static ArrayList<Vegg> veggListe = new ArrayList<>();
     public static ArrayList<LitenPrikk> litenPrikkListe = new ArrayList<>();
+    public static ArrayList<StorPrikk> storPrikkListe = new ArrayList<>();
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -86,7 +81,7 @@ public class Spill extends Application {
         pacX = pacMan.posisjon.getCenterX();
         pacY = pacMan.posisjon.getCenterY();
         tegnLinje(retning);
-        pacBoks = new BoundingBox(pacX-8,pacY-8,16,16);
+        pacBoks = new BoundingBox(pacX-7,pacY-7,14,14);
         kollisjonSjekk(retning);
         spisPrikk();
         if(retningSjekk != retning) {
@@ -116,12 +111,14 @@ public class Spill extends Application {
                                 veggListe.add(vegg);
                                 Rectangle v = vegg.tegnVegg(vegg);
                                 spillbrett.getChildren().add(v); break;
-                    case 'G' : //System.out.println("Spøkelse");  break;
+                    case 'G' :  break;
                     case 'D' : LitenPrikk litenPrikk = new LitenPrikk(x,y);
                                 litenPrikkListe.add(litenPrikk);
                                 spillbrett.getChildren().add(litenPrikk.posisjon); break;
-                    case 'R' : //System.out.println("Tomrom!");  break;
-                    case 'B' : //System.out.println("Bigboy");  break;
+                    case 'R' :  break;
+                    case 'B' : StorPrikk storPrikk = new StorPrikk(x,y);
+                                storPrikkListe.add(storPrikk);
+                                spillbrett.getChildren().add(storPrikk.posisjon); break;
                     case 'Ø' : //System.out.println("Dør");  break;
                 }
                 x += PIXEL;
@@ -158,9 +155,13 @@ public class Spill extends Application {
     public void spisPrikk(){
         for(int i=0; i<litenPrikkListe.size();i++){
             if(pacBoks.intersects(litenPrikkListe.get(i).boks)) {
-                spillbrett.getChildren().remove(litenPrikkListe.get(i));
+                spillbrett.getChildren().remove(litenPrikkListe.get(i).posisjon);
                 litenPrikkListe.remove(i);
-                System.out.println("Nom!");
+            }
+            else if (pacBoks.intersects(storPrikkListe.get(i).boks)){
+                spillbrett.getChildren().remove(storPrikkListe.get(i).posisjon);
+                litenPrikkListe.remove(i);
+
             }
         }
     }
