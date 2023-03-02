@@ -1,22 +1,20 @@
 package com.example.pacman;
 
 import javafx.event.ActionEvent;
+import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Circle;
 
 public abstract class Entitet{
-    protected double fart;
-    protected enum retning{
-        Nord,Syd,Øst,Vest;
+   protected double x, y;
+    protected BoundingBox boks;
+    public Entitet(double x, double y){
+        this.x = x;
+        this.y = y;
     }
-/*
-public void kollisjonSjekk(){
-
-        if(Bounds.intersects(0,0,0,0)){
-
     }
-}*/
 
-}
+
+
 
 

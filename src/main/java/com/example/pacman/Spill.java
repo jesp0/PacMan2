@@ -3,6 +3,7 @@ package com.example.pacman;
 import javafx.application.Application;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
+import javafx.scene.image.PixelBuffer;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -21,6 +22,8 @@ import javafx.geometry.Bounds;
 public class Spill extends Application {
     private final int BRETTHOYDE = 620;
     private final int BRETTLENGDE = 560;
+    //Pixlene er kvadratiske og trenger kun 1 verdi.
+    private static final int PIXEL = 20;
     PacMan pacMan; // = new PacMan();
     ArrayList<String> byggkart = new ArrayList<>();
     private static Pane spillbrett;
@@ -29,16 +32,15 @@ public class Spill extends Application {
     protected Animation animation;
     protected String retningSjekk;
     public static ArrayList<Vegg> veggListe = new ArrayList<>();
+    public static ArrayList<LitenPrikk> litenPrikkListe = new ArrayList<>();
     @Override
     public void start(Stage stage) throws IOException {
 
 
 
         spillbrett = new Pane();;
-        pacMan = new PacMan();
-        // PacMans startposisjon
-        pacMan.posisjon.setCenterX(BRETTLENGDE/2);
-        pacMan.posisjon.setCenterY(BRETTHOYDE*0.75);
+        pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75+5);
+
         spillbrett.getChildren().add(pacMan.posisjon);
         byggkart = Kart.kartInnlesing();
         kartTolking(byggkart);
@@ -86,6 +88,7 @@ public class Spill extends Application {
         tegnLinje(retning);
         pacBoks = new BoundingBox(pacX-8,pacY-8,16,16);
         kollisjonSjekk(retning);
+        spisPrikk();
         if(retningSjekk != retning) {
             animation.play();
 
@@ -109,40 +112,21 @@ public class Spill extends Application {
         for(int i = 0; i< kart.size(); i++){
             for(int k = 0; k < kart.get(i).length(); k++){
                 switch (kart.get(i).charAt(k)){
-                    case '#' :  boolean venstre = false, hoyre = false, under = false, over = false, venstreSjekk = false, nordSjekk = false;
-                                if(k>0 && (kart.get(i).charAt(k - 1) == '#')){
-                                        venstre = true;
-                                    }
-                                else if (k>0 && (kart.get(i).charAt(k - 1) == 'D' || kart.get(i).charAt(k - 1) == 'B' || kart.get(i).charAt(k - 1) == 'R')) {
-                                    venstreSjekk = true;
-                                }
-                                if(k < kart.get(i).length()-1)
-                                    if(kart.get(i).charAt(k + 1) == '#')
-                                        hoyre = true;
-                                if(i>0){
-                                    if(kart.get(i - 1).charAt(k) == '#')
-                                        over = true;
-                                    else if (kart.get(i - 1).charAt(k) == 'D' || kart.get(i - 1).charAt(k) == 'R' || kart.get(i - 1).charAt(k) == 'B') {
-                                       nordSjekk = true;
-                                    }
-                                }
-                        if(i < kart.size()-1)
-                                    if(kart.get(i + 1).charAt(k) == '#')
-                                        under = true;
-                                Vegg vegg = new Vegg(venstre,hoyre,over,under, nordSjekk, venstreSjekk, x, y);
+                    case '#' :  Vegg vegg = new Vegg(x,y);
                                 veggListe.add(vegg);
-                                Polyline p = vegg.tegnVegg2(vegg);
                                 Rectangle v = vegg.tegnVegg(vegg);
-                                spillbrett.getChildren().addAll(v,p); break;
+                                spillbrett.getChildren().add(v); break;
                     case 'G' : //System.out.println("Spøkelse");  break;
-                    case 'D' : //System.out.println("Liten prikk");  break;
+                    case 'D' : LitenPrikk litenPrikk = new LitenPrikk(x,y);
+                                litenPrikkListe.add(litenPrikk);
+                                spillbrett.getChildren().add(litenPrikk.posisjon); break;
                     case 'R' : //System.out.println("Tomrom!");  break;
                     case 'B' : //System.out.println("Bigboy");  break;
                     case 'Ø' : //System.out.println("Dør");  break;
                 }
-                x += 20;
+                x += PIXEL;
             }
-            y += 20;
+            y += PIXEL;
             x = 0;
         }
     }
@@ -168,6 +152,15 @@ public class Spill extends Application {
                         pacMan.posisjon.setCenterX(pacX - 1);
                         break;
                 }
+            }
+        }
+    }
+    public void spisPrikk(){
+        for(int i=0; i<litenPrikkListe.size();i++){
+            if(pacBoks.intersects(litenPrikkListe.get(i).boks)) {
+                spillbrett.getChildren().remove(litenPrikkListe.get(i));
+                litenPrikkListe.remove(i);
+                System.out.println("Nom!");
             }
         }
     }

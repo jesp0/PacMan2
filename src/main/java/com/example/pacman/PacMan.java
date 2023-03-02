@@ -9,10 +9,11 @@ public class PacMan extends Entitet{
     protected Circle posisjon;
     protected String ret;
 
-    public PacMan(){
-        posisjon = new Circle(0,0,10.0,Color.YELLOW);
+    public PacMan(double x, double y){
+        super(x,y);
+        posisjon = new Circle(x,y,8.0,Color.YELLOW);
         ret = "";
-        super.fart = 10.0;
+
 
 
     }
