@@ -5,6 +5,8 @@ import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.animation.*;
@@ -23,7 +25,7 @@ public class Spill extends Application {
     private static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
     protected BoundingBox pacBoks;
-    protected Animation animation;
+    protected Animation animation, pacAnimation;
     protected String retningSjekk;
     public static ArrayList<Vegg> veggListe = new ArrayList<>();
     public static ArrayList<LitenPrikk> litenPrikkListe = new ArrayList<>();
@@ -31,22 +33,12 @@ public class Spill extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-
-
         spillbrett = new Pane();;
         pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75+5);
 
         spillbrett.getChildren().add(pacMan.posisjon);
         byggkart = Kart.kartInnlesing();
         kartTolking(byggkart);
-/*
-        Line l = new Line(250,250,250,500);
-        l.setStroke(Color.BLUE);
-        l.setStrokeWidth(5);
-        spillbrett.getChildren().add(l);
-
-        //boks = new BoundingBox(249,250,1,250);
-*/
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
@@ -55,7 +47,7 @@ public class Spill extends Application {
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
             switch ((e.getCode())){ //enhanced switch?
-                //Prøver å fikse et problem som gjør at PacMan setter seg fat i veggen.
+                //Prøver å fikse et problem som gjør at PacMan setter seg fast i veggen.
                 case UP : if(pacMan.ret != "Nord")
                                 pacBevegelse("Nord");  break;
                 case DOWN : if(pacMan.ret != "Sør")
@@ -72,6 +64,23 @@ public class Spill extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.play(); // Start animation
 
+        pacAnimation = new Timeline(
+                new KeyFrame(Duration.millis(15), e -> pacMan.pacAnimasjon()));
+
+        pacAnimation.setCycleCount(Timeline.INDEFINITE);
+        pacAnimation.play();
+
+        Arc arc = new Arc();
+        arc.setCenterX(BRETTLENGDE/2);
+        arc.setCenterY(BRETTHOYDE/2);
+        arc.setRadiusX(25.0f);
+        arc.setRadiusY(25.0f);
+        arc.setStartAngle(45.0f);
+        arc.setLength(270.0f);
+        arc.setType(ArcType.ROUND);
+        arc.setFill(Color.BLUE);
+        spillbrett.getChildren().add(arc);
+
         //System.out.println(veggListe.size());
 
         stage.setResizable(false);
@@ -86,7 +95,7 @@ public class Spill extends Application {
         pacY = pacMan.posisjon.getCenterY();
         tegnLinje(retning);
         //Oppdaterer BoundingBoksen til PacMan.
-        pacBoks = new BoundingBox(pacX-7,pacY-7,14,14);
+        pacBoks = new BoundingBox(pacX-6,pacY-6,12,12);
         kollisjonSjekk(retning);
         spisPrikk();
         spisStorPrikk();

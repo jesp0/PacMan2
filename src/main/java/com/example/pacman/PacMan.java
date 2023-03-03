@@ -20,4 +20,7 @@ public class PacMan extends Entitet{
         boks = new BoundingBox(x, y, 7, 7);
         return boks;
     }
+    public void pacAnimasjon(){
+
+    }
 }
