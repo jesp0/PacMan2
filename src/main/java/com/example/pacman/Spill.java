@@ -3,11 +3,14 @@ package com.example.pacman;
 import javafx.application.Application;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.util.Duration;
@@ -21,12 +24,15 @@ public class Spill extends Application {
     //Pixlene er kvadratiske og trenger kun 1 verdi.
     private static final int PIXEL = 20;
     PacMan pacMan; // = new PacMan();
-    Spokelse blinky;
+    Blinky blinky;
     private static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
     protected BoundingBox pacBoks;
-    protected Animation animation, pacAnimation;
+    protected Animation animation;
+    protected Animation pacAnimation;
+    protected static Animation blinkyAnimation;
     protected String retningSjekk;
+    public Text score = new Text("00000");
     public static ArrayList<Vegg> veggListe = new ArrayList<>();
     public static ArrayList<LitenPrikk> litenPrikkListe = new ArrayList<>();
     public static ArrayList<StorPrikk> storPrikkListe = new ArrayList<>();
@@ -35,17 +41,19 @@ public class Spill extends Application {
 
         spillbrett = new Pane();;
 
-
-
-
+        score.setStroke(Color.WHITE);
+        score.setFill(Color.WHITE);
+        score.setX(5);
+        score.setY(18);
+        score.setFont(new Font(20));
+        spillbrett.getChildren().add(score);
         kartTolking(Kart.kartInnlesing());
+
         pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75-14);
         spillbrett.getChildren().add(pacMan.posisjon);
 
         blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-58);
         spillbrett.getChildren().add(blinky.posisjon);
-
-
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
@@ -77,13 +85,15 @@ public class Spill extends Application {
         });
         animation = new Timeline(
                 new KeyFrame(Duration.millis(15), e -> pacBevegelse(pacMan.ret)));
-
         animation.setCycleCount(Timeline.INDEFINITE);
 
         pacAnimation = new Timeline(
                 new KeyFrame(Duration.millis(15), e -> pacMan.pacAnimasjon(pacMan.posisjon, pacMan.ret)));
-
         pacAnimation.setCycleCount(Timeline.INDEFINITE);
+
+        blinkyAnimation = new Timeline(
+                new KeyFrame(Duration.millis(15), e -> blinky.bevegelse()));
+        blinkyAnimation.setCycleCount(Timeline.INDEFINITE);
 
 
         stage.setResizable(false);
@@ -105,11 +115,12 @@ public class Spill extends Application {
         if(retningSjekk != retning) {
             animation.play();
             pacAnimation.play();
+            blinkyAnimation.play();
         }
     }
     // 500 byttes etterhvert ut med distansen til nærmeste vegg i riktig retning?
     public void tegnLinje(String retning){
-        if(retning.equals("Nord")){ // bedre med switch?
+        if(retning.equals("Nord")){
             pacMan.posisjon.setCenterY(pacY - 1);
         }else if(retning.equals("Sør")){
             pacMan.posisjon.setCenterY(pacY+1);
