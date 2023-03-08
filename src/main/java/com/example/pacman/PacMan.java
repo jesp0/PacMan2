@@ -21,25 +21,78 @@ public class PacMan extends Entitet{
         ret = "";
         boks = lagBoks(x,y);
     }
-    public BoundingBox lagBoks(double x, double y){
-        boks = new BoundingBox(x, y, 10, 10);
-        return boks;
-    }
-    public void pacAnimasjon(Arc arc){
-        if (munnSjekk == true){
-            if(arc.getStartAngle() < 75){
-                arc.setStartAngle(arc.getStartAngle()+1);
-                arc.setLength(arc.getLength()-2);
-                if(arc.getStartAngle() == 75)
-                    munnSjekk = false;
+
+    public void pacAnimasjon(Arc arc, String retning){
+        if(retning == "Øst"){
+            if (munnSjekk == true){
+                if(arc.getStartAngle() < 75){
+                    arc.setStartAngle(arc.getStartAngle()+1);
+                    arc.setLength(arc.getLength()-2);
+                    if(arc.getStartAngle() == 75)
+                        munnSjekk = false;
+                }
+            }
+            if (munnSjekk == false){
+                if(arc.getStartAngle() > 0){
+                    arc.setStartAngle(arc.getStartAngle()-1);
+                    arc.setLength(arc.getLength()+2);
+                    if(arc.getStartAngle() == 0)
+                        munnSjekk = true;
+                }
             }
         }
-        if (munnSjekk == false){
-            if(arc.getStartAngle() > 0){
-                arc.setStartAngle(arc.getStartAngle()-1);
-                arc.setLength(arc.getLength()+2);
-                if(arc.getStartAngle() == 0)
-                    munnSjekk = true;
+        if(retning == "Vest"){
+            if (munnSjekk == true){
+                if(arc.getStartAngle() < 255){
+                    arc.setStartAngle(arc.getStartAngle()+1);
+                    arc.setLength(arc.getLength()-2);
+                    if(arc.getStartAngle() == 255)
+                        munnSjekk = false;
+                }
+            }
+            if (munnSjekk == false){
+                if(arc.getStartAngle() > 180){
+                    arc.setStartAngle(arc.getStartAngle()-1);
+                    arc.setLength(arc.getLength()+2);
+                    if(arc.getStartAngle() == 180)
+                        munnSjekk = true;
+                }
+            }
+        }
+        if(retning == "Sør"){
+            if (munnSjekk == true){
+                if(arc.getStartAngle() < 345){
+                    arc.setStartAngle(arc.getStartAngle()+1);
+                    arc.setLength(arc.getLength()-2);
+                    if(arc.getStartAngle() == 345)
+                        munnSjekk = false;
+                }
+            }
+            if (munnSjekk == false){
+                if(arc.getStartAngle() > 270){
+                    arc.setStartAngle(arc.getStartAngle()-1);
+                    arc.setLength(arc.getLength()+2);
+                    if(arc.getStartAngle() == 270)
+                        munnSjekk = true;
+                }
+            }
+        }
+        if(retning == "Nord"){
+            if (munnSjekk == true){
+                if(arc.getStartAngle() < 165){
+                    arc.setStartAngle(arc.getStartAngle()+1);
+                    arc.setLength(arc.getLength()-2);
+                    if(arc.getStartAngle() == 165)
+                        munnSjekk = false;
+                }
+            }
+            if (munnSjekk == false){
+                if(arc.getStartAngle() > 90){
+                    arc.setStartAngle(arc.getStartAngle()-1);
+                    arc.setLength(arc.getLength()+2);
+                    if(arc.getStartAngle() == 90)
+                        munnSjekk = true;
+                }
             }
         }
     }

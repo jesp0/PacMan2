@@ -21,6 +21,7 @@ public class Spill extends Application {
     //Pixlene er kvadratiske og trenger kun 1 verdi.
     private static final int PIXEL = 20;
     PacMan pacMan; // = new PacMan();
+    Spokelse blinky;
     private static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
     protected BoundingBox pacBoks;
@@ -41,6 +42,10 @@ public class Spill extends Application {
         pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75-14);
         spillbrett.getChildren().add(pacMan.posisjon);
 
+        blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-58);
+        spillbrett.getChildren().add(blinky.posisjon);
+
+
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
@@ -48,16 +53,26 @@ public class Spill extends Application {
 
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
+            pacMan.posisjon.setLength(270);
             switch ((e.getCode())){ //enhanced switch?
                 //Prøver å fikse et problem som gjør at PacMan setter seg fast i veggen.
                 case UP : if(pacMan.ret != "Nord")
-                                pacBevegelse("Nord");  break;
+                                pacBevegelse("Nord");
+                                pacMan.posisjon.setStartAngle(135);
+                                break;
                 case DOWN : if(pacMan.ret != "Sør")
-                                pacBevegelse("Sør"); break;
-                case LEFT : if(pacMan.ret != "Vest")
-                                pacBevegelse("Vest"); break;
-                case RIGHT : if(pacMan.ret != "Øst")
+                                pacBevegelse("Sør");
+                                pacMan.posisjon.setStartAngle(315);
+                                break;
+                case LEFT : if(pacMan.ret != "Vest"){
+                                pacBevegelse("Vest");
+                                pacMan.posisjon.setStartAngle(225);
+                                break;
+                                }
+                case RIGHT : if(pacMan.ret != "Øst"){
                                 pacBevegelse("Øst");
+                                pacMan.posisjon.setStartAngle(45);
+                                }
             }
         });
         animation = new Timeline(
@@ -66,7 +81,7 @@ public class Spill extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
 
         pacAnimation = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> pacMan.pacAnimasjon(pacMan.posisjon)));
+                new KeyFrame(Duration.millis(15), e -> pacMan.pacAnimasjon(pacMan.posisjon, pacMan.ret)));
 
         pacAnimation.setCycleCount(Timeline.INDEFINITE);
 

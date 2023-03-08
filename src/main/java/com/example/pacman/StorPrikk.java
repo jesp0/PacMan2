@@ -12,10 +12,7 @@ public class StorPrikk extends Entitet {
             boks = lagBoks(x,y);
             posisjon = new Circle(x+10, y+10, 5.0, Color.LIGHTSALMON);
         }
-        public BoundingBox lagBoks(double x, double y){
-            boks = new BoundingBox(x+10, y+10, 3, 3);
-            return boks;
-        }
+
 
     }
 
