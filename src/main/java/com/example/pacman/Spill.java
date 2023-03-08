@@ -21,7 +21,6 @@ public class Spill extends Application {
     //Pixlene er kvadratiske og trenger kun 1 verdi.
     private static final int PIXEL = 20;
     PacMan pacMan; // = new PacMan();
-    ArrayList<String> byggkart = new ArrayList<>();
     private static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
     protected BoundingBox pacBoks;
@@ -34,11 +33,14 @@ public class Spill extends Application {
     public void start(Stage stage) throws IOException {
 
         spillbrett = new Pane();;
-        pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75+5);
 
+
+
+
+        kartTolking(Kart.kartInnlesing());
+        pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75-14);
         spillbrett.getChildren().add(pacMan.posisjon);
-        byggkart = Kart.kartInnlesing();
-        kartTolking(byggkart);
+
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
@@ -62,26 +64,12 @@ public class Spill extends Application {
                 new KeyFrame(Duration.millis(15), e -> pacBevegelse(pacMan.ret)));
 
         animation.setCycleCount(Timeline.INDEFINITE);
-        animation.play(); // Start animation
 
         pacAnimation = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> pacMan.pacAnimasjon()));
+                new KeyFrame(Duration.millis(15), e -> pacMan.pacAnimasjon(pacMan.posisjon)));
 
         pacAnimation.setCycleCount(Timeline.INDEFINITE);
-        pacAnimation.play();
 
-        Arc arc = new Arc();
-        arc.setCenterX(BRETTLENGDE/2);
-        arc.setCenterY(BRETTHOYDE/2);
-        arc.setRadiusX(25.0f);
-        arc.setRadiusY(25.0f);
-        arc.setStartAngle(45.0f);
-        arc.setLength(270.0f);
-        arc.setType(ArcType.ROUND);
-        arc.setFill(Color.BLUE);
-        spillbrett.getChildren().add(arc);
-
-        //System.out.println(veggListe.size());
 
         stage.setResizable(false);
         stage.setTitle("PacMan");
@@ -101,7 +89,7 @@ public class Spill extends Application {
         spisStorPrikk();
         if(retningSjekk != retning) {
             animation.play();
-
+            pacAnimation.play();
         }
     }
     // 500 byttes etterhvert ut med distansen til nærmeste vegg i riktig retning?
@@ -154,6 +142,7 @@ public class Spill extends Application {
                 System.out.println("" + i + veggListe.get(i).boks.toString());
                 System.out.println("X: "+pacMan.posisjon.getCenterX() + " Y: " + pacMan.posisjon.getCenterY());
                 animation.pause();
+                pacAnimation.pause();
                 retningSjekk = retning;
                 switch (retning) {
                     case "Nord":

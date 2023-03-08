@@ -16,7 +16,7 @@ public class Vegg extends Entitet{
 
     public Rectangle tegnVegg(Vegg vegg) {
         Rectangle bounding = new Rectangle(x, y, 20, 20);
-        bounding.setStroke(Color.RED);
+        bounding.setStroke(Color.BLUE);
         return bounding;
     }
     public ArrayList<Rectangle> fancyVegg(Vegg vegg){
@@ -25,7 +25,7 @@ public class Vegg extends Entitet{
         for (int i = 0; i<4; i++){
             for(int k = 0; k<3; k++) {
                 Rectangle r = new Rectangle(x + dx ,y + dy ,5,3);
-                r.setFill(Color.RED);
+                r.setFill(Color.BLUE);
                 v.add(r);
                 dx += 6;
             }
