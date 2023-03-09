@@ -19,19 +19,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Spill extends Application {
-    private final int BRETTHOYDE = 620;
-    private final int BRETTLENGDE = 560;
+    private static final int BRETTHOYDE = 620;
+    private static final int BRETTLENGDE = 560;
     //Pixlene er kvadratiske og trenger kun 1 verdi.
     private static final int PIXEL = 20;
-    PacMan pacMan; // = new PacMan();
-    Blinky blinky;
-    private static Pane spillbrett;
+    static PacMan pacMan; // = new PacMan();
+    static Blinky blinky;
+    protected static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
     protected BoundingBox pacBoks;
-    protected Animation animation;
-    protected Animation pacAnimation;
+    protected static Animation animation;
+    protected static Animation pacAnimation;
     protected static Animation blinkyAnimation;
-    protected String retningSjekk;
+    protected static String retningSjekk;
     public Text score = new Text("00000");
     public static ArrayList<Vegg> veggListe = new ArrayList<>();
     public static ArrayList<LitenPrikk> litenPrikkListe = new ArrayList<>();
@@ -65,30 +65,30 @@ public class Spill extends Application {
             switch ((e.getCode())){ //enhanced switch?
                 //Prøver å fikse et problem som gjør at PacMan setter seg fast i veggen.
                 case UP : if(pacMan.ret != "Nord")
-                                pacBevegelse("Nord");
+                                pacMan.bevegelse("Nord");
                                 pacMan.posisjon.setStartAngle(135);
                                 break;
                 case DOWN : if(pacMan.ret != "Sør")
-                                pacBevegelse("Sør");
+                                pacMan.bevegelse("Sør");
                                 pacMan.posisjon.setStartAngle(315);
                                 break;
                 case LEFT : if(pacMan.ret != "Vest"){
-                                pacBevegelse("Vest");
+                                pacMan.bevegelse("Vest");
                                 pacMan.posisjon.setStartAngle(225);
                                 break;
                                 }
                 case RIGHT : if(pacMan.ret != "Øst"){
-                                pacBevegelse("Øst");
+                                pacMan.bevegelse("Øst");
                                 pacMan.posisjon.setStartAngle(45);
                                 }
             }
         });
         animation = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> pacBevegelse(pacMan.ret)));
+                new KeyFrame(Duration.millis(15), e -> pacMan.bevegelse(pacMan.ret)));
         animation.setCycleCount(Timeline.INDEFINITE);
 
         pacAnimation = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> pacMan.pacAnimasjon(pacMan.posisjon, pacMan.ret)));
+                new KeyFrame(Duration.millis(5), e -> pacMan.pacAnimasjon(pacMan.posisjon, pacMan.ret)));
         pacAnimation.setCycleCount(Timeline.INDEFINITE);
 
         blinkyAnimation = new Timeline(
@@ -101,35 +101,9 @@ public class Spill extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    public void pacBevegelse(String retning){
-        pacMan.ret = retning;
-        // Henter oppdatert posisjon
-        pacX = pacMan.posisjon.getCenterX();
-        pacY = pacMan.posisjon.getCenterY();
-        tegnLinje(retning);
-        //Oppdaterer BoundingBoksen til PacMan.
-        pacBoks = new BoundingBox(pacX-6,pacY-6,12,12);
-        kollisjonSjekk(retning);
-        spisPrikk();
-        spisStorPrikk();
-        if(retningSjekk != retning) {
-            animation.play();
-            pacAnimation.play();
-            blinkyAnimation.play();
-        }
-    }
+
     // 500 byttes etterhvert ut med distansen til nærmeste vegg i riktig retning?
-    public void tegnLinje(String retning){
-        if(retning.equals("Nord")){
-            pacMan.posisjon.setCenterY(pacY - 1);
-        }else if(retning.equals("Sør")){
-            pacMan.posisjon.setCenterY(pacY+1);
-        }else if(retning.equals("Vest")){
-            pacMan.posisjon.setCenterX(pacX-1);
-        }else if(retning.equals("Øst")){
-            pacMan.posisjon.setCenterX(pacX+1);
-        }
-    }
+
 
     public static void kartTolking(ArrayList<String> kart){
         double x = 0, y = 0;
@@ -161,48 +135,16 @@ public class Spill extends Application {
             x = 0;
         }
     }
+    public static void reset(){
+        pacMan.lever = true;
+        pacMan.posisjon.setCenterX(BRETTLENGDE/2);
+        pacMan.posisjon.setCenterY(BRETTHOYDE*0.75-14);
 
-    public void kollisjonSjekk(String retning){
-        for(int i=0; i<veggListe.size();i++){
-            if(pacBoks.intersects(veggListe.get(i).boks)) {
-                System.out.println("" + i + veggListe.get(i).boks.toString());
-                System.out.println("X: "+pacMan.posisjon.getCenterX() + " Y: " + pacMan.posisjon.getCenterY());
-                animation.pause();
-                pacAnimation.pause();
-                retningSjekk = retning;
-                switch (retning) {
-                    case "Nord":
-                        pacMan.posisjon.setCenterY(pacY + 1);
-                        break;
-                    case "Sør":
-                        pacMan.posisjon.setCenterY(pacY - 1);
-                        break;
-                    case "Vest":
-                        pacMan.posisjon.setCenterX(pacX + 1);
-                        break;
-                    case "Øst":
-                        pacMan.posisjon.setCenterX(pacX - 1);
-                        break;
-                }
-            }
-        }
+        blinky.posisjon.setCenterX(BRETTLENGDE/2);
+        blinky.posisjon.setCenterY(BRETTHOYDE/2-58);
     }
-    public void spisPrikk(){
-        for(int i=0; i<litenPrikkListe.size();i++){
-            if(pacBoks.intersects(litenPrikkListe.get(i).boks)) {
-                spillbrett.getChildren().remove(litenPrikkListe.get(i).posisjon);
-                litenPrikkListe.remove(i);
-            }
-        }
-    }
-    public void spisStorPrikk(){
-        for(int i=0; i<storPrikkListe.size();i++) {
-            if (pacBoks.intersects(storPrikkListe.get(i).boks)) {
-                spillbrett.getChildren().remove(storPrikkListe.get(i).posisjon);
-                storPrikkListe.remove(i);
-            }
-        }
-    }
+
+
 
     public static void main(String[] args) {
         launch();

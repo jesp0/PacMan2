@@ -29,8 +29,8 @@ public class Blinky extends Spokelse{
         for(int i=0; i<Spill.veggListe.size();i++){
             if(boks.intersects(Spill.veggListe.get(i).boks)) {
 
-                System.out.println("" + i + Spill.veggListe.get(i).boks.toString());
-                System.out.println("X: "+ posisjon.getCenterX() + " Y: " + posisjon.getCenterY());
+                //System.out.println("" + i + Spill.veggListe.get(i).boks.toString());
+                //System.out.println("X: "+ posisjon.getCenterX() + " Y: " + posisjon.getCenterY());
                 retningSjekk = ret;
                 switch (ret) {
                     case "Nord":
