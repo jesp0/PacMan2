@@ -8,6 +8,7 @@ import javafx.scene.shape.Circle;
 
 public class LitenPrikk extends Entitet {
     protected Circle posisjon;
+    private static int teller = 0;
     public LitenPrikk(double x, double y) {
         super(x, y);
         boks = lagBoks(x,y);
@@ -18,8 +19,13 @@ public class LitenPrikk extends Entitet {
             if(Spill.pacMan.boks.intersects(Spill.litenPrikkListe.get(i).boks)) {
                 Spill.spillbrett.getChildren().remove(Spill.litenPrikkListe.get(i).posisjon);
                 Spill.litenPrikkListe.remove(i);
+                oppdaterScore();
             }
         }
+    }
+    public static void oppdaterScore(){
+        Spill.poengsum += 10;
+        Spill.score.setText("" + Spill.poengsum);
     }
 
 

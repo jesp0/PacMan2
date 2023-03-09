@@ -32,7 +32,8 @@ public class Spill extends Application {
     protected static Animation pacAnimation;
     protected static Animation blinkyAnimation;
     protected static String retningSjekk;
-    public Text score = new Text("00000");
+    public static Text score = new Text("0");
+    public static int poengsum = 0;
     public static ArrayList<Vegg> veggListe = new ArrayList<>();
     public static ArrayList<LitenPrikk> litenPrikkListe = new ArrayList<>();
     public static ArrayList<StorPrikk> storPrikkListe = new ArrayList<>();
@@ -64,23 +65,25 @@ public class Spill extends Application {
             pacMan.posisjon.setLength(270);
             switch ((e.getCode())){ //enhanced switch?
                 //Prøver å fikse et problem som gjør at PacMan setter seg fast i veggen.
-                case UP : if(pacMan.ret != "Nord")
+                case UP : if(pacMan.ret != "Nord") {
                                 pacMan.bevegelse("Nord");
                                 pacMan.posisjon.setStartAngle(135);
                                 break;
-                case DOWN : if(pacMan.ret != "Sør")
+                            }
+                case DOWN : if(pacMan.ret != "Sør"){
                                 pacMan.bevegelse("Sør");
                                 pacMan.posisjon.setStartAngle(315);
                                 break;
+                            }
                 case LEFT : if(pacMan.ret != "Vest"){
                                 pacMan.bevegelse("Vest");
                                 pacMan.posisjon.setStartAngle(225);
                                 break;
-                                }
+                            }
                 case RIGHT : if(pacMan.ret != "Øst"){
                                 pacMan.bevegelse("Øst");
                                 pacMan.posisjon.setStartAngle(45);
-                                }
+                            }
             }
         });
         animation = new Timeline(
@@ -94,7 +97,6 @@ public class Spill extends Application {
         blinkyAnimation = new Timeline(
                 new KeyFrame(Duration.millis(15), e -> blinky.bevegelse()));
         blinkyAnimation.setCycleCount(Timeline.INDEFINITE);
-
 
         stage.setResizable(false);
         stage.setTitle("PacMan");
