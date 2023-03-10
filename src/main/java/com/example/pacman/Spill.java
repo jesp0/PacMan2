@@ -35,6 +35,7 @@ public class Spill extends Application {
     public static Text score = new Text("0");
     public static int poengsum = 0;
     public static ArrayList<Vegg> veggListe = new ArrayList<>();
+    public static ArrayList<Kryss> kryssListe = new ArrayList<>();
     public static ArrayList<LitenPrikk> litenPrikkListe = new ArrayList<>();
     public static ArrayList<StorPrikk> storPrikkListe = new ArrayList<>();
     @Override
@@ -53,7 +54,7 @@ public class Spill extends Application {
         pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75-14);
         spillbrett.getChildren().add(pacMan.posisjon);
 
-        blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-58);
+        blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-60);
         spillbrett.getChildren().add(blinky.posisjon);
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
@@ -121,7 +122,8 @@ public class Spill extends Application {
                                 for (int j = 0; j< fancy.size(); j++)
                                     spillbrett.getChildren().add(fancy.get(j)); break;
 
-                    case 'G' :  break;
+                    case 'K' : Kryss kryss = new Kryss(x,y);
+                               kryssListe.add(kryss); break;
                     case 'D' : LitenPrikk litenPrikk = new LitenPrikk(x,y);
                                 litenPrikkListe.add(litenPrikk);
                                 spillbrett.getChildren().add(litenPrikk.posisjon); break;

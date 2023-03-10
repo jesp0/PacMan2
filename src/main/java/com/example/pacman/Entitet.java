@@ -13,7 +13,7 @@ public abstract class Entitet{
         this.y = y;
     }
     public BoundingBox lagBoks(double x, double y){
-        boks = new BoundingBox(x+10, y+10, 5, 5);
+        boks = new BoundingBox(x, y, 20, 20);
         return boks;
     }
     }
