@@ -9,7 +9,7 @@ public class Blinky extends Spokelse{
         super(x,y);
         boks = lagBoks(x,y);
         posisjon = new Circle(x, y, 10, Color.RED);
-        retning = "Øst";
+        retning = "Vest";
     }
     public void bevegelse(){
 
@@ -43,7 +43,7 @@ public class Blinky extends Spokelse{
         private void veggKræsj(String ret) {
                 //System.out.println("" + i + Spill.veggListe.get(i).boks.toString());
                 //System.out.println("X: "+ posisjon.getCenterX() + " Y: " + posisjon.getCenterY());
-                retningSjekk = ret;
+                //retningSjekk = ret;
                 switch (ret) {
                     case "Nord":
                         posisjon.setCenterY(posisjon.getCenterY() + 1);
@@ -64,27 +64,29 @@ public class Blinky extends Spokelse{
 
     public String nyRetning(String gammelRetning){
         String nyRetning = "";
+        int random = trekkTall(1,3);
         switch (gammelRetning){
-            case "Nord": switch (trekkTall(1,3)){
-                case 1: nyRetning = "Nord"; break;
-                case 2: nyRetning = "Øst"; break;
-                case 3: nyRetning = "Vest"; break;
-            }
-            case "Sør": switch (trekkTall(1,3)){
+            case "Nord": switch (random){
+                case 1: nyRetning = "Øst"; ;break;
+                case 2: nyRetning = "Vest"; break;
+                case 3: nyRetning = "Nord"; break;
+            } break;
+            case "Sør": switch (random){
                 case 1: nyRetning = "Sør"; break;
                 case 2: nyRetning = "Øst"; break;
                 case 3: nyRetning = "Vest"; break;
-            }
-            case "Øst": switch (trekkTall(1,3)){
+            } break;
+            case "Øst": switch (random){
                 case 1: nyRetning = "Sør"; break;
                 case 2: nyRetning = "Øst"; break;
                 case 3: nyRetning = "Nord"; break;
-            }
-            case "Vest": switch (trekkTall(1,3)){
+            } break;
+            case "Vest": switch (random){
                 case 1: nyRetning = "Sør"; break;
-                case 2: nyRetning = "Nord"; break;
-                case 3: nyRetning = "Vest"; break;
+                case 2: nyRetning = "Vest"; break;
+                case 3: nyRetning = "Nord"; break;
             }
+
             return nyRetning;
         }
 
@@ -92,6 +94,7 @@ public class Blinky extends Spokelse{
     }
     public static int trekkTall(int min, int max) {
         return min + (int)( Math.random()*(max-min+1) );
+
     }
 
 }

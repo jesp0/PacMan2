@@ -28,7 +28,7 @@ public class PacMan extends Entitet{
 
         flytt(retning);
         //Oppdaterer BoundingBoksen til PacMan.
-        boks = new BoundingBox(posisjon.getCenterX()-7, posisjon.getCenterY()-7,14,14);
+        boks = new BoundingBox(posisjon.getCenterX()-8, posisjon.getCenterY()-8,16,16);
         kollisjonSjekk(retning);
         LitenPrikk.spisPrikk();
         StorPrikk.spisStorPrikk();
