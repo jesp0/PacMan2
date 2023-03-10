@@ -63,7 +63,7 @@ public abstract class Spokelse extends Entitet{
     public abstract String logikk(String s);
     public void utenforSjekk(Spokelse spokelse){
         if (Spill.utenforHøyre.contains(spokelse.boks) ){
-            spokelse.posisjon.setCenterX(-20);
+            spokelse.posisjon.setCenterX(-10);
         }
         if (Spill.utenforVenstre.contains(spokelse.boks) ){
             spokelse.posisjon.setCenterX(580);

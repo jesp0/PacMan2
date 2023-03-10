@@ -10,11 +10,11 @@ RRRRRRRRRRRRRRRRRRRRRRRRRRRR
 #DDDDDK##DDDD##DDDD##KDDDDD#
 ######D#####R##R#####D######
 ######D#####R##R#####D######
-######D##RRRKRRKRRR##D######
+######D##RRRGRRGRRR##D######
 ######D##R###RR###R##D######
-RRRRRRKRRK#GGKKGG#KRRKRRRRRR
+RRRRRRKRRG#RRGGRR#GRRKRRRRRR
 ######D##R########R##D######
-######D##KRRRRRRRRK##D######
+######D##GRRRRRRRRG##D######
 ######D##R########R##D######
 ######D##R########R##D######
 #DDDDDKDDKDDD##DDDKDDKDDDDD#

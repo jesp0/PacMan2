@@ -24,13 +24,13 @@ public class Spill extends Application {
     //Pixlene er kvadratiske og trenger kun 1 verdi.
     private static final int PIXEL = 20;
     static PacMan pacMan; // = new PacMan();
-    static Spokelse blinky;
+    static Spokelse blinky, inky, pinky, clyde;
     protected static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
     protected BoundingBox pacBoks;
     protected static Animation animation;
     protected static Animation pacAnimation;
-    protected static Animation blinkyAnimation;
+    protected static Animation blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation;
     protected static String retningSjekk;
     public static Text score = new Text("0");
     public static int poengsum = 0;
@@ -58,6 +58,15 @@ public class Spill extends Application {
 
         blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-60);
         spillbrett.getChildren().add(blinky.posisjon);
+
+        pinky = new Pinky(BRETTLENGDE/2,BRETTHOYDE/2-20);
+        spillbrett.getChildren().add(pinky.posisjon);
+
+        inky = new Inky(BRETTLENGDE/2-20, BRETTHOYDE/2-20);
+        spillbrett.getChildren().add(inky.posisjon);
+
+        clyde = new Clyde(BRETTLENGDE/2+20, BRETTHOYDE/2-20);
+        spillbrett.getChildren().add(clyde.posisjon);
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
@@ -101,6 +110,18 @@ public class Spill extends Application {
                 new KeyFrame(Duration.millis(15), e -> blinky.bevegelse()));
         blinkyAnimation.setCycleCount(Timeline.INDEFINITE);
 
+        inkyAnimation = new Timeline(
+                new KeyFrame(Duration.millis(15), e -> inky.bevegelse()));
+        inkyAnimation.setCycleCount(Timeline.INDEFINITE);
+
+        pinkyAnimation = new Timeline(
+                new KeyFrame(Duration.millis(15), e -> pinky.bevegelse()));
+        pinkyAnimation.setCycleCount(Timeline.INDEFINITE);
+
+        clydeAnimation = new Timeline(
+                new KeyFrame(Duration.millis(15), e -> clyde.bevegelse()));
+        clydeAnimation.setCycleCount(Timeline.INDEFINITE);
+
         stage.setResizable(false);
         stage.setTitle("PacMan");
         stage.setScene(scene);
@@ -125,7 +146,7 @@ public class Spill extends Application {
                                     spillbrett.getChildren().add(fancy.get(j)); break;
 
                     case 'K' : Kryss kryss = new Kryss(x,y);
-                               kryssListe.add(kryss); break;
+                               kryssListe.add(kryss);
                     case 'D' : LitenPrikk litenPrikk = new LitenPrikk(x,y);
                                 litenPrikkListe.add(litenPrikk);
                                 spillbrett.getChildren().add(litenPrikk.posisjon); break;
@@ -133,7 +154,8 @@ public class Spill extends Application {
                     case 'B' : StorPrikk storPrikk = new StorPrikk(x,y);
                                 storPrikkListe.add(storPrikk);
                                 spillbrett.getChildren().add(storPrikk.posisjon); break;
-                    case 'Ø' : //System.out.println("Dør");  break;
+                    case 'G' : Kryss kryssUten = new Kryss(x,y);
+                                kryssListe.add(kryssUten); break;
                 }
                 x += PIXEL;
             }
@@ -147,7 +169,16 @@ public class Spill extends Application {
         pacMan.posisjon.setCenterY(BRETTHOYDE*0.75-14);
 
         blinky.posisjon.setCenterX(BRETTLENGDE/2);
-        blinky.posisjon.setCenterY(BRETTHOYDE/2-58);
+        blinky.posisjon.setCenterY(BRETTHOYDE/2-60);
+
+        inky.posisjon.setCenterX(BRETTLENGDE/2-20);
+        inky.posisjon.setCenterY(BRETTHOYDE/2-20);
+
+        pinky.posisjon.setCenterX(BRETTLENGDE/2);
+        pinky.posisjon.setCenterY(BRETTHOYDE/2-20);
+
+        clyde.posisjon.setCenterX(BRETTLENGDE/2+20);
+        clyde.posisjon.setCenterY(BRETTHOYDE/2-20);
     }
 
 

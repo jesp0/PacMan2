@@ -36,6 +36,9 @@ public class PacMan extends Entitet{
             Spill.animation.play();
             Spill.pacAnimation.play();
             Spill.blinkyAnimation.play();
+            Spill.pinkyAnimation.play();
+            Spill.inkyAnimation.play();
+            Spill.clydeAnimation.play();
         }
     }
     public void flytt(String retning){
@@ -50,7 +53,10 @@ public class PacMan extends Entitet{
         }
     }
     public static void kollisjonSjekk(String retning){
-        if(Spill.pacMan.boks.intersects(Spill.blinky.boks)){
+        if(     Spill.pacMan.boks.intersects(Spill.blinky.boks) ||
+                Spill.pacMan.boks.intersects(Spill.inky.boks) ||
+                Spill.pacMan.boks.intersects(Spill.pinky.boks) ||
+                Spill.pacMan.boks.intersects(Spill.clyde.boks)){
             Spill.animation.pause();
             Spill.pacAnimation.pause();
             lever = false;
@@ -66,8 +72,8 @@ public class PacMan extends Entitet{
         }
         for(int i=0; i<Spill.veggListe.size();i++){
             if(Spill.pacMan.boks.intersects(Spill.veggListe.get(i).boks)) {
-                System.out.println("" + i + Spill.veggListe.get(i).boks.toString());
-                System.out.println("X: "+ Spill.pacMan.posisjon.getCenterX() + " Y: " + Spill.pacMan.posisjon.getCenterY());
+                //System.out.println("" + i + Spill.veggListe.get(i).boks.toString());
+                //System.out.println("X: "+ Spill.pacMan.posisjon.getCenterX() + " Y: " + Spill.pacMan.posisjon.getCenterY());
                 Spill.animation.pause();
                 Spill.pacAnimation.pause();
                 Spill.retningSjekk = retning;
