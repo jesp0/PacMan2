@@ -2,17 +2,15 @@ package com.example.pacman;
 
 import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 public class Blinky extends Spokelse{
     public Blinky(double x, double y){
         super(x,y);
         boks = lagBoks(x,y);
-        posisjon = new Circle(x, y, 10, Color.RED);
+        posisjon.setFill(Color.RED);
         retning = "Vest";
     }
     public void bevegelse(){
-
             if(retning.equals("Nord")){
                 posisjon.setCenterY(posisjon.getCenterY() -1);
             }else if(retning.equals("Sør")){
@@ -30,7 +28,7 @@ public class Blinky extends Spokelse{
         utenforSjekk(Spill.blinky);
         for (int i=0; i<Spill.kryssListe.size();i++){
             if(boks.contains(Spill.kryssListe.get(i).boks) && random > 3){
-                retning = nyRetning(retning);
+                retning = logikk(retning);
                 //System.out.println("Kryss!");
             }
         }
@@ -42,9 +40,6 @@ public class Blinky extends Spokelse{
             }
     }
         private void veggKræsj(String ret) {
-                //System.out.println("" + i + Spill.veggListe.get(i).boks.toString());
-                //System.out.println("X: "+ posisjon.getCenterX() + " Y: " + posisjon.getCenterY());
-                //retningSjekk = ret;
                 switch (ret) {
                     case "Nord":
                         posisjon.setCenterY(posisjon.getCenterY() + 1);
@@ -59,11 +54,11 @@ public class Blinky extends Spokelse{
                         posisjon.setCenterX(posisjon.getCenterX() - 1);
                         break;
                 }
-                retning = nyRetning(retning);
+                retning = logikk(retning);
         }
 
 
-    public String nyRetning(String gammelRetning){
+    public String logikk(String gammelRetning){
         String nyRetning = "";
         int random = trekkTall(1,3);
         switch (gammelRetning){
