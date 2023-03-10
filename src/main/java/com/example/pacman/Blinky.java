@@ -9,6 +9,7 @@ public class Blinky extends Spokelse{
         boks = lagBoks(x,y);
         posisjon.setFill(Color.RED);
         retning = "Vest";
+        poly.setFill(Color.RED);
     }
 
     public String logikk(String gammelRetning){

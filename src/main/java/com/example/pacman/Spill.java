@@ -58,15 +58,20 @@ public class Spill extends Application {
 
         blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-60);
         spillbrett.getChildren().add(blinky.posisjon);
+        spillbrett.getChildren().add(blinky.poly);
+
 
         pinky = new Pinky(BRETTLENGDE/2,BRETTHOYDE/2-20);
         spillbrett.getChildren().add(pinky.posisjon);
+        spillbrett.getChildren().add(pinky.poly);
 
         inky = new Inky(BRETTLENGDE/2-20, BRETTHOYDE/2-20);
         spillbrett.getChildren().add(inky.posisjon);
+        spillbrett.getChildren().add(inky.poly);
 
         clyde = new Clyde(BRETTLENGDE/2+20, BRETTHOYDE/2-20);
         spillbrett.getChildren().add(clyde.posisjon);
+        spillbrett.getChildren().add(clyde.poly);
 
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);

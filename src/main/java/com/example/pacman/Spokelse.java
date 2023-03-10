@@ -2,24 +2,33 @@ package com.example.pacman;
 
 import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 
 public abstract class Spokelse extends Entitet{
-    protected Circle posisjon;
+    protected Arc posisjon;
+    protected Polygon poly;
     protected String retning,retningSjekk;
     public Spokelse(double x, double y) {
         super(x, y);
-        posisjon = new Circle(x, y, 10);
+        posisjon = new Arc(x,y,10.0,10.0,0,180);
+        poly = new Polygon(x-10,y,x-10,y+10,x-5,y+5,x,y+10,x+5,y+5,x+10,y+10,x+10,y,x-10,y);
+
     }
     public void bevegelse(){
         if(retning.equals("Nord")){
             posisjon.setCenterY(posisjon.getCenterY() -1);
+            poly.setLayoutY(poly.getLayoutY()-1);
         }else if(retning.equals("Sør")){
             posisjon.setCenterY(posisjon.getCenterY() + 1);
+            poly.setLayoutY(poly.getLayoutY()+1);
         }else if(retning.equals("Vest")){
             posisjon.setCenterX(posisjon.getCenterX()-1);
+            poly.setLayoutX(poly.getLayoutX()-1);
         }else if(retning.equals("Øst")){
             posisjon.setCenterX(posisjon.getCenterX()+1);
+            poly.setLayoutX(poly.getLayoutX()+1);
         }
         boks = new BoundingBox(posisjon.getCenterX()-9,posisjon.getCenterY()-9,18,18);
         kollisjonSjekk(this);
@@ -44,15 +53,19 @@ public abstract class Spokelse extends Entitet{
         switch (ret) {
             case "Nord":
                 posisjon.setCenterY(posisjon.getCenterY() + 1);
+                poly.setLayoutY(poly.getLayoutY()+1);
                 break;
             case "Sør":
                 posisjon.setCenterY(posisjon.getCenterY() - 1);
+                poly.setLayoutY(poly.getLayoutY()-1);
                 break;
             case "Vest":
                 posisjon.setCenterX(posisjon.getCenterX() + 1);
+                poly.setLayoutX(poly.getLayoutX()+1);
                 break;
             case "Øst":
                 posisjon.setCenterX(posisjon.getCenterX() - 1);
+                poly.setLayoutX(poly.getLayoutX()-1);
                 break;
         }
         retning = logikk(retning);
@@ -64,9 +77,11 @@ public abstract class Spokelse extends Entitet{
     public void utenforSjekk(Spokelse spokelse){
         if (Spill.utenforHøyre.contains(spokelse.boks) ){
             spokelse.posisjon.setCenterX(-10);
+            spokelse.poly.setLayoutX(-290);
         }
         if (Spill.utenforVenstre.contains(spokelse.boks) ){
             spokelse.posisjon.setCenterX(580);
+            spokelse.poly.setLayoutX(300);
         }
     }
 }

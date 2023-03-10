@@ -8,6 +8,7 @@ public class Clyde extends Spokelse{
         boks = lagBoks(x,y);
         posisjon.setFill(Color.ORANGE);
         retning = "Nord";
+        poly.setFill(Color.ORANGE);
     }
 
     public String logikk(String gammelRetning){

@@ -8,6 +8,7 @@ public class Inky extends Spokelse{
             boks = lagBoks(x,y);
             posisjon.setFill(Color.CYAN);
             retning = "Nord";
+            poly.setFill(Color.CYAN);
         }
 
         public String logikk(String gammelRetning){
