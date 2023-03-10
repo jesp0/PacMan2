@@ -24,7 +24,7 @@ public class Spill extends Application {
     //Pixlene er kvadratiske og trenger kun 1 verdi.
     private static final int PIXEL = 20;
     static PacMan pacMan; // = new PacMan();
-    static Blinky blinky;
+    static Spokelse blinky;
     protected static Pane spillbrett;
     double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
     protected BoundingBox pacBoks;
@@ -38,6 +38,8 @@ public class Spill extends Application {
     public static ArrayList<Kryss> kryssListe = new ArrayList<>();
     public static ArrayList<LitenPrikk> litenPrikkListe = new ArrayList<>();
     public static ArrayList<StorPrikk> storPrikkListe = new ArrayList<>();
+    protected static BoundingBox utenforVenstre = new BoundingBox(-21,270,20,60);
+    protected static BoundingBox utenforHøyre = new BoundingBox(581,270,20,60);
     @Override
     public void start(Stage stage) throws IOException {
 

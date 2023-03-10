@@ -28,7 +28,7 @@ public class PacMan extends Entitet{
 
         flytt(retning);
         //Oppdaterer BoundingBoksen til PacMan.
-        boks = new BoundingBox(posisjon.getCenterX()-8, posisjon.getCenterY()-8,16,16);
+        boks = new BoundingBox(posisjon.getCenterX()-7, posisjon.getCenterY()-7,14,14);
         kollisjonSjekk(retning);
         LitenPrikk.spisPrikk();
         StorPrikk.spisStorPrikk();
@@ -56,6 +56,13 @@ public class PacMan extends Entitet{
             lever = false;
             Spill.reset();
             System.out.println("Got you PacMan!!");
+        }
+        if (Spill.utenforHøyre.contains(Spill.pacMan.boks) ){
+            Spill.pacMan.posisjon.setCenterX(-6);
+        }
+        if (Spill.utenforVenstre.contains(Spill.pacMan.boks) ){
+            Spill.pacMan.posisjon.setCenterX(586);
+            Spill.pacMan.posisjon.setCenterX(-6);
         }
         for(int i=0; i<Spill.veggListe.size();i++){
             if(Spill.pacMan.boks.intersects(Spill.veggListe.get(i).boks)) {

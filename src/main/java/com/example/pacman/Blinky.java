@@ -27,6 +27,7 @@ public class Blinky extends Spokelse{
         }
     public void kollisjonSjekk(){
         int random = trekkTall(1,10);
+        utenforSjekk(Spill.blinky);
         for (int i=0; i<Spill.kryssListe.size();i++){
             if(boks.contains(Spill.kryssListe.get(i).boks) && random > 3){
                 retning = nyRetning(retning);

@@ -16,6 +16,7 @@ public abstract class Entitet{
         boks = new BoundingBox(x, y, 20, 20);
         return boks;
     }
+
     }
 
 
