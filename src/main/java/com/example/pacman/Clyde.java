@@ -41,4 +41,14 @@ public class Clyde extends Spokelse{
 
         return nyRetning;
     }
+    public void utenforSjekk(){
+        if (Spill.utenforHøyre.contains(boks) ){
+            posisjon.setCenterX(-10);
+            poly.setLayoutX(-310);
+        }
+        if (Spill.utenforVenstre.contains(boks) ){
+            posisjon.setCenterX(580);
+            poly.setLayoutX(280);
+        }
+    }
 }

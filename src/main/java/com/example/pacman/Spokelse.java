@@ -34,8 +34,19 @@ public abstract class Spokelse extends Entitet{
         kollisjonSjekk(this);
     }
     public void kollisjonSjekk(Spokelse spokelse){
+        if(spokelse.boks.intersects(Spill.pacMan.boks)){
+            Spill.animation.pause();
+            Spill.pacAnimation.pause();
+            Spill.blinkyAnimation.pause();
+            Spill.inkyAnimation.pause();
+            Spill.pinkyAnimation.pause();
+            Spill.clydeAnimation.pause();
+            Spill.pacMan.lever = false;
+            Spill.reset();
+            System.out.println("Got you PacMan!!");
+        }
         int random = trekkTall(1,10);
-        utenforSjekk(spokelse);
+        utenforSjekk();
         for (int i=0; i<Spill.kryssListe.size();i++){
             if(boks.contains(Spill.kryssListe.get(i).boks) && random > 3){
                 retning = spokelse.logikk(retning);
@@ -74,15 +85,8 @@ public abstract class Spokelse extends Entitet{
         return min + (int)( Math.random()*(max-min+1) );
     }
     public abstract String logikk(String s);
-    public void utenforSjekk(Spokelse spokelse){
-        if (Spill.utenforHøyre.contains(spokelse.boks) ){
-            spokelse.posisjon.setCenterX(-10);
-            spokelse.poly.setLayoutX(-290);
-        }
-        if (Spill.utenforVenstre.contains(spokelse.boks) ){
-            spokelse.posisjon.setCenterX(580);
-            spokelse.poly.setLayoutX(300);
-        }
-    }
+    public abstract void utenforSjekk();
+
+
 }
 

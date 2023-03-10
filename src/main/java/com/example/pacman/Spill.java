@@ -175,15 +175,23 @@ public class Spill extends Application {
 
         blinky.posisjon.setCenterX(BRETTLENGDE/2);
         blinky.posisjon.setCenterY(BRETTHOYDE/2-60);
+        blinky.poly.setLayoutX(0);
+        blinky.poly.setLayoutY(0);
 
         inky.posisjon.setCenterX(BRETTLENGDE/2-20);
         inky.posisjon.setCenterY(BRETTHOYDE/2-20);
+        inky.poly.setLayoutX(0);
+        inky.poly.setLayoutY(0);
 
         pinky.posisjon.setCenterX(BRETTLENGDE/2);
         pinky.posisjon.setCenterY(BRETTHOYDE/2-20);
+        pinky.poly.setLayoutX(0);
+        pinky.poly.setLayoutY(0);
 
         clyde.posisjon.setCenterX(BRETTLENGDE/2+20);
         clyde.posisjon.setCenterY(BRETTHOYDE/2-20);
+        clyde.poly.setLayoutX(0);
+        clyde.poly.setLayoutY(0);
     }
 
 

@@ -41,6 +41,16 @@ public class Inky extends Spokelse{
 
             return nyRetning;
         }
+    public void utenforSjekk(){
+        if (Spill.utenforHøyre.contains(boks) ){
+            posisjon.setCenterX(-10);
+            poly.setLayoutX(-270);
+        }
+        if (Spill.utenforVenstre.contains(boks) ){
+            posisjon.setCenterX(580);
+            poly.setLayoutX(320);
+        }
+    }
 
 
 }

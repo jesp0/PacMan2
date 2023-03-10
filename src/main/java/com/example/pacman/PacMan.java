@@ -53,16 +53,6 @@ public class PacMan extends Entitet{
         }
     }
     public static void kollisjonSjekk(String retning){
-        if(     Spill.pacMan.boks.intersects(Spill.blinky.boks) ||
-                Spill.pacMan.boks.intersects(Spill.inky.boks) ||
-                Spill.pacMan.boks.intersects(Spill.pinky.boks) ||
-                Spill.pacMan.boks.intersects(Spill.clyde.boks)){
-            Spill.animation.pause();
-            Spill.pacAnimation.pause();
-            lever = false;
-            Spill.reset();
-            System.out.println("Got you PacMan!!");
-        }
         if (Spill.utenforHøyre.contains(Spill.pacMan.boks) ){
             Spill.pacMan.posisjon.setCenterX(-6);
         }
