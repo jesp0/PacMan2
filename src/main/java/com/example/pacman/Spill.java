@@ -3,18 +3,14 @@ package com.example.pacman;
 import javafx.application.Application;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -26,8 +22,6 @@ public class Spill extends Application {
     static PacMan pacMan; // = new PacMan();
     static Spokelse blinky, inky, pinky, clyde;
     protected static Pane spillbrett;
-    double pacX, pacY; // = pacMan.posisjon.getCenterX(); // = pacMan.posisjon.getCenterY();
-    protected BoundingBox pacBoks;
     protected static Animation animation;
     protected static Animation pacAnimation;
     protected static Animation blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation;
@@ -59,7 +53,6 @@ public class Spill extends Application {
         blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-60);
         spillbrett.getChildren().add(blinky.posisjon);
         spillbrett.getChildren().add(blinky.poly);
-
 
         pinky = new Pinky(BRETTLENGDE/2,BRETTHOYDE/2-20);
         spillbrett.getChildren().add(pinky.posisjon);
@@ -193,9 +186,6 @@ public class Spill extends Application {
         clyde.poly.setLayoutX(0);
         clyde.poly.setLayoutY(0);
     }
-
-
-
     public static void main(String[] args) {
         launch();
     }

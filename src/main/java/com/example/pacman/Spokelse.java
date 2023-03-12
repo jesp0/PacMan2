@@ -1,9 +1,7 @@
 package com.example.pacman;
 
 import javafx.geometry.BoundingBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 
 public abstract class Spokelse extends Entitet{
@@ -31,10 +29,10 @@ public abstract class Spokelse extends Entitet{
             poly.setLayoutX(poly.getLayoutX()+1);
         }
         boks = new BoundingBox(posisjon.getCenterX()-9,posisjon.getCenterY()-9,18,18);
-        kollisjonSjekk(this);
+        kollisjonSjekk();
     }
-    public void kollisjonSjekk(Spokelse spokelse){
-        if(spokelse.boks.intersects(Spill.pacMan.boks)){
+    public void kollisjonSjekk(){
+        if(boks.intersects(Spill.pacMan.boks)){
             Spill.animation.pause();
             Spill.pacAnimation.pause();
             Spill.blinkyAnimation.pause();
@@ -49,7 +47,7 @@ public abstract class Spokelse extends Entitet{
         utenforSjekk();
         for (int i=0; i<Spill.kryssListe.size();i++){
             if(boks.contains(Spill.kryssListe.get(i).boks) && random > 3){
-                retning = spokelse.logikk(retning);
+                retning = logikk(retning);
                 //System.out.println("Kryss!");
             }
         }
@@ -80,6 +78,32 @@ public abstract class Spokelse extends Entitet{
                 break;
         }
         retning = logikk(retning);
+    }
+    public boolean sjekkVeggkræsj(String ret){
+        double dX = 0, dY = 0;
+
+        switch (ret) {
+            case "Nord":
+                dY = 1;
+                break;
+            case "Sør":
+                dY = -1;
+                break;
+            case "Vest":
+                dX = 1;
+                break;
+            case "Øst":
+                dX = -1;
+                break;
+        }
+        BoundingBox boks2 = new BoundingBox(posisjon.getCenterX()-9 + dX,posisjon.getCenterY()-9 + dY,18,18);
+
+        for(int i=0; i<Spill.veggListe.size();i++){
+            if(boks2.intersects(Spill.veggListe.get(i).boks)){
+                return true;
+            }
+        }
+        return false;
     }
     public static int trekkTall(int min, int max) {
         return min + (int)( Math.random()*(max-min+1) );
