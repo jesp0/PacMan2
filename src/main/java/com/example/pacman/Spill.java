@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -25,9 +26,7 @@ public class Spill extends Application {
     static PacMan pacMan;
     static Spokelse blinky, inky, pinky, clyde;
     protected static Pane spillbrett;
-    protected static Animation animation;
-    protected static Animation pacAnimation, deathAnimation;
-    protected static Animation blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation;
+
     protected static String retningSjekk;
     public static Text score = new Text("0");
     public static Text gameoverTekst;
@@ -39,14 +38,12 @@ public class Spill extends Application {
     protected static BoundingBox utenforVenstre = new BoundingBox(-21,270,20,60);
     protected static BoundingBox utenforHøyre = new BoundingBox(581,270,20,60);
     public static int antLiv = 3;
-    static Rectangle button;
     @Override
     public void start(Stage stage) throws IOException {
 
         spillbrett = new Pane();;
-
-
         nyttSpill();
+        Animasjoner.startAnimation();
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
 
@@ -70,29 +67,7 @@ public class Spill extends Application {
                              pacMan.posisjon.setStartAngle(45);
             }
         });
-        animation = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> pacMan.bevegelse(pacMan.ret)));
-        animation.setCycleCount(Timeline.INDEFINITE);
 
-        pacAnimation = new Timeline(
-                new KeyFrame(Duration.millis(5), e -> pacMan.pacAnimasjon(pacMan.posisjon, pacMan.ret)));
-        pacAnimation.setCycleCount(Timeline.INDEFINITE);
-
-        blinkyAnimation = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> blinky.bevegelse()));
-        blinkyAnimation.setCycleCount(Timeline.INDEFINITE);
-
-        inkyAnimation = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> inky.bevegelse()));
-        inkyAnimation.setCycleCount(Timeline.INDEFINITE);
-
-        pinkyAnimation = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> pinky.bevegelse()));
-        pinkyAnimation.setCycleCount(Timeline.INDEFINITE);
-
-        clydeAnimation = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> clyde.bevegelse()));
-        clydeAnimation.setCycleCount(Timeline.INDEFINITE);
 
         stage.setResizable(false);
         stage.setTitle("PacMan");
@@ -223,21 +198,25 @@ public class Spill extends Application {
             gameoverTekst.setStroke(Color.RED);
             gameoverTekst.setFill(Color.DARKRED);
             gameoverTekst.setX(BRETTLENGDE/11);
-            gameoverTekst.setY(BRETTHOYDE/2);
+            gameoverTekst.setY(BRETTHOYDE/6);
             spillbrett.getChildren().add(gameoverTekst);
 
-            button = new Rectangle(100,20);
-            button.setFill(Color.YELLOW);
-            button.setLayoutX(BRETTLENGDE/2-50);
-            button.setLayoutY(BRETTHOYDE/2+100);
+            Ellipse button = new Ellipse(100,40);
+            button.setStroke(Color.YELLOW);
+            button.setCenterX(BRETTLENGDE/2);
+            button.setCenterY(BRETTHOYDE/2+250);
+            Text rs = new Text(BRETTLENGDE/2-75,BRETTHOYDE/2+265,"Restart");
+            rs.setStroke(Color.YELLOW);
+            rs.setFont(new Font(50));
+            rs.setOnMouseClicked(e-> nyttSpill());
             button.setOnMouseClicked(e-> nyttSpill());
-            spillbrett.getChildren().add(button);
+            spillbrett.getChildren().addAll(button,rs);
 
             //nyttSpill(); // kjøres når prøv igjen knappen er trykket?
         }
         PacMan.hjerteliste.get(Spill.antLiv).setFill(Color.BLACK);
 
-        deathAnimation = new Timeline(
+        Animation deathAnimation = new Timeline(
                 new KeyFrame(Duration.millis(20), e -> pacMan.dødsAnimasjon(pacMan.posisjon)));
         deathAnimation.setCycleCount(100);
         deathAnimation.setOnFinished(e -> reset());

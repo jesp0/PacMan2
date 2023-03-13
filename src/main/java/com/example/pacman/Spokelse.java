@@ -37,12 +37,12 @@ public abstract class Spokelse extends Entitet{
     }
     public void kollisjonSjekk(){
         if(boks.intersects(Spill.pacMan.boks)){
-            Spill.animation.pause();
-            Spill.pacAnimation.pause();
-            Spill.blinkyAnimation.pause();
-            Spill.inkyAnimation.pause();
-            Spill.pinkyAnimation.pause();
-            Spill.clydeAnimation.pause();
+            Animasjoner.animation.pause();
+            Animasjoner.pacAnimation.pause();
+            Animasjoner.blinkyAnimation.pause();
+            Animasjoner.inkyAnimation.pause();
+            Animasjoner.pinkyAnimation.pause();
+            Animasjoner.clydeAnimation.pause();
             Spill.pacMan.lever = false;
             System.out.println("Got you PacMan!!");
 

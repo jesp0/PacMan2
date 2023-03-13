@@ -38,12 +38,12 @@ public class PacMan extends Entitet{
         LitenPrikk.spisPrikk();
         StorPrikk.spisStorPrikk();
         if(Spill.retningSjekk != retning && lever == true) {
-            Spill.animation.play();
-            Spill.pacAnimation.play();
-            Spill.blinkyAnimation.play();
-            Spill.pinkyAnimation.play();
-            Spill.inkyAnimation.play();
-            Spill.clydeAnimation.play();
+            Animasjoner.animation.play();
+            Animasjoner.pacAnimation.play();
+            Animasjoner.blinkyAnimation.play();
+            Animasjoner.pinkyAnimation.play();
+            Animasjoner.inkyAnimation.play();
+            Animasjoner.clydeAnimation.play();
         }
     }
     public void flytt(String retning){
@@ -69,8 +69,8 @@ public class PacMan extends Entitet{
             if(Spill.pacMan.boks.intersects(Spill.veggListe.get(i).boks)) {
                 //System.out.println("" + i + Spill.veggListe.get(i).boks.toString());
                 //System.out.println("X: "+ Spill.pacMan.posisjon.getCenterX() + " Y: " + Spill.pacMan.posisjon.getCenterY());
-                Spill.animation.pause();
-                Spill.pacAnimation.pause();
+                Animasjoner.animation.pause();
+                Animasjoner.pacAnimation.pause();
                 Spill.retningSjekk = retning;
                 switch (retning) {
                     case "Nord":
