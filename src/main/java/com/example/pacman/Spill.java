@@ -5,6 +5,7 @@ import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -213,15 +214,14 @@ public class Spill extends Application {
             gameoverTekst.setY(BRETTHOYDE/2);
             spillbrett.getChildren().add(gameoverTekst);
 
-            // Får ikke denne til å funke
-            deathAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(3000), e -> pacMan.dødsAnimasjon(pacMan.posisjon, pacMan.ret)));
-            deathAnimation.setCycleCount(1);
-            deathAnimation.setOnFinished(e -> nyttSpill());
-            deathAnimation.play();
-
             //nyttSpill(); // kjøres når prøv igjen knappen er trykket?
         }
+
+        deathAnimation = new Timeline(
+                new KeyFrame(Duration.millis(20), e -> pacMan.dødsAnimasjon(pacMan.posisjon)));
+        deathAnimation.setCycleCount(100);
+        deathAnimation.setOnFinished(e -> nyttSpill());
+        deathAnimation.play();
     }
 
     public static void main(String[] args) {

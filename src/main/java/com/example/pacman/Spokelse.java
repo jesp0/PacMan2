@@ -47,9 +47,10 @@ public abstract class Spokelse extends Entitet{
             System.out.println("Got you PacMan!!");
 
             Spill.antLiv--;
+            //Spill.pacMan.dødsAnimasjon(Spill.pacMan.posisjon, Spill.pacMan.ret);
             Spill.gameoverSjekk();
 
-            Spill.reset();
+            //Spill.reset();
 
         }
         int random = trekkTall(1,10);

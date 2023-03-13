@@ -1,8 +1,12 @@
 package com.example.pacman;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -161,23 +165,12 @@ public class PacMan extends Entitet{
             }
         }
     }
-    public void dødsAnimasjon(Arc arc, String retning){
-        //arc.getStartAngle();
-        System.out.println("the death of the pacman starts now");
-        arc.setFill(Color.GREEN);
-
-        //if(arc.getStartAngle() < 75){
-        arc.setStartAngle(arc.getStartAngle());
-        arc.setLength(arc.getLength()+100);
-        //arc.rotateProperty();
-
-
-        //arc.setStartAngle(arc.getStartAngle()-30);
-        //arc.setLength(arc.getLength() + 90);
-
-        //Spill.deathAnimation.play();
-        System.out.println("pacman døøøøøøøøør");
-
+    public void dødsAnimasjon(Arc arc){
+        if(arc.getLength() > 0){
+            System.out.println(arc.getStartAngle() + " : " + arc.getLength());
+            arc.setStartAngle(arc.getStartAngle()+2);
+            arc.setLength(arc.getLength()-4);
+        }
     }
 
     public static void tegnHjerter(){
