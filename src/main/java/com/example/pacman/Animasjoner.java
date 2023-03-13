@@ -3,12 +3,11 @@ package com.example.pacman;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class Animasjoner {
-    protected static Animation animation;
-    protected static Animation pacAnimation;
-    protected static Animation blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation;
+    protected static Animation animation, blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation, pacAnimation, blinkySkremt;
 
     public static void startAnimation(){
         animation = new Timeline(
@@ -35,4 +34,17 @@ public class Animasjoner {
                     new KeyFrame(Duration.millis(15), e -> Spill.clyde.bevegelse()));
             clydeAnimation.setCycleCount(Timeline.INDEFINITE);
     }
+
+    public static void skremtSpokelse(){
+        Spill.blinky.posisjon.setFill(Color.BLUE);
+        Spill.blinky.poly.setFill(Color.BLUE);
+        blinkySkremt = new Timeline(
+                new KeyFrame(Duration.millis(15), e -> System.out.println("Jeg er redd!!!!!")));
+        blinkySkremt.setCycleCount(300);
+        //blinkyAnimation.stop();
+        //blinkySkremt.setOnFinished(e -> blinkyAnimation.play());
+        blinkySkremt.setOnFinished(e -> Spill.blinky.posisjon.setFill(Color.RED));
+        blinkySkremt.play();
+    }
+
 }

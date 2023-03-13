@@ -18,6 +18,9 @@ public class StorPrikk extends Entitet {
                 Spill.spillbrett.getChildren().remove(Spill.storPrikkListe.get(i).posisjon);
                 Spill.storPrikkListe.remove(i);
                 oppdaterScore();
+                //Spill.blinky.erSkremt = true;
+                Animasjoner.blinkyAnimation.pause();
+                Animasjoner.skremtSpokelse();
             }
         }
     }

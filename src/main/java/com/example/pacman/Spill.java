@@ -68,7 +68,6 @@ public class Spill extends Application {
             }
         });
 
-
         stage.setResizable(false);
         stage.setTitle("PacMan");
         stage.setScene(scene);
@@ -133,9 +132,6 @@ public class Spill extends Application {
         clyde.posisjon.setCenterY(BRETTHOYDE/2-20);
         clyde.poly.setLayoutX(0);
         clyde.poly.setLayoutY(0);
-
-        // Fjerner et hjerte
-
 
     }
 
