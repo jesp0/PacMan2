@@ -21,7 +21,7 @@ public class PacMan extends Entitet{
 
     public PacMan(double x, double y){
         super(x,y);
-        posisjon = new Arc(x,y,8.0,8.0,45,270);
+        posisjon = new Arc(x,y,10.0,10.0,45,270);
         posisjon.setFill(Color.YELLOW);
         posisjon.setType(ArcType.ROUND);
         ret = "";

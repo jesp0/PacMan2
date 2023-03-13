@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Kart {
-    private static ArrayList<String> kart;
+    public static ArrayList<String> kart;
     public static ArrayList<String> kartInnlesing(){
         try{
             File fil = new File("src/main/java/com/example/pacman/Kart.txt");

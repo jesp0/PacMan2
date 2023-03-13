@@ -39,68 +39,35 @@ public class Spill extends Application {
     protected static BoundingBox utenforVenstre = new BoundingBox(-21,270,20,60);
     protected static BoundingBox utenforHøyre = new BoundingBox(581,270,20,60);
     public static int antLiv = 3;
-    public static Button button = new Button("Restart");
+    static Rectangle button;
     @Override
     public void start(Stage stage) throws IOException {
 
         spillbrett = new Pane();;
 
-        score.setStroke(Color.WHITE);
-        score.setFill(Color.WHITE);
-        score.setX(5);
-        score.setY(18);
-        score.setFont(new Font(20));
-        spillbrett.getChildren().add(score);
-        kartTolking(Kart.kartInnlesing());
 
-        pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75-14);
-        spillbrett.getChildren().add(pacMan.posisjon);
-
-        blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-60);
-        spillbrett.getChildren().add(blinky.posisjon);
-        spillbrett.getChildren().add(blinky.poly);
-
-
-        pinky = new Pinky(BRETTLENGDE/2,BRETTHOYDE/2-20);
-        spillbrett.getChildren().add(pinky.posisjon);
-        spillbrett.getChildren().add(pinky.poly);
-
-        inky = new Inky(BRETTLENGDE/2-20, BRETTHOYDE/2-20);
-        spillbrett.getChildren().add(inky.posisjon);
-        spillbrett.getChildren().add(inky.poly);
-
-        clyde = new Clyde(BRETTLENGDE/2+20, BRETTHOYDE/2-20);
-        spillbrett.getChildren().add(clyde.posisjon);
-        spillbrett.getChildren().add(clyde.poly);
-
+        nyttSpill();
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
 
-        PacMan.tegnHjerter();
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
             pacMan.posisjon.setLength(270);
             switch ((e.getCode())){ //enhanced switch?
                 //Prøver å fikse et problem som gjør at PacMan setter seg fast i veggen.
-                case UP : if(pacMan.ret != "Nord") {
-                                pacMan.bevegelse("Nord");
-                                pacMan.posisjon.setStartAngle(135);
-                                break;
-                            }
-                case DOWN : if(pacMan.ret != "Sør"){
-                                pacMan.bevegelse("Sør");
-                                pacMan.posisjon.setStartAngle(315);
-                                break;
-                            }
-                case LEFT : if(pacMan.ret != "Vest"){
-                                pacMan.bevegelse("Vest");
-                                pacMan.posisjon.setStartAngle(225);
-                                break;
-                            }
-                case RIGHT : if(pacMan.ret != "Øst"){
-                                pacMan.bevegelse("Øst");
-                                pacMan.posisjon.setStartAngle(45);
-                            }
+                case UP :   pacMan.bevegelse("Nord");
+                            pacMan.posisjon.setStartAngle(135);
+                            break;
+
+                case DOWN : pacMan.bevegelse("Sør");
+                            pacMan.posisjon.setStartAngle(315);
+                            break;
+                case LEFT : pacMan.bevegelse("Vest");
+                            pacMan.posisjon.setStartAngle(225);
+                            break;
+
+                case RIGHT : pacMan.bevegelse("Øst");
+                             pacMan.posisjon.setStartAngle(45);
             }
         });
         animation = new Timeline(
@@ -194,19 +161,58 @@ public class Spill extends Application {
 
         // Fjerner et hjerte
 
-        PacMan.hjerteliste.get(Spill.antLiv).setFill(Color.BLACK);
+
     }
 
     public static void nyttSpill(){
         // Tanken er at denne metoden skal kjøre når bruker trykker "Prøv igjen"
+        score.setStroke(Color.WHITE);
+        score.setFill(Color.WHITE);
+        score.setX(5);
+        score.setY(18);
+        score.setFont(new Font(20));
+        spillbrett.getChildren().remove(score);
 
-        PacMan.hjerteliste.clear();
+        spillbrett.getChildren().clear();
+
+        if(PacMan.hjerteliste != null)
+            PacMan.hjerteliste.clear();
+        if(veggListe != null)
+            veggListe.clear();
+        if(kryssListe != null)
+            kryssListe.clear();
+        if(litenPrikkListe != null)
+            litenPrikkListe.clear();
+        if (storPrikkListe != null)
+            storPrikkListe.clear();
         PacMan.tegnHjerter();
         score.setText("0");
+        spillbrett.getChildren().add(score);
+        poengsum = 0;
         antLiv = 3;
-        gameoverTekst.setText("");
-        //kartTolking(Kart.kart);
-        // Det holder vel egenlig å fjerne alle prikker også tegne de på nytt
+        if(gameoverTekst != null)
+            gameoverTekst.setText("");
+
+        kartTolking(Kart.kartInnlesing());
+
+        pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75-14);
+        spillbrett.getChildren().add(pacMan.posisjon);
+
+        blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-60);
+        spillbrett.getChildren().add(blinky.posisjon);
+        spillbrett.getChildren().add(blinky.poly);
+
+        pinky = new Pinky(BRETTLENGDE/2,BRETTHOYDE/2-20);
+        spillbrett.getChildren().add(pinky.posisjon);
+        spillbrett.getChildren().add(pinky.poly);
+
+        inky = new Inky(BRETTLENGDE/2-20, BRETTHOYDE/2-20);
+        spillbrett.getChildren().add(inky.posisjon);
+        spillbrett.getChildren().add(inky.poly);
+
+        clyde = new Clyde(BRETTLENGDE/2+20, BRETTHOYDE/2-20);
+        spillbrett.getChildren().add(clyde.posisjon);
+        spillbrett.getChildren().add(clyde.poly);
     }
 
     public static void gameoverSjekk(){
@@ -219,13 +225,17 @@ public class Spill extends Application {
             gameoverTekst.setX(BRETTLENGDE/11);
             gameoverTekst.setY(BRETTHOYDE/2);
             spillbrett.getChildren().add(gameoverTekst);
-            button.setLayoutX(BRETTLENGDE/2);
+
+            button = new Rectangle(100,20);
+            button.setFill(Color.YELLOW);
+            button.setLayoutX(BRETTLENGDE/2-50);
             button.setLayoutY(BRETTHOYDE/2+100);
             button.setOnMouseClicked(e-> nyttSpill());
             spillbrett.getChildren().add(button);
 
             //nyttSpill(); // kjøres når prøv igjen knappen er trykket?
         }
+        PacMan.hjerteliste.get(Spill.antLiv).setFill(Color.BLACK);
 
         deathAnimation = new Timeline(
                 new KeyFrame(Duration.millis(20), e -> pacMan.dødsAnimasjon(pacMan.posisjon)));
