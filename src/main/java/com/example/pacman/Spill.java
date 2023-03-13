@@ -19,14 +19,15 @@ public class Spill extends Application {
     private static final int BRETTLENGDE = 560;
     //Pixlene er kvadratiske og trenger kun 1 verdi.
     private static final int PIXEL = 20;
-    static PacMan pacMan; // = new PacMan();
+    static PacMan pacMan;
     static Spokelse blinky, inky, pinky, clyde;
     protected static Pane spillbrett;
     protected static Animation animation;
-    protected static Animation pacAnimation;
+    protected static Animation pacAnimation, deathAnimation;
     protected static Animation blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation;
     protected static String retningSjekk;
     public static Text score = new Text("0");
+    public static Text gameoverTekst;
     public static int poengsum = 0;
     public static ArrayList<Vegg> veggListe = new ArrayList<>();
     public static ArrayList<Kryss> kryssListe = new ArrayList<>();
@@ -34,6 +35,7 @@ public class Spill extends Application {
     public static ArrayList<StorPrikk> storPrikkListe = new ArrayList<>();
     protected static BoundingBox utenforVenstre = new BoundingBox(-21,270,20,60);
     protected static BoundingBox utenforHøyre = new BoundingBox(581,270,20,60);
+    public static int antLiv = 3;
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -54,6 +56,7 @@ public class Spill extends Application {
         spillbrett.getChildren().add(blinky.posisjon);
         spillbrett.getChildren().add(blinky.poly);
 
+
         pinky = new Pinky(BRETTLENGDE/2,BRETTHOYDE/2-20);
         spillbrett.getChildren().add(pinky.posisjon);
         spillbrett.getChildren().add(pinky.poly);
@@ -69,7 +72,7 @@ public class Spill extends Application {
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
 
-
+        PacMan.tegnHjerter();
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
             pacMan.posisjon.setLength(270);
@@ -125,9 +128,6 @@ public class Spill extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-    // 500 byttes etterhvert ut med distansen til nærmeste vegg i riktig retning?
-
 
     public static void kartTolking(ArrayList<String> kart){
         double x = 0, y = 0;
@@ -185,7 +185,45 @@ public class Spill extends Application {
         clyde.posisjon.setCenterY(BRETTHOYDE/2-20);
         clyde.poly.setLayoutX(0);
         clyde.poly.setLayoutY(0);
+
+        // Fjerner et hjerte
+        PacMan.hjerteliste.get(Spill.antLiv).setFill(Color.BLACK);
     }
+
+    public static void nyttSpill(){
+        // Tanken er at denne metoden skal kjøre når bruker trykker "Prøv igjen"
+        reset();
+        PacMan.hjerteliste.clear();
+        PacMan.tegnHjerter();
+        score.setText("0");
+        antLiv = 3;
+        gameoverTekst.setText("");
+        //kartTolking(Kart.kart);
+        // Det holder vel egenlig å fjerne alle prikker også tegne de på nytt
+    }
+
+    public static void gameoverSjekk(){
+        if(antLiv == 0) {
+            System.out.println("GAME OVER");
+            gameoverTekst = new Text("GAME OVER");
+            gameoverTekst.setFont(new Font(80));
+            gameoverTekst.setStroke(Color.RED);
+            gameoverTekst.setFill(Color.DARKRED);
+            gameoverTekst.setX(BRETTLENGDE/11);
+            gameoverTekst.setY(BRETTHOYDE/2);
+            spillbrett.getChildren().add(gameoverTekst);
+
+            // Får ikke denne til å funke
+            deathAnimation = new Timeline(
+                    new KeyFrame(Duration.millis(3000), e -> pacMan.dødsAnimasjon(pacMan.posisjon, pacMan.ret)));
+            deathAnimation.setCycleCount(1);
+            deathAnimation.setOnFinished(e -> nyttSpill());
+            deathAnimation.play();
+
+            //nyttSpill(); // kjøres når prøv igjen knappen er trykket?
+        }
+    }
+
     public static void main(String[] args) {
         launch();
     }

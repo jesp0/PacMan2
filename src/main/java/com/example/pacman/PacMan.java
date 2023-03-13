@@ -2,9 +2,9 @@ package com.example.pacman;
 
 import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.*;
+
+import java.util.ArrayList;
 
 public class PacMan extends Entitet{
 
@@ -13,6 +13,7 @@ public class PacMan extends Entitet{
     protected String ret;
     protected boolean munnSjekk = true;
     protected static boolean lever = true;
+    public static ArrayList<Polygon> hjerteliste;
 
     public PacMan(double x, double y){
         super(x,y);
@@ -58,7 +59,7 @@ public class PacMan extends Entitet{
         }
         if (Spill.utenforVenstre.contains(Spill.pacMan.boks) ){
             Spill.pacMan.posisjon.setCenterX(586);
-            Spill.pacMan.posisjon.setCenterX(-6);
+            //Spill.pacMan.posisjon.setCenterX(-6);
         }
         for(int i=0; i<Spill.veggListe.size();i++){
             if(Spill.pacMan.boks.intersects(Spill.veggListe.get(i).boks)) {
@@ -158,6 +159,48 @@ public class PacMan extends Entitet{
                         munnSjekk = true;
                 }
             }
+        }
+    }
+    public void dødsAnimasjon(Arc arc, String retning){
+        //arc.getStartAngle();
+        System.out.println("the death of the pacman starts now");
+        arc.setFill(Color.GREEN);
+
+        //if(arc.getStartAngle() < 75){
+        arc.setStartAngle(arc.getStartAngle());
+        arc.setLength(arc.getLength()+100);
+        //arc.rotateProperty();
+
+
+        //arc.setStartAngle(arc.getStartAngle()-30);
+        //arc.setLength(arc.getLength() + 90);
+
+        //Spill.deathAnimation.play();
+        System.out.println("pacman døøøøøøøøør");
+
+    }
+
+    public static void tegnHjerter(){
+        // Tegner 3 hjerter ved siden av hverandre
+        hjerteliste = new ArrayList<>();
+        double forskyv = 0.0;
+        for(int i=0; i<3; i++){
+            Polygon hjerte = new Polygon();
+            hjerte.getPoints().addAll(
+                    forskyv + 20.0, 610.0,
+                    forskyv + 22.5, 605.0,
+                    forskyv + 25.0, 605.0,
+                    forskyv + 27.5, 610.0,
+                    forskyv + 30.0, 605.0,
+                    forskyv + 32.5, 605.0,
+                    forskyv + 35.0, 610.0,
+                    forskyv + 27.5, 620.0);
+
+            hjerte.setStroke(Color.DARKRED);
+            hjerte.setFill(Color.RED);
+            hjerteliste.add(hjerte);
+            Spill.spillbrett.getChildren().add(hjerteliste.get(i));
+            forskyv += 20;
         }
     }
 }

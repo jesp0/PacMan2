@@ -1,8 +1,12 @@
 package com.example.pacman;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.BoundingBox;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Polygon;
+import javafx.util.Duration;
 
 public abstract class Spokelse extends Entitet{
     protected Arc posisjon;
@@ -40,8 +44,13 @@ public abstract class Spokelse extends Entitet{
             Spill.pinkyAnimation.pause();
             Spill.clydeAnimation.pause();
             Spill.pacMan.lever = false;
-            Spill.reset();
             System.out.println("Got you PacMan!!");
+
+            Spill.antLiv--;
+            Spill.gameoverSjekk();
+
+            Spill.reset();
+
         }
         int random = trekkTall(1,10);
         utenforSjekk();
