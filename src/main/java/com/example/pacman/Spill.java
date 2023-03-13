@@ -3,6 +3,8 @@ package com.example.pacman;
 import javafx.application.Application;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
@@ -37,6 +39,7 @@ public class Spill extends Application {
     protected static BoundingBox utenforVenstre = new BoundingBox(-21,270,20,60);
     protected static BoundingBox utenforHøyre = new BoundingBox(581,270,20,60);
     public static int antLiv = 3;
+    public static Button button = new Button("Restart");
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -164,6 +167,8 @@ public class Spill extends Application {
     }
     public static void reset(){
         pacMan.lever = true;
+        pacMan.posisjon.setStartAngle(45);
+        pacMan.posisjon.setLength(270);
         pacMan.posisjon.setCenterX(BRETTLENGDE/2);
         pacMan.posisjon.setCenterY(BRETTHOYDE*0.75-14);
 
@@ -188,12 +193,13 @@ public class Spill extends Application {
         clyde.poly.setLayoutY(0);
 
         // Fjerner et hjerte
+
         PacMan.hjerteliste.get(Spill.antLiv).setFill(Color.BLACK);
     }
 
     public static void nyttSpill(){
         // Tanken er at denne metoden skal kjøre når bruker trykker "Prøv igjen"
-        reset();
+
         PacMan.hjerteliste.clear();
         PacMan.tegnHjerter();
         score.setText("0");
@@ -213,6 +219,10 @@ public class Spill extends Application {
             gameoverTekst.setX(BRETTLENGDE/11);
             gameoverTekst.setY(BRETTHOYDE/2);
             spillbrett.getChildren().add(gameoverTekst);
+            button.setLayoutX(BRETTLENGDE/2);
+            button.setLayoutY(BRETTHOYDE/2+100);
+            button.setOnMouseClicked(e-> nyttSpill());
+            spillbrett.getChildren().add(button);
 
             //nyttSpill(); // kjøres når prøv igjen knappen er trykket?
         }
@@ -220,7 +230,7 @@ public class Spill extends Application {
         deathAnimation = new Timeline(
                 new KeyFrame(Duration.millis(20), e -> pacMan.dødsAnimasjon(pacMan.posisjon)));
         deathAnimation.setCycleCount(100);
-        deathAnimation.setOnFinished(e -> nyttSpill());
+        deathAnimation.setOnFinished(e -> reset());
         deathAnimation.play();
     }
 

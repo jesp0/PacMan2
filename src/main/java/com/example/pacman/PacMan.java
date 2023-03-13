@@ -167,7 +167,6 @@ public class PacMan extends Entitet{
     }
     public void dødsAnimasjon(Arc arc){
         if(arc.getLength() > 0){
-            System.out.println(arc.getStartAngle() + " : " + arc.getLength());
             arc.setStartAngle(arc.getStartAngle()+2);
             arc.setLength(arc.getLength()-4);
         }
