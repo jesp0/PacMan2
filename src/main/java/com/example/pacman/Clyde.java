@@ -81,4 +81,9 @@ public class Clyde extends Spokelse{
             poly.setLayoutX(280);
         }
     }
+    public void nullStill(){
+        Spill.blinky.posisjon.setFill(Color.RED);
+        Spill.blinky.poly.setFill(Color.RED);
+        Spill.blinky.erSkremt = false;
+    }
 }

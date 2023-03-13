@@ -81,6 +81,11 @@ public class Inky extends Spokelse{
             poly.setLayoutX(320);
         }
     }
+    public void nullStill(){
+        Spill.blinky.posisjon.setFill(Color.RED);
+        Spill.blinky.poly.setFill(Color.RED);
+        Spill.blinky.erSkremt = false;
+    }
 
 
 }

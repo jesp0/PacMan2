@@ -33,6 +33,24 @@ public abstract class Spokelse extends Entitet{
         boks = new BoundingBox(posisjon.getCenterX()-9,posisjon.getCenterY()-9,18,18);
         kollisjonSjekk();
     }
+    public void skremtBevegelse(){
+        Animasjoner.blinkyAnimation.pause();
+        if(retning.equals("Nord")){
+            posisjon.setCenterY(posisjon.getCenterY() -1);
+            poly.setLayoutY(poly.getLayoutY()-1);
+        }else if(retning.equals("Sør")){
+            posisjon.setCenterY(posisjon.getCenterY() + 1);
+            poly.setLayoutY(poly.getLayoutY()+1);
+        }else if(retning.equals("Vest")){
+            posisjon.setCenterX(posisjon.getCenterX()-1);
+            poly.setLayoutX(poly.getLayoutX()-1);
+        }else if(retning.equals("Øst")){
+            posisjon.setCenterX(posisjon.getCenterX()+1);
+            poly.setLayoutX(poly.getLayoutX()+1);
+        }
+        boks = new BoundingBox(posisjon.getCenterX()-9,posisjon.getCenterY()-9,18,18);
+        kollisjonSjekk();
+    }
     public void kollisjonSjekk(){
         if(boks.intersects(Spill.pacMan.boks)){
             Animasjoner.animation.pause();
@@ -46,24 +64,23 @@ public abstract class Spokelse extends Entitet{
 
             Spill.antLiv--;
             Spill.gameoverSjekk();
-
         }
         int random = trekkTall(1,10);
         utenforSjekk();
         for (int i=0; i<Spill.kryssListe.size();i++){
             if(boks.contains(Spill.kryssListe.get(i).boks) && random > 3){
-                //if(erSkremt == false)
+                //if(Spill.blinky.erSkremt == false)
                     retning = logikk(retning);
-                /*else if(erSkremt == true) {
+                /*else if(Spill.blinky.erSkremt == true) {
                     retning = skremtLogikk(retning);
                 }*/
             }
         }
         for(int i=0; i<Spill.veggListe.size();i++){
             if(boks.intersects(Spill.veggListe.get(i).boks)){
-                //if(erSkremt == false)
+                //if(Spill.blinky.erSkremt == false)
                     veggKræsj(retning);
-                /*else if(erSkremt == true) {
+                /*else if(Spill.blinky.erSkremt == true) {
                     retning = skremtLogikk(retning);
                 }*/
             }
@@ -121,6 +138,7 @@ public abstract class Spokelse extends Entitet{
     }
     public abstract String logikk(String s);
     public abstract String skremtLogikk(String s);
+    public abstract void nullStill();
     public abstract void utenforSjekk();
 
 

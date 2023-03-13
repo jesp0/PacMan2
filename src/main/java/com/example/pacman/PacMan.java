@@ -40,10 +40,6 @@ public class PacMan extends Entitet{
         if(Spill.retningSjekk != retning && lever == true) {
             Animasjoner.animation.play();
             Animasjoner.pacAnimation.play();
-            Animasjoner.blinkyAnimation.play();
-            Animasjoner.pinkyAnimation.play();
-            Animasjoner.inkyAnimation.play();
-            Animasjoner.clydeAnimation.play();
         }
     }
     public void flytt(String retning){

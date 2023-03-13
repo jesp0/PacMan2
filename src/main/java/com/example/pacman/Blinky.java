@@ -146,6 +146,7 @@ public class Blinky extends Spokelse{
         return nyRetning;*/
         }
 
+
     public String skremtLogikk(String gammelRetning){
         String nyRetning = "";
         int random = trekkTall(1,3);
@@ -186,6 +187,12 @@ public class Blinky extends Spokelse{
             posisjon.setCenterX(580);
             poly.setLayoutX(300);
         }
+    }
+    public void nullStill(){
+        Spill.blinky.posisjon.setFill(Color.RED);
+        Spill.blinky.poly.setFill(Color.RED);
+        Animasjoner.blinkyAnimation.play();
+        //Spill.blinky.erSkremt = false;
     }
 
 

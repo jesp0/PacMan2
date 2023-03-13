@@ -49,6 +49,12 @@ public class Spill extends Application {
 
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
+            if(Animasjoner.blinkyAnimation.getStatus() == Animation.Status.STOPPED || Animasjoner.blinkyAnimation.getStatus() == Animation.Status.PAUSED){
+                Animasjoner.blinkyAnimation.play();
+                Animasjoner.pinkyAnimation.play();
+                Animasjoner.inkyAnimation.play();
+                Animasjoner.clydeAnimation.play();
+            }
             pacMan.posisjon.setLength(270);
             switch ((e.getCode())){ //enhanced switch?
                 //Prøver å fikse et problem som gjør at PacMan setter seg fast i veggen.

@@ -81,4 +81,9 @@ public class Pinky extends Spokelse{
             poly.setLayoutX(300);
         }
     }
+    public void nullStill(){
+        Spill.blinky.posisjon.setFill(Color.RED);
+        Spill.blinky.poly.setFill(Color.RED);
+        Spill.blinky.erSkremt = false;
+    }
 }

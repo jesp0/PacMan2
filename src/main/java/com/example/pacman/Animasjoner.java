@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class Animasjoner {
-    protected static Animation animation, blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation, pacAnimation, blinkySkremt;
+    protected static Animation animation, blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation, pacAnimation;
 
     public static void startAnimation(){
         animation = new Timeline(
@@ -33,17 +33,22 @@ public class Animasjoner {
         clydeAnimation = new Timeline(
                     new KeyFrame(Duration.millis(15), e -> Spill.clyde.bevegelse()));
             clydeAnimation.setCycleCount(Timeline.INDEFINITE);
+
+        //if(Spill.retningSjekk != retning && lever == true) {
+
+
+        //}
     }
 
     public static void skremtSpokelse(){
         Spill.blinky.posisjon.setFill(Color.BLUE);
         Spill.blinky.poly.setFill(Color.BLUE);
-        blinkySkremt = new Timeline(
-                new KeyFrame(Duration.millis(15), e -> System.out.println("Jeg er redd!!!!!")));
-        blinkySkremt.setCycleCount(300);
-        //blinkyAnimation.stop();
+        Animation blinkySkremt = new Timeline(
+                new KeyFrame(Duration.millis(35), e -> Spill.blinky.skremtBevegelse()));
+        blinkySkremt.setCycleCount(200);
+
         //blinkySkremt.setOnFinished(e -> blinkyAnimation.play());
-        blinkySkremt.setOnFinished(e -> Spill.blinky.posisjon.setFill(Color.RED));
+        blinkySkremt.setOnFinished(e -> Spill.blinky.nullStill());
         blinkySkremt.play();
     }
 
