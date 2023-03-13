@@ -30,7 +30,6 @@ public class PacMan extends Entitet{
     public void bevegelse(String retning){
         ret = retning;
         // Henter oppdatert posisjon
-
         flytt(retning);
         //Oppdaterer BoundingBoksen til PacMan.
         boks = new BoundingBox(posisjon.getCenterX()-7, posisjon.getCenterY()-7,14,14);

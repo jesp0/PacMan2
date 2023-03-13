@@ -147,37 +147,6 @@ public class Blinky extends Spokelse{
         }
 
 
-    public String skremtLogikk(String gammelRetning){
-        String nyRetning = "";
-        int random = trekkTall(1,3);
-        switch (gammelRetning){
-            case "Nord": switch (random){
-                case 1: nyRetning = "Øst"; ;break;
-                case 2: nyRetning = "Vest"; break;
-                case 3: nyRetning = "Nord"; break;
-            } break;
-            case "Sør": switch (random){
-                case 1: nyRetning = "Sør"; break;
-                case 2: nyRetning = "Øst"; break;
-                case 3: nyRetning = "Vest"; break;
-            } break;
-            case "Øst": switch (random){
-                case 1: nyRetning = "Sør"; break;
-                case 2: nyRetning = "Øst"; break;
-                case 3: nyRetning = "Nord"; break;
-            } break;
-            case "Vest": switch (random){
-                case 1: nyRetning = "Sør"; break;
-                case 2: nyRetning = "Vest"; break;
-                case 3: nyRetning = "Nord"; break;
-            }
-
-                return nyRetning;
-        }
-
-        return nyRetning;
-    }
-
     public void utenforSjekk(){
         if (Spill.utenforHøyre.contains(boks) ){
             posisjon.setCenterX(-10);
@@ -192,7 +161,7 @@ public class Blinky extends Spokelse{
         Spill.blinky.posisjon.setFill(Color.RED);
         Spill.blinky.poly.setFill(Color.RED);
         Animasjoner.blinkyAnimation.play();
-        //Spill.blinky.erSkremt = false;
+        Spill.blinky.erSkremt = false;
     }
 
 

@@ -53,36 +53,37 @@ public abstract class Spokelse extends Entitet{
     }
     public void kollisjonSjekk(){
         if(boks.intersects(Spill.pacMan.boks)){
-            Animasjoner.animation.pause();
-            Animasjoner.pacAnimation.pause();
-            Animasjoner.blinkyAnimation.pause();
-            Animasjoner.inkyAnimation.pause();
-            Animasjoner.pinkyAnimation.pause();
-            Animasjoner.clydeAnimation.pause();
-            Spill.pacMan.lever = false;
-            System.out.println("Got you PacMan!!");
+            if(Spill.blinky.erSkremt == false){
+                Animasjoner.animation.pause();
+                Animasjoner.pacAnimation.pause();
+                Animasjoner.pauseSpokelser();
+                Spill.pacMan.lever = false;
+                System.out.println("Got you PacMan!!");
 
-            Spill.antLiv--;
-            Spill.gameoverSjekk();
+                Spill.antLiv--;
+                Spill.gameoverSjekk();
+            }
+            if(Spill.blinky.erSkremt == true){
+                Spill.spillbrett.getChildren().remove(Spill.blinky.posisjon);
+                Spill.spillbrett.getChildren().remove(Spill.blinky.poly);
+                Spill.spillbrett.getChildren().remove(Spill.blinky.boks);
+                Animasjoner.blinkyAnimation.stop();
+            }
         }
         int random = trekkTall(1,10);
         utenforSjekk();
         for (int i=0; i<Spill.kryssListe.size();i++){
             if(boks.contains(Spill.kryssListe.get(i).boks) && random > 3){
-                //if(Spill.blinky.erSkremt == false)
+                if(Spill.blinky.erSkremt == false)
                     retning = logikk(retning);
-                /*else if(Spill.blinky.erSkremt == true) {
+                else if(Spill.blinky.erSkremt == true) {
                     retning = skremtLogikk(retning);
-                }*/
+                }
             }
         }
         for(int i=0; i<Spill.veggListe.size();i++){
             if(boks.intersects(Spill.veggListe.get(i).boks)){
-                //if(Spill.blinky.erSkremt == false)
-                    veggKræsj(retning);
-                /*else if(Spill.blinky.erSkremt == true) {
-                    retning = skremtLogikk(retning);
-                }*/
+                veggKræsj(retning);
             }
         }
     }
@@ -105,7 +106,11 @@ public abstract class Spokelse extends Entitet{
                 poly.setLayoutX(poly.getLayoutX()-1);
                 break;
         }
-        retning = logikk(retning);
+        if (Spill.blinky.erSkremt == false)
+            retning = logikk(retning);
+        else if (Spill.blinky.erSkremt == true) {
+            retning = skremtLogikk(retning);
+        }
     }
     public boolean sjekkVeggkræsj(String ret){
         double dX = 0, dY = 0;
@@ -137,7 +142,36 @@ public abstract class Spokelse extends Entitet{
         return min + (int)( Math.random()*(max-min+1) );
     }
     public abstract String logikk(String s);
-    public abstract String skremtLogikk(String s);
+    public String skremtLogikk(String gammelRetning){
+        String nyRetning = "";
+        int random = trekkTall(1,3);
+        switch (gammelRetning){
+            case "Nord": switch (random){
+                case 1: nyRetning = "Øst"; ;break;
+                case 2: nyRetning = "Vest"; break;
+                case 3: nyRetning = "Nord"; break;
+            } break;
+            case "Sør": switch (random){
+                case 1: nyRetning = "Sør"; break;
+                case 2: nyRetning = "Øst"; break;
+                case 3: nyRetning = "Vest"; break;
+            } break;
+            case "Øst": switch (random){
+                case 1: nyRetning = "Sør"; break;
+                case 2: nyRetning = "Øst"; break;
+                case 3: nyRetning = "Nord"; break;
+            } break;
+            case "Vest": switch (random){
+                case 1: nyRetning = "Sør"; break;
+                case 2: nyRetning = "Vest"; break;
+                case 3: nyRetning = "Nord"; break;
+            }
+
+                return nyRetning;
+        }
+
+        return nyRetning;
+    }
     public abstract void nullStill();
     public abstract void utenforSjekk();
 

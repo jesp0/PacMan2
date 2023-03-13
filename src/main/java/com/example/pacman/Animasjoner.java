@@ -39,6 +39,18 @@ public class Animasjoner {
 
         //}
     }
+    public static void pauseSpokelser(){
+        blinkyAnimation.pause();
+        pinkyAnimation.pause();
+        inkyAnimation.pause();
+        clydeAnimation.pause();
+    }
+    public static void startSpokelser(){
+        blinkyAnimation.play();
+        pinkyAnimation.play();
+        inkyAnimation.play();
+        clydeAnimation.play();
+    }
 
     public static void skremtSpokelse(){
         Spill.blinky.posisjon.setFill(Color.BLUE);

@@ -3,12 +3,9 @@ package com.example.pacman;
 import javafx.application.Application;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -50,10 +47,7 @@ public class Spill extends Application {
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
             if(Animasjoner.blinkyAnimation.getStatus() == Animation.Status.STOPPED || Animasjoner.blinkyAnimation.getStatus() == Animation.Status.PAUSED){
-                Animasjoner.blinkyAnimation.play();
-                Animasjoner.pinkyAnimation.play();
-                Animasjoner.inkyAnimation.play();
-                Animasjoner.clydeAnimation.play();
+                Animasjoner.startSpokelser();
             }
             pacMan.posisjon.setLength(270);
             switch ((e.getCode())){ //enhanced switch?
@@ -214,7 +208,6 @@ public class Spill extends Application {
             button.setOnMouseClicked(e-> nyttSpill());
             spillbrett.getChildren().addAll(button,rs);
 
-            //nyttSpill(); // kjøres når prøv igjen knappen er trykket?
         }
         PacMan.hjerteliste.get(Spill.antLiv).setFill(Color.BLACK);
 
