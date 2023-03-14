@@ -2,7 +2,13 @@ package com.example.pacman;
 
 import javafx.application.Application;
 import javafx.geometry.BoundingBox;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Skin;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -14,6 +20,7 @@ import javafx.animation.*;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class Spill extends Application {
     private static final int BRETTHOYDE = 620;
@@ -32,6 +39,7 @@ public class Spill extends Application {
     public static ArrayList<Kryss> kryssListe = new ArrayList<>();
     public static ArrayList<LitenPrikk> litenPrikkListe = new ArrayList<>();
     public static ArrayList<StorPrikk> storPrikkListe = new ArrayList<>();
+    public static ArrayList<String> highScores = new ArrayList<>();
     protected static BoundingBox utenforVenstre = new BoundingBox(-21,270,20,60);
     protected static BoundingBox utenforHøyre = new BoundingBox(581,270,20,60);
     public static int antLiv = 3;
@@ -43,6 +51,7 @@ public class Spill extends Application {
         Animasjoner.startAnimation();
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
+        spillbrett.setBackground(Background.fill(Color.BLACK));
 
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
@@ -196,6 +205,34 @@ public class Spill extends Application {
             gameoverTekst.setX(BRETTLENGDE/11);
             gameoverTekst.setY(BRETTHOYDE/6);
             spillbrett.getChildren().add(gameoverTekst);
+            highScores = Highscore.getHighScores();
+            int x = 60, y = 140;
+            for (int i = 0; i < highScores.size(); i++){
+                Text t = new Text(Highscore.finTekst(highScores.get(i)));
+                t.setX(x); t.setY(y);
+                t.setFont(new Font(40));
+                t.setStroke(Color.DARKGRAY);
+                t.setFill(Color.WHITE);
+                spillbrett.getChildren().add(t);
+                y+=50;
+            }
+            int plassering = Highscore.checkHighScore(poengsum);
+            if (plassering >= 0 && plassering < 10){
+                TextField textNavn = new TextField();
+                textNavn.setLayoutX(BRETTLENGDE/2 - 75);
+                textNavn.setLayoutY(BRETTHOYDE/2);
+                textNavn.setFont(new Font(50));
+                textNavn.setPrefColumnCount(3);
+                textNavn.setStyle("-fx-background-color: #000000");
+                textNavn.setOnKeyPressed(e -> {
+                    if (e.getCode() == KeyCode.ENTER){
+                        Highscore.setHighScore(plassering, textNavn.getText(), poengsum);
+                        nyttSpill();
+                    }
+                });
+                spillbrett.getChildren().add(textNavn);
+            }
+
 
             Ellipse button = new Ellipse(100,40);
             button.setStroke(Color.YELLOW);
@@ -209,6 +246,7 @@ public class Spill extends Application {
             spillbrett.getChildren().addAll(button,rs);
 
         }
+
         PacMan.hjerteliste.get(Spill.antLiv).setFill(Color.BLACK);
 
         Animation deathAnimation = new Timeline(
