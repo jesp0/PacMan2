@@ -53,8 +53,9 @@ public class Clyde extends Spokelse{
         }
     }
     public void nullStill(){
-        Spill.blinky.posisjon.setFill(Color.RED);
-        Spill.blinky.poly.setFill(Color.RED);
-        Spill.blinky.erSkremt = false;
+        Spill.clyde.posisjon.setFill(Color.ORANGE);
+        Spill.clyde.poly.setFill(Color.ORANGE);
+        Spill.clyde.erSkremt = false;
+        Animasjoner.clydeAnimation.play();
     }
 }

@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class Animasjoner {
-    protected static Animation animation, blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation, pacAnimation;
+    protected static Animation animation, blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation, pacAnimation,spokelseSkremt;
 
     public static void startAnimation(){
         animation = new Timeline(
@@ -34,10 +34,6 @@ public class Animasjoner {
                     new KeyFrame(Duration.millis(15), e -> Spill.clyde.bevegelse()));
             clydeAnimation.setCycleCount(Timeline.INDEFINITE);
 
-        //if(Spill.retningSjekk != retning && lever == true) {
-
-
-        //}
     }
     public static void pauseSpokelser(){
         blinkyAnimation.pause();
@@ -52,16 +48,17 @@ public class Animasjoner {
         clydeAnimation.play();
     }
 
-    public static void skremtSpokelse(){
-        Spill.blinky.posisjon.setFill(Color.BLUE);
-        Spill.blinky.poly.setFill(Color.BLUE);
-        Animation blinkySkremt = new Timeline(
-                new KeyFrame(Duration.millis(35), e -> Spill.blinky.skremtBevegelse()));
-        blinkySkremt.setCycleCount(200);
+    public static void skremtSpokelse(Spokelse spokelse){
+        pauseSpokelser();
+        spokelse.posisjon.setFill(Color.BLUE);
+        spokelse.poly.setFill(Color.BLUE);
+        spokelseSkremt = new Timeline(
+                new KeyFrame(Duration.millis(35), e -> spokelse.bevegelse()));
+        spokelseSkremt.setCycleCount(200);
 
-        //blinkySkremt.setOnFinished(e -> blinkyAnimation.play());
-        blinkySkremt.setOnFinished(e -> Spill.blinky.nullStill());
-        blinkySkremt.play();
+        spokelseSkremt.setOnFinished(e -> spokelse.nullStill());
+        spokelseSkremt.play();
+
     }
 
 }

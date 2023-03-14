@@ -13,7 +13,7 @@ import javafx.util.Duration;
 public abstract class Spokelse extends Entitet{
     protected Arc posisjon;
     protected Polygon poly;
-    protected boolean erSkremt;
+    protected static boolean erSkremt;
     protected String retning,retningSjekk;
     protected boolean bonusPoengSjekk;
     protected static int antSpist = 0;
@@ -40,27 +40,9 @@ public abstract class Spokelse extends Entitet{
         boks = new BoundingBox(posisjon.getCenterX()-9,posisjon.getCenterY()-9,18,18);
         kollisjonSjekk();
     }
-    public void skremtBevegelse(){
-        Animasjoner.blinkyAnimation.pause();
-        if(retning.equals("Nord")){
-            posisjon.setCenterY(posisjon.getCenterY() -1);
-            poly.setLayoutY(poly.getLayoutY()-1);
-        }else if(retning.equals("Sør")){
-            posisjon.setCenterY(posisjon.getCenterY() + 1);
-            poly.setLayoutY(poly.getLayoutY()+1);
-        }else if(retning.equals("Vest")){
-            posisjon.setCenterX(posisjon.getCenterX()-1);
-            poly.setLayoutX(poly.getLayoutX()-1);
-        }else if(retning.equals("Øst")){
-            posisjon.setCenterX(posisjon.getCenterX()+1);
-            poly.setLayoutX(poly.getLayoutX()+1);
-        }
-        boks = new BoundingBox(posisjon.getCenterX()-9,posisjon.getCenterY()-9,18,18);
-        kollisjonSjekk();
-    }
     public void kollisjonSjekk(){
         if(boks.intersects(Spill.pacMan.boks)){
-            if(Spill.blinky.erSkremt == false){
+            if(erSkremt == false){
                 Animasjoner.animation.pause();
                 Animasjoner.pacAnimation.pause();
                 Animasjoner.pauseSpokelser();
@@ -70,7 +52,7 @@ public abstract class Spokelse extends Entitet{
                 Spill.antLiv--;
                 Spill.gameoverSjekk();
             }
-            if(Spill.blinky.erSkremt == true){
+            if(erSkremt == true){
                 Spill.spillbrett.getChildren().remove(Spill.blinky.posisjon);
                 Spill.spillbrett.getChildren().remove(Spill.blinky.poly);
                 Spill.spillbrett.getChildren().remove(Spill.blinky.boks);
@@ -86,9 +68,9 @@ public abstract class Spokelse extends Entitet{
         utenforSjekk();
         for (int i=0; i<Spill.kryssListe.size();i++){
             if(boks.contains(Spill.kryssListe.get(i).boks) && random > 3){
-                if(Spill.blinky.erSkremt == false)
+                if(erSkremt == false)
                     retning = logikk(retning);
-                else if(Spill.blinky.erSkremt == true) {
+                else if(erSkremt == true) {
                     retning = skremtLogikk(retning);
                 }
             }
@@ -118,9 +100,9 @@ public abstract class Spokelse extends Entitet{
                 poly.setLayoutX(poly.getLayoutX()-1);
                 break;
         }
-        if (Spill.blinky.erSkremt == false)
+        if (erSkremt == false)
             retning = logikk(retning);
-        else if (Spill.blinky.erSkremt == true) {
+        else if (erSkremt == true) {
             retning = skremtLogikk(retning);
         }
     }

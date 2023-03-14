@@ -53,8 +53,9 @@ public class Pinky extends Spokelse{
         }
     }
     public void nullStill(){
-        Spill.blinky.posisjon.setFill(Color.RED);
-        Spill.blinky.poly.setFill(Color.RED);
-        Spill.blinky.erSkremt = false;
+        Spill.pinky.posisjon.setFill(Color.PINK);
+        Spill.pinky.poly.setFill(Color.PINK);
+        erSkremt = false;
+        Animasjoner.pinkyAnimation.play();
     }
 }

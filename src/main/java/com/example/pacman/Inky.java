@@ -152,9 +152,10 @@ public class Inky extends Spokelse{
         }
     }
     public void nullStill(){
-        Spill.blinky.posisjon.setFill(Color.RED);
-        Spill.blinky.poly.setFill(Color.RED);
-        Spill.blinky.erSkremt = false;
+        Spill.inky.posisjon.setFill(Color.CYAN);
+        Spill.inky.poly.setFill(Color.CYAN);
+        Spill.inky.erSkremt = false;
+        Animasjoner.inkyAnimation.play();
     }
 
 

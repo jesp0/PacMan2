@@ -55,7 +55,7 @@ public class Spill extends Application {
 
         // Ved tastetrykk endres retning
         scene.setOnKeyPressed(e ->{
-            if(Animasjoner.blinkyAnimation.getStatus() == Animation.Status.STOPPED || Animasjoner.blinkyAnimation.getStatus() == Animation.Status.PAUSED){
+            if(Animasjoner.spokelseSkremt.getStatus() != Animation.Status.RUNNING || Animasjoner.blinkyAnimation.getStatus() == Animation.Status.PAUSED){
                 Animasjoner.startSpokelser();
             }
             pacMan.posisjon.setLength(270);
