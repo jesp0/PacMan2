@@ -145,7 +145,7 @@ public class Spill extends Application {
     }
 
     public static void nyttSpill(){
-        // Tanken er at denne metoden skal kjøre når bruker trykker "Prøv igjen"
+        // Denne metoden kjører når bruker trykker "Restart"
         score.setStroke(Color.WHITE);
         score.setFill(Color.WHITE);
         score.setX(5);

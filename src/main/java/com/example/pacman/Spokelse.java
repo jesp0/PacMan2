@@ -1,8 +1,13 @@
 package com.example.pacman;
 
+import javafx.animation.FadeTransition;
 import javafx.geometry.BoundingBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 
 public abstract class Spokelse extends Entitet{
@@ -10,6 +15,8 @@ public abstract class Spokelse extends Entitet{
     protected Polygon poly;
     protected boolean erSkremt;
     protected String retning,retningSjekk;
+    protected boolean bonusPoengSjekk;
+    protected static int antSpist = 0;
     public Spokelse(double x, double y) {
         super(x, y);
         posisjon = new Arc(x,y,10.0,10.0,0,180);
@@ -68,6 +75,11 @@ public abstract class Spokelse extends Entitet{
                 Spill.spillbrett.getChildren().remove(Spill.blinky.poly);
                 Spill.spillbrett.getChildren().remove(Spill.blinky.boks);
                 Animasjoner.blinkyAnimation.stop();
+                if(!bonusPoengSjekk) {
+                    antSpist += 1;
+                    oppdaterScore(Spill.blinky.posisjon, antSpist);
+                    bonusPoengSjekk = true;
+                }
             }
         }
         int random = trekkTall(1,10);
@@ -166,12 +178,45 @@ public abstract class Spokelse extends Entitet{
                 case 2: nyRetning = "Vest"; break;
                 case 3: nyRetning = "Nord"; break;
             }
-
-                return nyRetning;
+            return nyRetning;
         }
-
         return nyRetning;
     }
+
+    public static void oppdaterScore(Arc spokelse, int combo){
+        // Poengsum økes basert på hvor mange spøkelser Pacman spiser
+        int bonusPoeng = 0;
+        switch(combo){
+            case 1 : bonusPoeng = 200; break;
+            case 2 : bonusPoeng = 400; break;
+            case 3 : bonusPoeng = 600; break;
+            case 4 : bonusPoeng = 800; break;
+        }
+        Spill.poengsum += bonusPoeng;
+        Spill.score.setText("" + Spill.poengsum);
+
+        // Bonuspoeng dukker opp over spøkelset når det blir spist
+        Text bonusTekst = new Text(spokelse.getCenterX(),spokelse.getCenterY()-20,bonusPoeng + "!");
+        bonusTekst.setFont(new Font(20));
+        bonusTekst.setFill(Color.WHITE);
+        bonusTekst.setOpacity(0.0);
+        Spill.spillbrett.getChildren().add(bonusTekst);
+        FadeTransition ft = new FadeTransition(Duration.millis(2000), bonusTekst);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.setCycleCount(2);
+        ft.setAutoReverse(true);
+        ft.play();
+
+
+        //Spill.spillbrett.getChildren().remove(bonusTekst);
+
+        /*
+        Boolsk verdi sjekker om den != "", -> legger til tekst -> venter -> fjern
+         */
+
+    }
+
     public abstract void nullStill();
     public abstract void utenforSjekk();
 
