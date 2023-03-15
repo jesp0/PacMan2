@@ -89,10 +89,10 @@ public class Spill extends Application {
                 switch (kart.get(i).charAt(k)){
                     case '#' :  Vegg vegg = new Vegg(x,y);
                                 veggListe.add(vegg);
-                                Rectangle v = vegg.tegnVegg(vegg);
+                                Rectangle v = vegg.tegnVegg();
                                 spillbrett.getChildren().add(v);
                                 ArrayList<Rectangle> fancy;
-                                fancy = vegg.fancyVegg(vegg);
+                                fancy = vegg.fancyVegg();
                                 for (int j = 0; j< fancy.size(); j++)
                                     spillbrett.getChildren().add(fancy.get(j)); break;
 

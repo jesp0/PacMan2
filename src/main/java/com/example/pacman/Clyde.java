@@ -5,6 +5,9 @@ import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+/**
+ * Clyde tar tilfeldige valg her i livet
+ */
 public class Clyde extends Spokelse{
     public Clyde(double x, double y){
         super(x,y);

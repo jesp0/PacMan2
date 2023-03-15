@@ -18,12 +18,21 @@ public class Vegg extends Entitet{
         boks = lagBoks(x, y);
     }
 
-    public Rectangle tegnVegg(Vegg vegg) {
+    /**
+     * Tegner vegg i form av et vanlig blått rektangel
+     * @return
+     */
+    public Rectangle tegnVegg() {
         Rectangle bounding = new Rectangle(x, y, 20, 20);
         bounding.setStroke(Color.BLUE);
         return bounding;
     }
-    public ArrayList<Rectangle> fancyVegg(Vegg vegg){
+
+    /**
+     * Tegner mer fancy vegger for at banen skal bli kulere
+     * @return
+     */
+    public ArrayList<Rectangle> fancyVegg(){
         ArrayList<Rectangle> v = new ArrayList<>();
         double dx = 1, dy = 1;
         for (int i = 0; i<4; i++){
@@ -38,6 +47,13 @@ public class Vegg extends Entitet{
         }
         return v;
     }
+
+    /**
+     * Oppretter en boundingbox per vegg, slik at vi kan oppdage når Pacman og spøkelser kjører i en vegg
+     * @param x
+     * @param y
+     * @return
+     */
     public BoundingBox lagBoks(double x, double y){
         boks = new BoundingBox(x, y, 20, 20);
         return boks;

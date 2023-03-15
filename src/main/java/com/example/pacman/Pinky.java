@@ -5,6 +5,9 @@ import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+/**
+ * Referer til Blinky.java
+ */
 public class Pinky extends Spokelse{
     public Pinky(double x, double y){
         super(x,y);
