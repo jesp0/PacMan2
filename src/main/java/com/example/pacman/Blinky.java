@@ -17,7 +17,6 @@ public class Blinky extends Spokelse{
      * sannsynlighet for å ta et valg som vil ta blinky nærmere pacman. Han har muligheten til å ta "dårlige valg"
      * dersom han stanger i veggen.*/
     public String logikk(String gammelRetning){
-        String nyRetning = "";
         int random = trekkTall(1, 100);
         double dX = Spill.pacMan.posisjon.getCenterX() - posisjon.getCenterX();
         double dY = Spill.pacMan.posisjon.getCenterY() - posisjon.getCenterY();
@@ -127,7 +126,7 @@ public class Blinky extends Spokelse{
         if(dX > 0 && dY == 0){
             return "Øst";
         }
-        return nyRetning;
+        return "Vest";
     }
 
     /** Denne sjekker tar Blinky fra den ene siden av tunellen til den andre.*/

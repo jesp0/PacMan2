@@ -13,11 +13,10 @@ public class Inky extends Spokelse{
             super(x,y);
             boks = lagBoks(x,y);
             posisjon.setFill(Color.CYAN);
-            retning = "Nord";
+            retning = "Øst";
             poly.setFill(Color.CYAN);
         }
     public String logikk(String gammelRetning) {
-        String nyRetning = "";
         int random = trekkTall(1, 100);
         double dX = Spill.pacMan.posisjon.getCenterX() - posisjon.getCenterX();
         double dY = Spill.pacMan.posisjon.getCenterY() - posisjon.getCenterY();
@@ -127,7 +126,7 @@ public class Inky extends Spokelse{
         if(dX > 0 && dY == 0){
             return "Øst";
         }
-        return nyRetning;
+        return "Øst";
     }
 
     public void utenforSjekk(){

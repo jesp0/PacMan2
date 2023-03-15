@@ -18,7 +18,6 @@ public class Pinky extends Spokelse{
     }
 
     public String logikk(String gammelRetning) {
-        String nyRetning = "";
         int random = trekkTall(1, 100);
         double dX = Spill.pacMan.posisjon.getCenterX() - posisjon.getCenterX();
         double dY = Spill.pacMan.posisjon.getCenterY() - posisjon.getCenterY();
@@ -128,7 +127,7 @@ public class Pinky extends Spokelse{
         if(dX > 0 && dY == 0){
             return "Øst";
         }
-        return nyRetning;
+        return "Øst";
     }
 
     public void utenforSjekk(){
