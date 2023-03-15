@@ -1,7 +1,10 @@
 package com.example.pacman;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class Blinky extends Spokelse{
     public Blinky(double x, double y){
@@ -157,6 +160,16 @@ public class Blinky extends Spokelse{
             poly.setLayoutX(300);
         }
     }
+    public void skremtSpokelse() {
+        Animasjoner.pauseSpokelser();
+        posisjon.setFill(Color.BLUE);
+        poly.setFill(Color.BLUE);
+        spokelseSkremt = new Timeline(
+                new KeyFrame(Duration.millis(35), e -> bevegelse()));
+        spokelseSkremt.setCycleCount(200);
+        spokelseSkremt.setOnFinished(e -> nullStill());
+        spokelseSkremt.play();
+    }
     public void nullStill(){
         Spill.blinky.posisjon.setFill(Color.RED);
         Spill.blinky.poly.setFill(Color.RED);
@@ -169,8 +182,7 @@ public class Blinky extends Spokelse{
         posisjon.setCenterY(Spill.BRETTHOYDE/2-60);
         poly.setLayoutX(0);
         poly.setLayoutY(0);
-        Spill.spillbrett.getChildren().add(posisjon);
-        Spill.spillbrett.getChildren().add(poly);
+
 
     }
 

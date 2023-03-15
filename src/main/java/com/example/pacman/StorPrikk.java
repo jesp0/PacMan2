@@ -20,10 +20,10 @@ public class StorPrikk extends Entitet {
                 oppdaterScore();
                 Spokelse.erSkremt = true;
                 Spokelse.antSpist = 0;
-                Animasjoner.skremtSpokelse(Spill.blinky);
-                Animasjoner.skremtSpokelse(Spill.inky);
-                Animasjoner.skremtSpokelse(Spill.pinky);
-                Animasjoner.skremtSpokelse(Spill.clyde);
+                Spill.blinky.skremtSpokelse();
+                Spill.inky.skremtSpokelse();
+                Spill.pinky.skremtSpokelse();
+                Spill.clyde.skremtSpokelse();
             }
         }
     }

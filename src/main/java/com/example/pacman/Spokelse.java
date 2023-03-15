@@ -16,8 +16,9 @@ import javafx.util.Duration;
 public abstract class Spokelse extends Entitet{
     protected Arc posisjon;
     protected Polygon poly;
-    protected static boolean erSkremt, erSpist;
-    protected String retning,retningSjekk;
+    protected Animation spokelseSkremt;
+    protected static boolean erSkremt;
+    protected String retning;
     protected boolean bonusPoengSjekk;
     protected static int antSpist = 0;
     public Spokelse(double x, double y) {
@@ -25,7 +26,6 @@ public abstract class Spokelse extends Entitet{
         posisjon = new Arc(x,y,10.0,10.0,0,180);
         poly = new Polygon(x-10,y,x-10,y+10,x-5,y+5,x,y+10,x+5,y+5,x+10,y+10,x+10,y,x-10,y);
         erSkremt = false;
-        erSpist = false;
     }
     public void bevegelse(){
         if(retning.equals("Nord")){
@@ -57,7 +57,6 @@ public abstract class Spokelse extends Entitet{
                 Spill.gameoverSjekk();
             }
             if(erSkremt == true){
-                //erSpist = true;
                 erSpist(this);
 
                 if(!bonusPoengSjekk) {
@@ -86,9 +85,9 @@ public abstract class Spokelse extends Entitet{
     }
 
     private void erSpist(Spokelse spokelse) {
-        Animasjoner.spokelseSkremt.stop();
-        Spill.spillbrett.getChildren().remove(spokelse.posisjon);
-        Spill.spillbrett.getChildren().remove(spokelse.poly);
+        spokelse.spokelseSkremt.stop();
+        spokelse.posisjon.setFill(Color.TRANSPARENT);
+        spokelse.poly.setFill(Color.TRANSPARENT);
         spokelse.boks = new BoundingBox(-20,-20,1,1);
         Animation spokelseSpist = new Timeline(
                 new KeyFrame(Duration.millis(5000), e -> {
@@ -192,7 +191,7 @@ public abstract class Spokelse extends Entitet{
          */
 
     }
-
+    public abstract void skremtSpokelse();
     public abstract void nullStill();
     public abstract void nullStillHelt();
 

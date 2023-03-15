@@ -6,6 +6,8 @@ import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class Animasjoner {
     protected static Animation animation, blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation, pacAnimation,spokelseSkremt;
 
@@ -52,17 +54,8 @@ public class Animasjoner {
         clydeAnimation.play();
     }
 
-    public static void skremtSpokelse(Spokelse spokelse){
-        pauseSpokelser();
-        spokelse.posisjon.setFill(Color.BLUE);
-        spokelse.poly.setFill(Color.BLUE);
-        spokelseSkremt = new Timeline(
-                new KeyFrame(Duration.millis(35), e -> spokelse.bevegelse()));
-        spokelseSkremt.setCycleCount(200);
 
-        spokelseSkremt.setOnFinished(e -> spokelse.nullStill());
-        spokelseSkremt.play();
 
-    }
+
 
 }

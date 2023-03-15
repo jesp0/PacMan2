@@ -1,6 +1,9 @@
 package com.example.pacman;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class Clyde extends Spokelse{
     public Clyde(double x, double y){
@@ -52,6 +55,16 @@ public class Clyde extends Spokelse{
             poly.setLayoutX(280);
         }
     }
+    public void skremtSpokelse() {
+        Animasjoner.pauseSpokelser();
+        posisjon.setFill(Color.BLUE);
+        poly.setFill(Color.BLUE);
+        spokelseSkremt = new Timeline(
+                new KeyFrame(Duration.millis(35), e -> bevegelse()));
+        spokelseSkremt.setCycleCount(200);
+        spokelseSkremt.setOnFinished(e -> nullStill());
+        spokelseSkremt.play();
+    }
     public void nullStill(){
         Spill.clyde.posisjon.setFill(Color.ORANGE);
         Spill.clyde.poly.setFill(Color.ORANGE);
@@ -64,7 +77,6 @@ public class Clyde extends Spokelse{
         posisjon.setCenterY(Spill.BRETTHOYDE/2-20);
         poly.setLayoutX(0);
         poly.setLayoutY(0);
-        Spill.spillbrett.getChildren().add(posisjon);
-        Spill.spillbrett.getChildren().add(poly);
+
     }
 }

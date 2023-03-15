@@ -1,6 +1,9 @@
 package com.example.pacman;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class Inky extends Spokelse{
         public Inky(double x, double y){
@@ -151,6 +154,17 @@ public class Inky extends Spokelse{
             poly.setLayoutX(320);
         }
     }
+    public void skremtSpokelse() {
+        Animasjoner.pauseSpokelser();
+        posisjon.setFill(Color.BLUE);
+        poly.setFill(Color.BLUE);
+        spokelseSkremt = new Timeline(
+                new KeyFrame(Duration.millis(35), e -> bevegelse()));
+        spokelseSkremt.setCycleCount(200);
+
+        spokelseSkremt.setOnFinished(e -> nullStill());
+        spokelseSkremt.play();
+    }
     public void nullStill(){
         Spill.inky.posisjon.setFill(Color.CYAN);
         Spill.inky.poly.setFill(Color.CYAN);
@@ -163,8 +177,7 @@ public class Inky extends Spokelse{
         posisjon.setCenterY(Spill.BRETTHOYDE/2-20);
         poly.setLayoutX(0);
         poly.setLayoutY(0);
-        Spill.spillbrett.getChildren().add(posisjon);
-        Spill.spillbrett.getChildren().add(poly);
+
     }
 
 
