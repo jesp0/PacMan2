@@ -13,14 +13,11 @@ public class Inky extends Spokelse{
             retning = "Nord";
             poly.setFill(Color.CYAN);
         }
-
     public String logikk(String gammelRetning) {
         String nyRetning = "";
         int random = trekkTall(1, 100);
         double dX = Spill.pacMan.posisjon.getCenterX() - posisjon.getCenterX();
         double dY = Spill.pacMan.posisjon.getCenterY() - posisjon.getCenterY();
-        int pri1 = 50, pri2 = 25, pri3 = 15, pri4 = 10;
-        boolean nord = false, sør = false, øst = false, vest = false;
         double diff = Math.abs(dX) - Math.abs(dY);
 
         // Pacman er sør-øst for Inky, nærmere øst enn sør

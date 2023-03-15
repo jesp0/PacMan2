@@ -3,11 +3,9 @@ package com.example.pacman;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-
+/** Klassen håndterer en god del av animasjonene til spøkelsene og pacman*/
 public class Animasjoner {
     protected static Animation animation, blinkyAnimation, inkyAnimation, pinkyAnimation, clydeAnimation, pacAnimation,spokelseSkremt;
 
@@ -53,9 +51,4 @@ public class Animasjoner {
         inkyAnimation.play();
         clydeAnimation.play();
     }
-
-
-
-
-
 }

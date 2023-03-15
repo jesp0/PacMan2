@@ -1,9 +1,8 @@
 package com.example.pacman;
 
-import javafx.event.ActionEvent;
+//Klassen er superklassen for alt som blir lagt ut på brettet. Felles er at de har en x/y posisjon og en BoundingBox.
+
 import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
-import javafx.scene.shape.Circle;
 
 public abstract class Entitet{
    protected double x, y;

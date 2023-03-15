@@ -2,10 +2,9 @@ package com.example.pacman;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-
+/** Blinky er det røde spøkelset. */
 public class Blinky extends Spokelse{
     public Blinky(double x, double y){
         super(x,y);
@@ -14,13 +13,14 @@ public class Blinky extends Spokelse{
         retning = "Vest";
         poly.setFill(Color.RED);
     }
+    /** Blinky forsøker å ta gode valg her i livet. Han vet hvor pacman er i forhold til seg selv og har høy
+     * sannsynlighet for å ta et valg som vil ta blinky nærmere pacman. Han har muligheten til å ta "dårlige valg"
+     * dersom han stanger i veggen.*/
     public String logikk(String gammelRetning){
         String nyRetning = "";
         int random = trekkTall(1,100);
         double dX = Spill.pacMan.posisjon.getCenterX() - posisjon.getCenterX();
         double dY = Spill.pacMan.posisjon.getCenterY() - posisjon.getCenterY();
-        int pri1 = 50, pri2 = 25, pri3 = 15,pri4 = 10;
-        boolean nord = false,sør = false, øst = false,vest = false;
         double diff = Math.abs(dX) - Math.abs(dY);
 
         if(dX > 0 && dY > 0 && diff > 0){
@@ -115,41 +115,10 @@ public class Blinky extends Spokelse{
             if(random > 90)
                 return "Sør";
         }
-
-
         return nyRetning;
-
-        /*if(!sjekkVeggkræsj("Vest"))
-            vest = true;
-        if(!sjekkVeggkræsj("Sør"))
-            sør = true;
-        if(!sjekkVeggkræsj("Øst")){
-            øst = true;
-        }
-        if(!sjekkVeggkræsj("Nord")){
-            nord = true;
         }
 
-        if(sør == true && nord == true)
-            if(dY > 0)
-                return "Sør";
-            else return "Nord";
-        if(øst == true && vest == true)
-            if(dX > 0)
-                return "Øst";
-            else return "Vest";
-        if(sør == true)
-            return "Sør";
-        if (nord == true)
-            return "Nord";
-        if (vest == true)
-            return "Vest";
-        if (øst == true)
-            return "Øst";
-        return nyRetning;*/
-        }
-
-
+    /** Denne sjekker tar Blinky fra den ene siden av tunellen til den andre.*/
     public void utenforSjekk(){
         if (Spill.utenforHøyre.contains(boks) ){
             posisjon.setCenterX(-10);
@@ -160,6 +129,8 @@ public class Blinky extends Spokelse{
             poly.setLayoutX(300);
         }
     }
+    /** Denne animasjonen var opprinnelig felles men ble individuell da vi trengte å stoppe animasjonen dersom
+     * spøkelset ble spist.*/
     public void skremtSpokelse() {
         Animasjoner.pauseSpokelser();
         posisjon.setFill(Color.BLUE);
@@ -170,6 +141,7 @@ public class Blinky extends Spokelse{
         spokelseSkremt.setOnFinished(e -> nullStill());
         spokelseSkremt.play();
     }
+    /** Nulstiller farge og posisjon på spøkelset*/
     public void nullStill(){
         Spill.blinky.posisjon.setFill(Color.RED);
         Spill.blinky.poly.setFill(Color.RED);
@@ -182,9 +154,5 @@ public class Blinky extends Spokelse{
         posisjon.setCenterY(Spill.BRETTHOYDE/2-60);
         poly.setLayoutX(0);
         poly.setLayoutY(0);
-
-
     }
-
-
 }
