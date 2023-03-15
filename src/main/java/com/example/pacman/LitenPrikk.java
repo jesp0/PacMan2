@@ -3,6 +3,9 @@ package com.example.pacman;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+/**
+ * Oppretter små prikker og behandler hva som skjer når Pacman spiser en liten prikk
+ */
 public class LitenPrikk extends Entitet {
     protected Circle posisjon;
 

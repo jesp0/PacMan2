@@ -2,6 +2,9 @@ package com.example.pacman;
 
 import javafx.geometry.BoundingBox;
 
+/**
+ * Veikryss som lar spøkelser ta beslutninger oftere
+ */
 public class Kryss extends Entitet{
     public Kryss (double x, double y){
         super(x,y);

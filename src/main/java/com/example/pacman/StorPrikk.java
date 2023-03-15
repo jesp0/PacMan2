@@ -3,6 +3,9 @@ package com.example.pacman;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+/**
+ * Oppretter store prikker og behandler hva som skjer når Pacman spiser en stor prikk
+ */
 public class StorPrikk extends Entitet {
 
     protected Circle posisjon;

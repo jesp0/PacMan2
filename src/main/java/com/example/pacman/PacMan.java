@@ -5,6 +5,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import java.util.ArrayList;
 
+/**
+ * Hovedpersonen selv
+ */
 public class PacMan extends Entitet{
 
 

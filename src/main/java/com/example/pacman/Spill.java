@@ -18,7 +18,9 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * Dette er main
+ */
 public class Spill extends Application {
     protected static final int BRETTHOYDE = 620;
     protected static final int BRETTLENGDE = 560;

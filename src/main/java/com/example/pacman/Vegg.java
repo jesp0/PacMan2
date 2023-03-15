@@ -6,6 +6,9 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
+/**
+ * Brukes for å tegne vegger på spillbrettet og å opprette tilhørende boundingbokser
+ */
 public class Vegg extends Entitet{
 
     /**
