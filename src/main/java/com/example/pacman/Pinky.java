@@ -14,34 +14,119 @@ public class Pinky extends Spokelse{
         poly.setFill(Color.PINK);
     }
 
-    public String logikk(String gammelRetning){
+    public String logikk(String gammelRetning) {
         String nyRetning = "";
-        int random = trekkTall(1,3);
-        switch (gammelRetning){
-            case "Nord": switch (random){
-                case 1: nyRetning = "Øst"; ;break;
-                case 2: nyRetning = "Vest"; break;
-                case 3: nyRetning = "Nord"; break;
-            } break;
-            case "Sør": switch (random){
-                case 1: nyRetning = "Sør"; break;
-                case 2: nyRetning = "Øst"; break;
-                case 3: nyRetning = "Vest"; break;
-            } break;
-            case "Øst": switch (random){
-                case 1: nyRetning = "Sør"; break;
-                case 2: nyRetning = "Øst"; break;
-                case 3: nyRetning = "Nord"; break;
-            } break;
-            case "Vest": switch (random){
-                case 1: nyRetning = "Sør"; break;
-                case 2: nyRetning = "Vest"; break;
-                case 3: nyRetning = "Nord"; break;
-            }
+        int random = trekkTall(1, 100);
+        double dX = Spill.pacMan.posisjon.getCenterX() - posisjon.getCenterX();
+        double dY = Spill.pacMan.posisjon.getCenterY() - posisjon.getCenterY();
+        int pri1 = 50, pri2 = 25, pri3 = 15, pri4 = 10;
+        boolean nord = false, sør = false, øst = false, vest = false;
+        double diff = Math.abs(dX) - Math.abs(dY);
 
-                return nyRetning;
+        // Pacman er sør-øst for Inky, nærmere øst enn sør
+        if (dX > 0 && dY > 0 && diff > 0) {
+            if (random > 0 && random <= 60)
+                return "Sør";
+            if (random > 60 && random <= 90)
+                return "Øst";
+            if (random > 90 && random <= 95)
+                return "Vest";
+            if (random > 95 && random <= 100)
+                return "Nord";
         }
-
+        // Pacman er sør-øst, nærmere sør enn øst
+        if (dX > 0 && dY > 0 && diff < 0) {
+            if (random > 0 && random <= 60)
+                return "Øst";
+            if (random > 60 && random <= 90)
+                return "Sør";
+            if (random > 90 && random <= 95)
+                return "Vest";
+            if (random > 95 && random <= 100)
+                return "Nord";
+        }
+        // Pacman er sør-vest, nærmere vest enn sør
+        if (dX < 0 && dY > 0 && diff > 0) {
+            if (random > 0 && random <= 60)
+                return "Sør";
+            if (random > 60 && random <= 90)
+                return "Vest";
+            if (random > 90 && random <= 95)
+                return "Vest";
+            if (random > 95 && random <= 100)
+                return "Nord";
+        }
+        // Pacman er sør-vest, nærmere sør enn vest
+        if (dX < 0 && dY > 0 && diff < 0) {
+            if (random > 0 && random <= 60)
+                return "Vest";
+            if (random > 60 && random <= 90)
+                return "Sør";
+            if (random > 90 && random <= 95)
+                return "Øst";
+            if (random > 95 && random <= 100)
+                return "Nord";
+        }
+        // Pacman er nord-vest, nærmere vest enn nord
+        if (dX < 0 && dY < 0 && diff > 0) {
+            if (random > 0 && random <= 60)
+                return "Nord";
+            if (random > 60 && random <= 90)
+                return "Vest";
+            if (random > 90 && random <= 95)
+                return "Øst";
+            if (random > 95 && random <= 100)
+                return "Sør";
+        }
+        // Pacman er nord-vest, nærmere nord enn vest
+        if (dX < 0 && dY < 0 && diff < 0) {
+            if (random > 0 && random <= 60)
+                return "Vest";
+            if (random > 60 && random <= 90)
+                return "Nord";
+            if (random > 90 && random <= 95)
+                return "Sør";
+            if (random > 95 && random <= 100)
+                return "Øst";
+        }
+        // Pacman er nord-øst, nærmere nord enn øst
+        if (dX > 0 && dY < 0 && diff < 0) {
+            if (random > 0 && random <= 60)
+                return "Øst";
+            if (random > 60 && random <= 90)
+                return "Nord";
+            if (random > 90 && random <= 95)
+                return "Sør";
+            if (random > 95 && random <= 100)
+                return "Vest";
+        }
+        // Pacman er nord-øst, nærmere øst enn nord
+        if (dX > 0 && dY < 0 && diff > 0) {
+            if (random > 0 && random <= 60)
+                return "Nord";
+            if (random > 60 && random <= 90)
+                return "Øst";
+            if (random > 90 && random <= 95)
+                return "Sør";
+            if (random > 95 && random <= 100)
+                return "Vest";
+        }
+        // Pacman er rett over
+        if(dX == 0 && dY < 0){
+            return "Nord";
+        }
+        // Pacman er rett under
+        if(dX == 0 && dY > 0){
+            return "Sør";
+        }
+        // Pacman er rett vest
+        if(dX < 0 && dY == 0){
+            return "Vest";
+        }
+        // Pacman er rett øst
+        if(dX > 0 && dY == 0){
+            return "Øst";
+        }
         return nyRetning;
     }
 

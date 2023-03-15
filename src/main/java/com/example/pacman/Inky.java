@@ -100,20 +100,6 @@ public class Inky extends Spokelse{
             if (random > 95 && random <= 100)
                 return "Vest";
         }
-        /*
-        // Pacman er sør-vest
-        if (dX < 0 && dY < 0 && diff > 0) {
-            System.out.println("IntelliJ tar feil!");
-            if (random <= 50)
-                return "Nord";
-            if (random > 50 && random <= 75)
-                return "Øst";
-            if (random > 75 && random <= 90)
-                return "Vest";
-            if (random > 90)
-                return "Sør";
-        }
-         */
         // Pacman er nord-øst, nærmere øst enn nord
         if (dX > 0 && dY < 0 && diff > 0) {
             if (random > 0 && random <= 60)

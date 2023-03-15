@@ -1,13 +1,8 @@
 package com.example.pacman;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.util.Duration;
-
 import java.util.ArrayList;
 
 public class PacMan extends Entitet{
@@ -18,8 +13,13 @@ public class PacMan extends Entitet{
     protected boolean munnSjekk = true;
     protected static boolean lever = true;
     public static ArrayList<Polygon> hjerteliste;
-
+    /**
+     Pacman opprettes og for form, farge og en BoundingBox (boks), som skal oppdage
+     når Pacman krysser spøkelser eller kolliderer med vegger.
+     I tillegg setter vi retningen som en tom String, retning endres basert på tastetrykk.
+     */
     public PacMan(double x, double y){
+
         super(x,y);
         posisjon = new Arc(x,y,10.0,10.0,45,270);
         posisjon.setFill(Color.YELLOW);
@@ -27,23 +27,38 @@ public class PacMan extends Entitet{
         ret = "";
         boks = lagBoks(x,y);
     }
+
+    /**
+     * Sørger for at Pacman beveger seg som han skal
+     * @param retning
+     */
     public void bevegelse(String retning){
         ret = retning;
-        // Henter oppdatert posisjon
+        // Flytter Pacman i en retning som bestemmes av tastetrykk
         flytt(retning);
-        //Oppdaterer BoundingBoksen til PacMan.
+        /*
+            Oppdaterer BoundingBoksen til PacMan. Boksen er litt mindre en Pacman slik
+            at han er litt lettere å styre rundt kantene på vegger.
+            BoundingBox kan ikke flyttes på, så den blir newet hele tiden så lenge Pacman beveger seg.
+         */
         boks = new BoundingBox(posisjon.getCenterX()-7, posisjon.getCenterY()-7,14,14);
         kollisjonSjekk(retning);
         LitenPrikk.spisPrikk();
         StorPrikk.spisStorPrikk();
         if(Spill.retningSjekk != retning && lever == true) {
+            // Sørger for at Pacmans animasjoner kjører, så lenge han lever og ikke har en vegg foran seg
             Animasjoner.animation.play();
             Animasjoner.pacAnimation.play();
         }
     }
+
+    /**
+     * Pacman flyttes kontinuerlig i valgt retning
+     * @param retning
+     */
     public void flytt(String retning){
         if(retning.equals("Nord")){
-            posisjon.setCenterY(posisjon.getCenterY() - 1);
+            posisjon.setCenterY(posisjon.getCenterY()-1);
         }else if(retning.equals("Sør")){
             posisjon.setCenterY(posisjon.getCenterY()+1);
         }else if(retning.equals("Vest")){
@@ -52,21 +67,33 @@ public class PacMan extends Entitet{
             posisjon.setCenterX(posisjon.getCenterX()+1);
         }
     }
+
+    /**
+     * Sjekker om Pacman kolliderer med vegger rundt om på kartet
+     * @param retning
+     */
     public static void kollisjonSjekk(String retning){
+        // Teleporterer Pacman dersom han kjører i "tunnelen" ut av banen.
         if (Spill.utenforHøyre.contains(Spill.pacMan.boks) ){
             Spill.pacMan.posisjon.setCenterX(-6);
         }
         if (Spill.utenforVenstre.contains(Spill.pacMan.boks) ){
             Spill.pacMan.posisjon.setCenterX(586);
-            //Spill.pacMan.posisjon.setCenterX(-6);
         }
+
         for(int i=0; i<Spill.veggListe.size();i++){
             if(Spill.pacMan.boks.intersects(Spill.veggListe.get(i).boks)) {
-                //System.out.println("" + i + Spill.veggListe.get(i).boks.toString());
-                //System.out.println("X: "+ Spill.pacMan.posisjon.getCenterX() + " Y: " + Spill.pacMan.posisjon.getCenterY());
+                /*
+                Stanser pacmans bevegelsesanimasjon (animation) og
+                munn-animasjonen (pacAnimation), når han står mot en vegg
+                 */
                 Animasjoner.animation.pause();
                 Animasjoner.pacAnimation.pause();
                 Spill.retningSjekk = retning;
+                /*
+                Sørger for at Pacman ikke setter seg fast i vegger ved å flytte han
+                1 piksel tilbake når han treffer en vegg
+                 */
                 switch (retning) {
                     case "Nord":
                         Spill.pacMan.posisjon.setCenterY(Spill.pacMan.posisjon.getCenterY() + 1);
@@ -85,7 +112,12 @@ public class PacMan extends Entitet{
         }
     }
 
-
+    /**
+     * Animerer munnen til Pacman, slik at han kan spise prikker mens han
+     * beveger seg rundt i forskjellige retninger.
+     * @param arc
+     * @param retning
+     */
     public void pacAnimasjon(Arc arc, String retning){
         if(retning == "Øst"){
             if (munnSjekk == true){
@@ -160,6 +192,11 @@ public class PacMan extends Entitet{
             }
         }
     }
+
+    /**
+     * Animerer munnen til Pacman når han dør, slik at han spiser seg selv og forsvinner
+     * @param arc
+     */
     public void dødsAnimasjon(Arc arc){
         if(arc.getLength() > 0){
             arc.setStartAngle(arc.getStartAngle()+2);
@@ -167,6 +204,10 @@ public class PacMan extends Entitet{
         }
     }
 
+    /**
+     * Tegner Pacmans hjerter ved siden av hverandre,
+     * som en visuell representasjon av antall liv han har.
+     */
     public static void tegnHjerter(){
         // Tegner 3 hjerter ved siden av hverandre
         hjerteliste = new ArrayList<>();

@@ -8,7 +8,11 @@ import java.util.ArrayList;
 
 public class Vegg extends Entitet{
 
-
+    /**
+     * Et vegg-objekt inneholder en x-verdi, en y-verdi og en boundingbox
+     * @param x
+     * @param y
+     */
     public Vegg (double x, double y){
         super(x,y);
         boks = lagBoks(x, y);

@@ -21,19 +21,19 @@ public class Animasjoner {
             pacAnimation.setCycleCount(Timeline.INDEFINITE);
 
         blinkyAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(15), e -> Spill.blinky.bevegelse()));
+                    new KeyFrame(Duration.millis(14), e -> Spill.blinky.bevegelse()));
             blinkyAnimation.setCycleCount(Timeline.INDEFINITE);
 
         inkyAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(15), e -> Spill.inky.bevegelse()));
+                    new KeyFrame(Duration.millis(14), e -> Spill.inky.bevegelse()));
             inkyAnimation.setCycleCount(Timeline.INDEFINITE);
 
         pinkyAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(15), e -> Spill.pinky.bevegelse()));
+                    new KeyFrame(Duration.millis(14), e -> Spill.pinky.bevegelse()));
             pinkyAnimation.setCycleCount(Timeline.INDEFINITE);
 
         clydeAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(15), e -> Spill.clyde.bevegelse()));
+                    new KeyFrame(Duration.millis(8), e -> Spill.clyde.bevegelse()));
             clydeAnimation.setCycleCount(Timeline.INDEFINITE);
 
             spokelseSkremt = new Timeline(

@@ -1,19 +1,26 @@
 package com.example.pacman;
 
-import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-
-
 public class LitenPrikk extends Entitet {
     protected Circle posisjon;
-    private static int teller = 0;
+
+    /**
+     * En liten prikk har en x og y verdi, en BoundingBox og en sirkel
+     * @param x
+     * @param y
+     */
     public LitenPrikk(double x, double y) {
         super(x, y);
         boks = lagBoks(x,y);
         posisjon = new Circle(x+10, y+10, 3.0, Color.LIGHTSALMON);
     }
+
+    /**
+     * De små prikkene fjernes fra Pane etterhvert som de blir spist.
+     * Poengsum oppdateres også.
+     */
     public static void spisPrikk(){
         for(int i=0; i<Spill.litenPrikkListe.size();i++){
             if(Spill.pacMan.boks.intersects(Spill.litenPrikkListe.get(i).boks)) {
@@ -23,6 +30,9 @@ public class LitenPrikk extends Entitet {
             }
         }
     }
+    /**
+     * Oppdaterer poengsum med 10
+     */
     public static void oppdaterScore(){
         Spill.poengsum += 10;
         Spill.score.setText("" + Spill.poengsum);
