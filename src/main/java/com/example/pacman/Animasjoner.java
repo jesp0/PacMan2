@@ -31,7 +31,7 @@ public class Animasjoner {
             pinkyAnimation.setCycleCount(Timeline.INDEFINITE);
 
         clydeAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(8), e -> Spill.clyde.bevegelse()));
+                    new KeyFrame(Duration.millis(14), e -> Spill.clyde.bevegelse()));
             clydeAnimation.setCycleCount(Timeline.INDEFINITE);
 
             spokelseSkremt = new Timeline(

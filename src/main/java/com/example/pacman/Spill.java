@@ -72,7 +72,6 @@ public class Spill extends Application {
                              pacMan.posisjon.setStartAngle(45);
             }
         });
-
         stage.setResizable(false);
         stage.setTitle("PacMan");
         stage.setScene(scene);

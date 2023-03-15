@@ -18,105 +18,117 @@ public class Blinky extends Spokelse{
      * dersom han stanger i veggen.*/
     public String logikk(String gammelRetning){
         String nyRetning = "";
-        int random = trekkTall(1,100);
+        int random = trekkTall(1, 100);
         double dX = Spill.pacMan.posisjon.getCenterX() - posisjon.getCenterX();
         double dY = Spill.pacMan.posisjon.getCenterY() - posisjon.getCenterY();
         double diff = Math.abs(dX) - Math.abs(dY);
 
-        if(dX > 0 && dY > 0 && diff > 0){
-            if(random <= 50)
-                return "Sør";
-            if(random > 50 && random <= 75)
+        // Pacman er sør-øst for Inky, nærmere sør enn øst
+        if (dX > 0 && dY > 0 && diff > 0) {
+            if (random > 0 && random <= 60)
                 return "Øst";
-            if(random > 75 && random <= 90)
-                return "Nord";
-            if(random > 90)
-                return "Vest";
-        }
-        if(dX > 0 && dY > 0 && diff < 0){
-            if(random <= 50)
-                return "Øst";
-            if(random > 50 && random <= 75)
+            if (random > 60 && random <= 90)
                 return "Sør";
-            if(random > 75 && random <= 90)
+            if (random > 90 && random <= 95)
                 return "Vest";
-            if(random > 90)
+            if (random > 95 && random <= 100)
                 return "Nord";
         }
-        if(dX < 0 && dY > 0 && diff > 0){
-            if(random <= 50)
+        // Pacman er sør-øst, nærmere øst enn sør
+        if (dX > 0 && dY > 0 && diff < 0) {
+            if (random > 0 && random <= 60)
                 return "Sør";
-            if(random > 50 && random <= 75)
-                return "Vest";
-            if(random > 75 && random <= 90)
-                return "Nord";
-            if(random > 90)
+            if (random > 60 && random <= 90)
                 return "Øst";
-        }
-        if(dX < 0 && dY > 0 && diff < 0){
-            if(random <= 50)
+            if (random > 90 && random <= 95)
                 return "Vest";
-            if(random > 50 && random <= 75)
-                return "Sør";
-            if(random > 75 && random <= 90)
-                return "Øst";
-            if(random > 90)
+            if (random > 95 && random <= 100)
                 return "Nord";
         }
-        if(dX < 0 && dY < 0 && diff > 0){
-            if(random <= 50)
-                return "Nord";
-            if(random > 50 && random <= 75)
+        // Pacman er sør-vest, nærmere sør enn vest
+        if (dX < 0 && dY > 0 && diff > 0) {
+            if (random > 0 && random <= 60)
                 return "Vest";
-            if(random > 75 && random <= 90)
+            if (random > 60 && random <= 90)
+                return "Sør";
+            if (random > 90 && random <= 95)
                 return "Øst";
-            if(random > 90)
+            if (random > 95 && random <= 100)
+                return "Nord";
+        }
+        // Pacman er sør-vest, nærmere vest enn sør
+        if (dX < 0 && dY > 0 && diff < 0) {
+            if (random > 0 && random <= 60)
+                return "Sør";
+            if (random > 60 && random <= 90)
+                return "Vest";
+            if (random > 90 && random <= 95)
+                return "Øst";
+            if (random > 95 && random <= 100)
+                return "Nord";
+        }
+        // Pacman er nord-vest, nærmere nord enn vest
+        if (dX < 0 && dY < 0 && diff > 0) {
+            if (random > 0 && random <= 60)
+                return "Vest";
+            if (random > 60 && random <= 90)
+                return "Nord";
+            if (random > 90 && random <= 95)
+                return "Øst";
+            if (random > 95 && random <= 100)
                 return "Sør";
         }
-        if(dX < 0 && dY < 0 && diff < 0){
-            if(random <= 50)
-                return "Vest";
-            if(random > 50 && random <= 75)
+        // Pacman er nord-vest, nærmere vest enn nord
+        if (dX < 0 && dY < 0 && diff < 0) {
+            if (random > 0 && random <= 60)
                 return "Nord";
-            if(random > 75 && random <= 90)
+            if (random > 60 && random <= 90)
+                return "Vest";
+            if (random > 90 && random <= 95)
                 return "Sør";
-            if(random > 90)
+            if (random > 95 && random <= 100)
                 return "Øst";
         }
-
-        if(dX > 0 && dY < 0 && diff < 0){
-            if(random <= 50)
+        // Pacman er nord-øst, nærmere nord enn øst
+        if (dX > 0 && dY < 0 && diff > 0) {
+            if (random > 0 && random <= 60)
                 return "Øst";
-            if(random > 50 && random <= 75)
+            if (random > 60 && random <= 90)
                 return "Nord";
-            if(random > 75 && random <= 90)
+            if (random > 90 && random <= 95)
                 return "Sør";
-            if(random > 90)
+            if (random > 95 && random <= 100)
                 return "Vest";
         }
-        if(dX < 0 && dY < 0 && diff > 0){
-            System.out.println("IntelliJ tar feil!");
-            if(random <= 50)
+        // Pacman er nord-øst, nærmere øst enn nord
+        if (dX > 0 && dY < 0 && diff < 0) {
+            if (random > 0 && random <= 60)
                 return "Nord";
-            if(random > 50 && random <= 75)
+            if (random > 60 && random <= 90)
                 return "Øst";
-            if(random > 75 && random <= 90)
-                return "Vest";
-            if(random > 90)
+            if (random > 90 && random <= 95)
                 return "Sør";
+            if (random > 95 && random <= 100)
+                return "Vest";
         }
-        if(dX > 0 && dY < 0 && diff > 0){
-            if(random <= 50)
-                return "Øst";
-            if(random > 50 && random <= 75)
-                return "Nord";
-            if(random > 75 && random <= 90)
-                return "Vest";
-            if(random > 90)
-                return "Sør";
+        // Pacman er rett over
+        if(dX == 0 && dY < 0){
+            return "Nord";
+        }
+        // Pacman er rett under
+        if(dX == 0 && dY > 0){
+            return "Sør";
+        }
+        // Pacman er rett vest
+        if(dX < 0 && dY == 0){
+            return "Vest";
+        }
+        // Pacman er rett øst
+        if(dX > 0 && dY == 0){
+            return "Øst";
         }
         return nyRetning;
-        }
+    }
 
     /** Denne sjekker tar Blinky fra den ene siden av tunellen til den andre.*/
     public void utenforSjekk(){

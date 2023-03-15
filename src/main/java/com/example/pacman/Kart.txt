@@ -13,7 +13,7 @@ RRRRRRRRRRRRRRRRRRRRRRRRRRRR
 ######D##RRRGRRGRRR##D######
 ######D##R###RR###R##D######
 RRRRRRKRRG#RRGGRR#GRRKRRRRRR
-######D##R########R##D######
+######D##R###RR###R##D######
 ######D##GRRRRRRRRG##D######
 ######D##R########R##D######
 ######D##R########R##D######
