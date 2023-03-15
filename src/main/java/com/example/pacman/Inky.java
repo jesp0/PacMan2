@@ -154,8 +154,17 @@ public class Inky extends Spokelse{
     public void nullStill(){
         Spill.inky.posisjon.setFill(Color.CYAN);
         Spill.inky.poly.setFill(Color.CYAN);
-        Spill.inky.erSkremt = false;
+        erSkremt = false;
         Animasjoner.inkyAnimation.play();
+    }
+    public void nullStillHelt(){
+        nullStill();
+        posisjon.setCenterX(Spill.BRETTLENGDE/2-20);
+        posisjon.setCenterY(Spill.BRETTHOYDE/2-20);
+        poly.setLayoutX(0);
+        poly.setLayoutY(0);
+        Spill.spillbrett.getChildren().add(posisjon);
+        Spill.spillbrett.getChildren().add(poly);
     }
 
 

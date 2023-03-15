@@ -2,13 +2,10 @@ package com.example.pacman;
 
 import javafx.application.Application;
 import javafx.geometry.BoundingBox;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Skin;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -23,8 +20,8 @@ import java.util.ArrayList;
 
 
 public class Spill extends Application {
-    private static final int BRETTHOYDE = 620;
-    private static final int BRETTLENGDE = 560;
+    protected static final int BRETTHOYDE = 620;
+    protected static final int BRETTLENGDE = 560;
     //Pixlene er kvadratiske og trenger kun 1 verdi.
     private static final int PIXEL = 20;
     static PacMan pacMan;

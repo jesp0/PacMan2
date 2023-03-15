@@ -58,4 +58,13 @@ public class Pinky extends Spokelse{
         erSkremt = false;
         Animasjoner.pinkyAnimation.play();
     }
+    public void nullStillHelt(){
+        nullStill();
+        posisjon.setCenterX(Spill.BRETTLENGDE/2);
+        posisjon.setCenterY(Spill.BRETTHOYDE/2-20);
+        poly.setLayoutX(0);
+        poly.setLayoutY(0);
+        Spill.spillbrett.getChildren().add(posisjon);
+        Spill.spillbrett.getChildren().add(poly);
+    }
 }

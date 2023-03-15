@@ -34,6 +34,10 @@ public class Animasjoner {
                     new KeyFrame(Duration.millis(15), e -> Spill.clyde.bevegelse()));
             clydeAnimation.setCycleCount(Timeline.INDEFINITE);
 
+            spokelseSkremt = new Timeline(
+                new KeyFrame(Duration.millis(35), e -> System.out.println("")));
+        spokelseSkremt.setCycleCount(10);
+
     }
     public static void pauseSpokelser(){
         blinkyAnimation.pause();

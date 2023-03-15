@@ -160,8 +160,18 @@ public class Blinky extends Spokelse{
     public void nullStill(){
         Spill.blinky.posisjon.setFill(Color.RED);
         Spill.blinky.poly.setFill(Color.RED);
-        Spill.blinky.erSkremt = false;
+        erSkremt = false;
         Animasjoner.blinkyAnimation.play();
+    }
+    public void nullStillHelt(){
+        nullStill();
+        posisjon.setCenterX(Spill.BRETTLENGDE/2);
+        posisjon.setCenterY(Spill.BRETTHOYDE/2-60);
+        poly.setLayoutX(0);
+        poly.setLayoutY(0);
+        Spill.spillbrett.getChildren().add(posisjon);
+        Spill.spillbrett.getChildren().add(poly);
+
     }
 
 

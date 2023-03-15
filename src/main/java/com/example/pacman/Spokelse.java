@@ -1,6 +1,9 @@
 package com.example.pacman;
 
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.BoundingBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -13,7 +16,7 @@ import javafx.util.Duration;
 public abstract class Spokelse extends Entitet{
     protected Arc posisjon;
     protected Polygon poly;
-    protected static boolean erSkremt;
+    protected static boolean erSkremt, erSpist;
     protected String retning,retningSjekk;
     protected boolean bonusPoengSjekk;
     protected static int antSpist = 0;
@@ -22,6 +25,7 @@ public abstract class Spokelse extends Entitet{
         posisjon = new Arc(x,y,10.0,10.0,0,180);
         poly = new Polygon(x-10,y,x-10,y+10,x-5,y+5,x,y+10,x+5,y+5,x+10,y+10,x+10,y,x-10,y);
         erSkremt = false;
+        erSpist = false;
     }
     public void bevegelse(){
         if(retning.equals("Nord")){
@@ -53,13 +57,12 @@ public abstract class Spokelse extends Entitet{
                 Spill.gameoverSjekk();
             }
             if(erSkremt == true){
-                Spill.spillbrett.getChildren().remove(Spill.blinky.posisjon);
-                Spill.spillbrett.getChildren().remove(Spill.blinky.poly);
-                Spill.spillbrett.getChildren().remove(Spill.blinky.boks);
-                Animasjoner.blinkyAnimation.stop();
+                //erSpist = true;
+                erSpist(this);
+
                 if(!bonusPoengSjekk) {
                     antSpist += 1;
-                    oppdaterScore(Spill.blinky.posisjon, antSpist);
+                    oppdaterScore(this.posisjon, antSpist);
                     bonusPoengSjekk = true;
                 }
             }
@@ -81,6 +84,22 @@ public abstract class Spokelse extends Entitet{
             }
         }
     }
+
+    private void erSpist(Spokelse spokelse) {
+        Animasjoner.spokelseSkremt.stop();
+        Spill.spillbrett.getChildren().remove(spokelse.posisjon);
+        Spill.spillbrett.getChildren().remove(spokelse.poly);
+        spokelse.boks = new BoundingBox(-20,-20,1,1);
+        Animation spokelseSpist = new Timeline(
+                new KeyFrame(Duration.millis(5000), e -> {
+                }));
+        spokelseSpist.setCycleCount(1);
+        spokelseSpist.setOnFinished(e -> spokelse.nullStillHelt());
+        spokelseSpist.play();
+    }
+
+
+
     private void veggKræsj(String ret) {
         switch (ret) {
             case "Nord":
@@ -106,32 +125,7 @@ public abstract class Spokelse extends Entitet{
             retning = skremtLogikk(retning);
         }
     }
-    public boolean sjekkVeggkræsj(String ret){
-        double dX = 0, dY = 0;
 
-        switch (ret) {
-            case "Nord":
-                dY = 1;
-                break;
-            case "Sør":
-                dY = -1;
-                break;
-            case "Vest":
-                dX = 1;
-                break;
-            case "Øst":
-                dX = -1;
-                break;
-        }
-        BoundingBox boks2 = new BoundingBox(posisjon.getCenterX()-9 + dX,posisjon.getCenterY()-9 + dY,18,18);
-
-        for(int i=0; i<Spill.veggListe.size();i++){
-            if(boks2.intersects(Spill.veggListe.get(i).boks)){
-                return true;
-            }
-        }
-        return false;
-    }
     public static int trekkTall(int min, int max) {
         return min + (int)( Math.random()*(max-min+1) );
     }
@@ -200,6 +194,8 @@ public abstract class Spokelse extends Entitet{
     }
 
     public abstract void nullStill();
+    public abstract void nullStillHelt();
+
     public abstract void utenforSjekk();
 
 
