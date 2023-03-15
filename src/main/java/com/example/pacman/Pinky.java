@@ -13,7 +13,7 @@ public class Pinky extends Spokelse{
         super(x,y);
         boks = lagBoks(x,y);
         posisjon.setFill(Color.PINK);
-        retning = "Sør";
+        retning = "Øst";
         poly.setFill(Color.PINK);
     }
 
