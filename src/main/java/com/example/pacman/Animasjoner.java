@@ -15,7 +15,7 @@ public class Animasjoner {
             animation.setCycleCount(Timeline.INDEFINITE);
 
         pacAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(5), e -> Spill.pacMan.pacAnimasjon(Spill.pacMan.posisjon, Spill.pacMan.ret)));
+                    new KeyFrame(Duration.millis(2), e -> Spill.pacMan.pacAnimasjon(Spill.pacMan.posisjon, Spill.pacMan.ret)));
             pacAnimation.setCycleCount(Timeline.INDEFINITE);
 
         blinkyAnimation = new Timeline(
