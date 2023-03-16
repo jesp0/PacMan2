@@ -4,9 +4,12 @@ import javafx.application.Application;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -16,13 +19,16 @@ import javafx.stage.Stage;
 import javafx.animation.*;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import static com.example.pacman.Spokelse.trekkTall;
 
 /**
  * Dette er main
  */
 public class Spill extends Application {
-    protected static final int BRETTHOYDE = 620;
+    protected static final int BRETTHOYDE = 600;
     protected static final int BRETTLENGDE = 560;
     //Pixlene er kvadratiske og trenger kun 1 verdi.
     private static final int PIXEL = 20;
@@ -50,6 +56,16 @@ public class Spill extends Application {
         Scene scene = new Scene(spillbrett, BRETTLENGDE, BRETTHOYDE);
         scene.setFill(Color.BLACK);
         spillbrett.setBackground(Background.fill(Color.BLACK));
+
+        String link = "https://soundcloud.com/fantom87-music/arrival";
+        //Media sang = new Media(link);
+        //Media sang = new Media("file://src/main/java/com/example/pacman/Arrival.mp3");
+        Media sang = new Media(Paths.get("src/main/java/com/example/pacman/Arrival.mp3").toUri().toString());
+        MediaPlayer mp = new MediaPlayer(sang);
+        mp.setAutoPlay(true);
+        mp.setCycleCount(Timeline.INDEFINITE);
+
+
         /*
          * Ved tastetrykk endres Pacmans retning, og spøkelser startes dersom de ikke er skremt (de blir skremt når Pacman spiser store prikker)
          */
@@ -74,6 +90,7 @@ public class Spill extends Application {
                              pacMan.posisjon.setStartAngle(45);
             }
         });
+        stage.getIcons().add(new Image("https://www.pngall.com/wp-content/uploads/2/Pacman-PNG-Free-Download.png"));
         stage.setResizable(false);
         stage.setTitle("PacMan");
         stage.setScene(scene);
@@ -84,17 +101,56 @@ public class Spill extends Application {
      Basert på char i tabellen tegnes forskjellige elementer på spillbrettet
      */
     public static void kartTolking(ArrayList<String> kart){
+        Color farge = Color.BLUE;
+        int red = 0;
+        int green = 0;
+        int blue = 0;
+
+        int random = trekkTall(1,4);
+        if(random == 1){
+            // Sunset
+            red = 255;
+            green = 255;
+            blue = 0;
+            //farge = Color.rgb(red,green-=8,blue);
+        }else if(random == 2){
+            // Heftig
+            red = 0;
+            green = 0;
+            blue = 255;
+            //farge = trekkFarge(red+=6,green,blue);
+        }else if(random == 3){
+            // Hacker
+            red = 40;
+            green = 40;
+            blue = 40;
+            //farge = trekkFarge(red,green+=6,blue+=5);
+        }else if(random == 4){
+            // Tilfeldige farger
+            red = 0;
+            green = 0;
+            blue = 0;
+        }
+        int masseFarger = trekkTall(1,4);
 
         double x = 0, y = 0;
         for(int i = 0; i< kart.size(); i++){
+            if(random == 1)
+                farge = Color.rgb(red,green-=8,blue);
+            if(random == 2)
+                farge = Color.rgb(red+=6,green,blue);
+            if(random == 3)
+                farge = Color.rgb(red,green+=6,blue);
+            if(random == 4)
+                farge = Color.rgb(trekkTall(0,255),trekkTall(0,255),trekkTall(0,255));
             for(int k = 0; k < kart.get(i).length(); k++){
                 switch (kart.get(i).charAt(k)){
                     case '#' :  Vegg vegg = new Vegg(x,y);
                                 veggListe.add(vegg);
-                                Rectangle v = vegg.tegnVegg();
+                                Rectangle v = vegg.tegnVegg(farge);
                                 spillbrett.getChildren().add(v);
                                 ArrayList<Rectangle> fancy;
-                                fancy = vegg.fancyVegg();
+                                fancy = vegg.fancyVegg(farge, random, masseFarger);
                                 for (int j = 0; j< fancy.size(); j++)
                                     spillbrett.getChildren().add(fancy.get(j)); break;
 
@@ -125,29 +181,30 @@ public class Spill extends Application {
         pacMan.lever = true;
         pacMan.posisjon.setStartAngle(45);
         pacMan.posisjon.setLength(270);
+        pacMan.ret="";
         pacMan.posisjon.setCenterX(BRETTLENGDE/2);
-        pacMan.posisjon.setCenterY(BRETTHOYDE*0.75-14);
+        pacMan.posisjon.setCenterY(BRETTHOYDE*0.75);
 
         blinky.posisjon.setCenterX(BRETTLENGDE/2);
-        blinky.posisjon.setCenterY(BRETTHOYDE/2-60);
+        blinky.posisjon.setCenterY(BRETTHOYDE/2-50);
         inky.retning = "Vest";
         blinky.poly.setLayoutX(0);
         blinky.poly.setLayoutY(0);
 
         inky.posisjon.setCenterX(BRETTLENGDE/2-20);
-        inky.posisjon.setCenterY(BRETTHOYDE/2-20);
+        inky.posisjon.setCenterY(BRETTHOYDE/2-10);
         inky.retning = "Øst";
         inky.poly.setLayoutX(0);
         inky.poly.setLayoutY(0);
 
         pinky.posisjon.setCenterX(BRETTLENGDE/2);
-        pinky.posisjon.setCenterY(BRETTHOYDE/2-20);
+        pinky.posisjon.setCenterY(BRETTHOYDE/2-10);
         inky.retning = "Øst";
         pinky.poly.setLayoutX(0);
         pinky.poly.setLayoutY(0);
 
         clyde.posisjon.setCenterX(BRETTLENGDE/2+20);
-        clyde.posisjon.setCenterY(BRETTHOYDE/2-20);
+        clyde.posisjon.setCenterY(BRETTHOYDE/2-10);
         inky.retning = "Vest";
         clyde.poly.setLayoutX(0);
         clyde.poly.setLayoutY(0);
@@ -197,29 +254,8 @@ public class Spill extends Application {
         kartTolking(Kart.kartInnlesing());
 
         /* Pacman og spøkelsene opprettes, får startposisjon og legges til i Pane */
-        pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75-14);
-        spillbrett.getChildren().add(pacMan.posisjon);
+        tegnAktører();
 
-        /* posisjon er felles navn på en Arc (per spøkelse), den tegnes som en halvsirkel (øvre del),
-           poly er et Polygon som er nedre halvdel av spøkelsene, også henger øvre og nedre del sammen.
-           Vi gjorde det på denne måten for å kunne bruke getCenterX() og andre nyttige metoder Arc har,
-           men ikke Polygon
-         */
-        blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-60);
-        spillbrett.getChildren().add(blinky.posisjon);
-        spillbrett.getChildren().add(blinky.poly);
-
-        pinky = new Pinky(BRETTLENGDE/2,BRETTHOYDE/2-20);
-        spillbrett.getChildren().add(pinky.posisjon);
-        spillbrett.getChildren().add(pinky.poly);
-
-        inky = new Inky(BRETTLENGDE/2-20, BRETTHOYDE/2-20);
-        spillbrett.getChildren().add(inky.posisjon);
-        spillbrett.getChildren().add(inky.poly);
-
-        clyde = new Clyde(BRETTLENGDE/2+20, BRETTHOYDE/2-20);
-        spillbrett.getChildren().add(clyde.posisjon);
-        spillbrett.getChildren().add(clyde.poly);
     }
     /**
      Gameover-sjekken kjøres hver gang Pacman blir spist, og gjør en rekke tiltak
@@ -295,6 +331,95 @@ public class Spill extends Application {
         deathAnimation.setCycleCount(100);
         deathAnimation.setOnFinished(e -> reset());
         deathAnimation.play();
+    }
+    public static void win(){
+        if(litenPrikkListe.size() == 0 && storPrikkListe.size() == 0) {
+            Animasjoner.animation.pause();
+            Animasjoner.pacAnimation.pause();
+            Animasjoner.pauseSpokelser();
+
+            Animation winAnimation = new Timeline(
+                    new KeyFrame(Duration.millis(2000), e -> pacMan.winAnimasjon(pacMan.posisjon)));
+            winAnimation.setCycleCount(1);
+            winAnimation.setOnFinished(e -> nesteBane());
+            winAnimation.play();
+        }
+    }
+    public static void nesteBane(){
+        if(veggListe != null)
+            veggListe.clear();
+        if(kryssListe != null)
+            kryssListe.clear();
+        // Disse skal være tomme nå, men de cleares for sikkerhets skyld
+        if(litenPrikkListe != null)
+            litenPrikkListe.clear();
+        if (storPrikkListe != null)
+            storPrikkListe.clear();
+
+        spillbrett.getChildren().remove(pacMan.posisjon);
+
+        spillbrett.getChildren().remove(blinky.posisjon);
+        spillbrett.getChildren().remove(blinky.poly);
+
+        spillbrett.getChildren().remove(inky.posisjon);
+        spillbrett.getChildren().remove(inky.poly);
+
+        spillbrett.getChildren().remove(pinky.posisjon);
+        spillbrett.getChildren().remove(pinky.poly);
+
+        spillbrett.getChildren().remove(clyde.posisjon);
+        spillbrett.getChildren().remove(clyde.poly);
+        kartTolking(Kart.kartInnlesing());
+        tegnAktører();
+        reset();
+
+    }
+    public static void tegnAktører(){
+        pacMan = new PacMan(BRETTLENGDE/2,BRETTHOYDE*0.75);
+        spillbrett.getChildren().add(pacMan.posisjon);
+
+        /* posisjon er felles navn på en Arc (per spøkelse), den tegnes som en halvsirkel (øvre del),
+           poly er et Polygon som er nedre halvdel av spøkelsene, også henger øvre og nedre del sammen.
+           Vi gjorde det på denne måten for å kunne bruke getCenterX() og andre nyttige metoder Arc har,
+           men ikke Polygon
+         */
+        blinky = new Blinky(BRETTLENGDE/2,BRETTHOYDE/2-50);
+        spillbrett.getChildren().add(blinky.posisjon);
+        spillbrett.getChildren().add(blinky.poly);
+
+        pinky = new Pinky(BRETTLENGDE/2,BRETTHOYDE/2-10);
+        spillbrett.getChildren().add(pinky.posisjon);
+        spillbrett.getChildren().add(pinky.poly);
+
+        inky = new Inky(BRETTLENGDE/2-20, BRETTHOYDE/2-10);
+        spillbrett.getChildren().add(inky.posisjon);
+        spillbrett.getChildren().add(inky.poly);
+
+        clyde = new Clyde(BRETTLENGDE/2+20, BRETTHOYDE/2-10);
+        spillbrett.getChildren().add(clyde.posisjon);
+        spillbrett.getChildren().add(clyde.poly);
+    }
+    public static Color trekkFarge(int red, int green, int blue){
+        int r = red;
+        int g = green;
+        int b = blue;
+        return Color.rgb(r,g,b);
+
+        /*
+        int red = 0;
+        int green = 0;
+        int blue = 0;
+        double sat = 1.0;
+        int random = trekkTall(1,4);
+        switch (random){
+            case 1 : red = 255;
+            case 2 : green = 255;
+            case 3 : blue = 255;
+            case 4 : sat = 1.0;
+        }
+        return Color.rgb(red, green, blue, sat);
+
+         */
     }
 
     public static void main(String[] args) {

@@ -30,6 +30,7 @@ public class LitenPrikk extends Entitet {
                 Spill.spillbrett.getChildren().remove(Spill.litenPrikkListe.get(i).posisjon);
                 Spill.litenPrikkListe.remove(i);
                 oppdaterScore();
+                Spill.win();
             }
         }
     }

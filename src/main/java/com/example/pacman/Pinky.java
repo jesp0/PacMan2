@@ -3,10 +3,11 @@ package com.example.pacman;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 /**
- * Se Blinky.java
+ * Pinky prøver å avskjære Pacman
  */
 public class Pinky extends Spokelse{
     public Pinky(double x, double y){
@@ -19,8 +20,26 @@ public class Pinky extends Spokelse{
 
     public String logikk(String gammelRetning) {
         int random = trekkTall(1, 100);
-        double dX = Spill.pacMan.posisjon.getCenterX() - posisjon.getCenterX();
-        double dY = Spill.pacMan.posisjon.getCenterY() - posisjon.getCenterY();
+        double dX, dY;
+        double foranVannrett = 0.0;
+        double foranLoddrett = 0.0;
+        switch (Spill.pacMan.ret){
+            case "Nord" :
+                foranLoddrett = Spill.pacMan.posisjon.getCenterY() - 60.0;
+                break;
+            case "Sør" :
+                foranLoddrett = Spill.pacMan.posisjon.getCenterY() + 60.0;
+                break;
+            case "Øst" :
+                foranVannrett = Spill.pacMan.posisjon.getCenterX() + 60.0;
+                break;
+            case "Vest" :
+                foranVannrett = Spill.pacMan.posisjon.getCenterX() - 60.0;
+
+        }
+        dX = (foranVannrett - posisjon.getCenterX());
+        dY = (foranLoddrett - posisjon.getCenterY());
+
         double diff = Math.abs(dX) - Math.abs(dY);
 
         // Pacman er sør-øst for Inky, nærmere sør enn øst
@@ -161,7 +180,7 @@ public class Pinky extends Spokelse{
     public void nullStillHelt(){
         nullStill();
         posisjon.setCenterX(Spill.BRETTLENGDE/2);
-        posisjon.setCenterY(Spill.BRETTHOYDE/2-20);
+        posisjon.setCenterY(Spill.BRETTHOYDE/2-10);
         poly.setLayoutX(0);
         poly.setLayoutY(0);
 

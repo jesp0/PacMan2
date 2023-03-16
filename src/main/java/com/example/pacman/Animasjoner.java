@@ -11,7 +11,7 @@ public class Animasjoner {
 
     public static void startAnimation(){
         animation = new Timeline(
-                    new KeyFrame(Duration.millis(15), e -> Spill.pacMan.bevegelse(Spill.pacMan.ret)));
+                    new KeyFrame(Duration.millis(11), e -> Spill.pacMan.bevegelse(Spill.pacMan.ret)));
             animation.setCycleCount(Timeline.INDEFINITE);
 
         pacAnimation = new Timeline(
@@ -19,23 +19,23 @@ public class Animasjoner {
             pacAnimation.setCycleCount(Timeline.INDEFINITE);
 
         blinkyAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(14), e -> Spill.blinky.bevegelse()));
+                    new KeyFrame(Duration.millis(11), e -> Spill.blinky.bevegelse()));
             blinkyAnimation.setCycleCount(Timeline.INDEFINITE);
 
         inkyAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(14), e -> Spill.inky.bevegelse()));
+                    new KeyFrame(Duration.millis(11), e -> Spill.inky.bevegelse()));
             inkyAnimation.setCycleCount(Timeline.INDEFINITE);
 
         pinkyAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(14), e -> Spill.pinky.bevegelse()));
+                    new KeyFrame(Duration.millis(11), e -> Spill.pinky.bevegelse()));
             pinkyAnimation.setCycleCount(Timeline.INDEFINITE);
 
         clydeAnimation = new Timeline(
-                    new KeyFrame(Duration.millis(14), e -> Spill.clyde.bevegelse()));
+                    new KeyFrame(Duration.millis(9), e -> Spill.clyde.bevegelse()));
             clydeAnimation.setCycleCount(Timeline.INDEFINITE);
 
             spokelseSkremt = new Timeline(
-                new KeyFrame(Duration.millis(35), e -> System.out.println("")));
+                new KeyFrame(Duration.millis(30), e -> System.out.println("")));
         spokelseSkremt.setCycleCount(10);
 
     }

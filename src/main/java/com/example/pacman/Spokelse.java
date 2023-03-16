@@ -62,9 +62,15 @@ public abstract class Spokelse extends Entitet{
                 Animasjoner.pacAnimation.pause();
                 Animasjoner.pauseSpokelser();
                 Spill.pacMan.lever = false;
+                boks = new BoundingBox(0,0,1,1);
                 System.out.println("Got you PacMan!!");
-                Spill.antLiv--;
-                Spill.gameoverSjekk();
+                if(Spill.antLiv <= 3 && Spill.antLiv > 1) {
+                    Spill.antLiv--;
+                    Spill.gameoverSjekk();
+                }else if (Spill.antLiv == 1) {
+                    Spill.antLiv = 0;
+                    Spill.gameoverSjekk();
+                }
             }
             if(erSkremt == true){
                 erSpist(this);

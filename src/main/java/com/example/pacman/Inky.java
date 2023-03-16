@@ -159,7 +159,7 @@ public class Inky extends Spokelse{
     public void nullStillHelt(){
         nullStill();
         posisjon.setCenterX(Spill.BRETTLENGDE/2-20);
-        posisjon.setCenterY(Spill.BRETTHOYDE/2-20);
+        posisjon.setCenterY(Spill.BRETTHOYDE/2-10);
         poly.setLayoutX(0);
         poly.setLayoutY(0);
 

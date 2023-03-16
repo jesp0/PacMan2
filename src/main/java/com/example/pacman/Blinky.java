@@ -22,7 +22,7 @@ public class Blinky extends Spokelse{
         double dY = Spill.pacMan.posisjon.getCenterY() - posisjon.getCenterY();
         double diff = Math.abs(dX) - Math.abs(dY);
 
-        // Pacman er sør-øst for Inky, nærmere sør enn øst
+        // Pacman er sør-øst for Blinky, nærmere sør enn øst
         if (dX > 0 && dY > 0 && diff > 0) {
             if (random > 0 && random <= 60)
                 return "Øst";
@@ -162,7 +162,7 @@ public class Blinky extends Spokelse{
     public void nullStillHelt(){
         nullStill();
         posisjon.setCenterX(Spill.BRETTLENGDE/2);
-        posisjon.setCenterY(Spill.BRETTHOYDE/2-60);
+        posisjon.setCenterY(Spill.BRETTHOYDE/2-50);
         poly.setLayoutX(0);
         poly.setLayoutY(0);
     }

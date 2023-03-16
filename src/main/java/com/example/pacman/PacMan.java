@@ -48,6 +48,7 @@ public class PacMan extends Entitet{
         kollisjonSjekk(retning);
         LitenPrikk.spisPrikk();
         StorPrikk.spisStorPrikk();
+        //Spill.win();
         if(Spill.retningSjekk != retning && lever == true) {
             // Sørger for at Pacmans animasjoner kjører, så lenge han lever og ikke har en vegg foran seg
             Animasjoner.animation.play();
@@ -206,6 +207,12 @@ public class PacMan extends Entitet{
             arc.setLength(arc.getLength()-4);
         }
     }
+    public void winAnimasjon(Arc arc){
+        if(arc.getLength() > 0){
+            arc.setStartAngle(arc.getStartAngle()+10);
+            arc.setLength(arc.getLength()+10);
+        }
+    }
 
     /**
      * Tegner Pacmans hjerter ved siden av hverandre,
@@ -218,14 +225,14 @@ public class PacMan extends Entitet{
         for(int i=0; i<3; i++){
             Polygon hjerte = new Polygon();
             hjerte.getPoints().addAll(
-                    forskyv + 20.0, 610.0,
-                    forskyv + 22.5, 605.0,
-                    forskyv + 25.0, 605.0,
-                    forskyv + 27.5, 610.0,
-                    forskyv + 30.0, 605.0,
-                    forskyv + 32.5, 605.0,
-                    forskyv + 35.0, 610.0,
-                    forskyv + 27.5, 620.0);
+                    forskyv + 500.0, 8.0,
+                    forskyv + 502.5, 2.0,
+                    forskyv + 505.0, 2.0,
+                    forskyv + 507.5, 8.0,
+                    forskyv + 510.0, 2.0,
+                    forskyv + 512.5, 2.0,
+                    forskyv + 515.0, 8.0,
+                    forskyv + 507.5, 18.0);
 
             hjerte.setStroke(Color.DARKRED);
             hjerte.setFill(Color.RED);
